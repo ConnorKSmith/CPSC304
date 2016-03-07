@@ -9,8 +9,14 @@ To-do List:
 
 1. SQL file of the database
 
-2. https://netbeans.org/competition/win-with-netbeans/mysql-client.html <--  go through this tutorial if you have time, I found it to be very helpful.
+2. Clone project, set up mySQL, import it to NetBeans
 
-3. Clone project, set up mySQL, import it to NetBeans
+3. Add the necessary database information in DatabaseConnection.java, then test run it. Very basic Log-in and sign-up should be implemented already.
 
-4. Add the necessary database information in DatabaseConnection.java, then test run it. Very basic Log-in and sign-up should be implemented already.
+
+
+
+Useful Resources:
+
+https://netbeans.org/competition/win-with-netbeans/mysql-client.html
+https://dev.mysql.com/doc/connector-j/en/connector-j-usagenotes-connect-drivermanager.html
