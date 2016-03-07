@@ -18,5 +18,5 @@ To-do List:
 
 Useful Resources:
 
-https://netbeans.org/competition/win-with-netbeans/mysql-client.html
-https://dev.mysql.com/doc/connector-j/en/connector-j-usagenotes-connect-drivermanager.html
+1. https://netbeans.org/competition/win-with-netbeans/mysql-client.html
+2. https://dev.mysql.com/doc/connector-j/en/connector-j-usagenotes-connect-drivermanager.html
