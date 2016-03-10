@@ -18,6 +18,7 @@ public class MainForm extends javax.swing.JFrame {
     /**
      * Creates new form MainForm
      */
+    public static String userName = "";
     DatabaseConnection dbc = new DatabaseConnection();
     Statement stmt = null;
     ResultSet rs = null;
@@ -224,6 +225,7 @@ public class MainForm extends javax.swing.JFrame {
 
     private boolean validateAccount() {
         String u = userNameTextField.getText();
+        userName = u;
         String p = passwordTextField.getText();
         
         System.out.println("u is " + u + "and p is " + p);
@@ -236,7 +238,7 @@ public class MainForm extends javax.swing.JFrame {
                     + p +"'";
 
             ResultSet rs = stmt.executeQuery(queryStr);
-            if(rs.last()){
+            if(rs.next()){
                 return true;
             } else {
                 System.out.println("Incorrect username or password!");

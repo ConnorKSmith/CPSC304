@@ -8,6 +8,7 @@ import pkg304application.database.*;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 /**
  *
  * @author jko
@@ -23,6 +24,10 @@ public class SignUpForm extends javax.swing.JFrame {
     
     public SignUpForm() {
         initComponents();
+        mismatch.setVisible(false);
+        alreadyExists.setVisible(false);
+        insufficientInfo.setVisible(false);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     }
 
     /**
@@ -34,6 +39,7 @@ public class SignUpForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         signUpTitle = new javax.swing.JLabel();
         userNameLabel = new javax.swing.JLabel();
         passwordLabel = new javax.swing.JLabel();
@@ -42,15 +48,32 @@ public class SignUpForm extends javax.swing.JFrame {
         createAccountButton = new javax.swing.JButton();
         passwordLabel2 = new javax.swing.JLabel();
         passwordField2 = new javax.swing.JPasswordField();
+        playerButton = new javax.swing.JRadioButton();
+        jLabel1 = new javax.swing.JLabel();
+        developerButton = new javax.swing.JRadioButton();
+        mismatch = new javax.swing.JLabel();
+        alreadyExists = new javax.swing.JLabel();
+        insufficientInfo = new javax.swing.JLabel();
+
+        buttonGroup1.add(playerButton);
+        buttonGroup1.add(developerButton);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        signUpTitle.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
         signUpTitle.setText("Sign up here!");
 
+        userNameLabel.setFont(new java.awt.Font("Lucida Grande", 0, 16)); // NOI18N
         userNameLabel.setText("Your username:");
 
+        passwordLabel.setFont(new java.awt.Font("Lucida Grande", 0, 16)); // NOI18N
         passwordLabel.setText("Your password:");
 
+        userNameTextField.setFont(new java.awt.Font("Lucida Grande", 0, 16)); // NOI18N
+
+        passwordField.setFont(new java.awt.Font("Lucida Grande", 0, 16)); // NOI18N
+
+        createAccountButton.setFont(new java.awt.Font("Lucida Grande", 0, 15)); // NOI18N
         createAccountButton.setText("Create Account");
         createAccountButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -58,53 +81,108 @@ public class SignUpForm extends javax.swing.JFrame {
             }
         });
 
-        passwordLabel2.setText("Re-enter password:");
+        passwordLabel2.setFont(new java.awt.Font("Lucida Grande", 0, 16)); // NOI18N
+        passwordLabel2.setText("Re-enter:");
+
+        passwordField2.setFont(new java.awt.Font("Lucida Grande", 0, 16)); // NOI18N
+
+        playerButton.setText("Player");
+
+        jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 16)); // NOI18N
+        jLabel1.setText("Account Type:");
+
+        developerButton.setText("Developer");
+
+        mismatch.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        mismatch.setForeground(new java.awt.Color(255, 0, 0));
+        mismatch.setText("The passwords do not match!");
+
+        alreadyExists.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        alreadyExists.setForeground(new java.awt.Color(255, 0, 0));
+        alreadyExists.setText("Username already exists!");
+
+        insufficientInfo.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        insufficientInfo.setForeground(new java.awt.Color(255, 0, 0));
+        insufficientInfo.setText("Missing information!");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(52, 52, 52)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(signUpTitle)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(passwordLabel2)
-                                .addComponent(passwordLabel))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(userNameLabel)
-                                .addGap(26, 26, 26)))
-                        .addGap(29, 29, 29)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(createAccountButton))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(51, 51, 51)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(createAccountButton)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(userNameTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
-                                .addComponent(passwordField)
-                                .addComponent(passwordField2)))))
-                .addContainerGap(55, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(passwordLabel)
+                                    .addComponent(passwordLabel2))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(passwordField2, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(playerButton)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(developerButton))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel1)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(userNameLabel)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addComponent(userNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(alreadyExists)
+                                    .addComponent(insufficientInfo)
+                                    .addComponent(mismatch))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
+                .addGap(60, 60, 60))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(149, 149, 149)
+                .addComponent(signUpTitle)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(49, 49, 49)
+                .addGap(39, 39, 39)
                 .addComponent(signUpTitle)
-                .addGap(31, 31, 31)
+                .addGap(41, 41, 41)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(userNameLabel)
                     .addComponent(userNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(16, 16, 16)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(passwordLabel)
-                    .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(passwordField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(passwordLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(alreadyExists)
                 .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(passwordLabel))
+                        .addGap(28, 28, 28))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(passwordField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(passwordLabel2)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(mismatch)
+                .addGap(38, 38, 38)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(playerButton)
+                    .addComponent(developerButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(insufficientInfo)
+                .addGap(29, 29, 29)
                 .addComponent(createAccountButton)
-                .addContainerGap(51, Short.MAX_VALUE))
+                .addContainerGap(52, Short.MAX_VALUE))
         );
 
         pack();
@@ -112,14 +190,23 @@ public class SignUpForm extends javax.swing.JFrame {
 
     private void createAccountButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createAccountButtonActionPerformed
         // TODO add your handling code here:
+        String u = userNameTextField.getText();
+        String p = passwordField.getText();
+        
+        if ((u.equals(null) || p.equals(null)) || !(playerButton.isSelected() || developerButton.isSelected())){
+            System.out.println("You are missing some information.");
+            insufficientInfo.setVisible(true);
+            return;
+        }
+        
         DatabaseConnection dbc = new DatabaseConnection();
         dbc.init();
         if (!passwordField.getText().equals(passwordField2.getText())){
             System.out.println("Passwords do not match!");
+            mismatch.setVisible(true);
+            return;
         }
-        
-        String u = userNameTextField.getText();
-        String p = passwordField.getText();
+
         
         String insertStr = "insert into Account(userName, password) "
                 + "values('" + u + "' , '" + p + "')";
@@ -128,10 +215,11 @@ public class SignUpForm extends javax.swing.JFrame {
         
         try{
             stmt= dbc.getMyConnection().createStatement(); 
-        
             stmt.executeUpdate(insertStr);
         } catch (SQLException ex) {
             Logger.getLogger(SignUpForm.class.getName()).log(Level.SEVERE, null, ex);
+            alreadyExists.setVisible(true);
+            return;
         }
             System.out.println("1 row inserted");
             this.setVisible(false);
@@ -176,11 +264,18 @@ public class SignUpForm extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel alreadyExists;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton createAccountButton;
+    private javax.swing.JRadioButton developerButton;
+    private javax.swing.JLabel insufficientInfo;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel mismatch;
     private javax.swing.JPasswordField passwordField;
     private javax.swing.JPasswordField passwordField2;
     private javax.swing.JLabel passwordLabel;
     private javax.swing.JLabel passwordLabel2;
+    private javax.swing.JRadioButton playerButton;
     private javax.swing.JLabel signUpTitle;
     private javax.swing.JLabel userNameLabel;
     private javax.swing.JTextField userNameTextField;

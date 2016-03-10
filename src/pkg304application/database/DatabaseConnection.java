@@ -19,18 +19,10 @@ public class DatabaseConnection {
     }
     
     public void init(){
-       try{
-           
+       try{      
         Class.forName("com.mysql.jdbc.Driver");
-        myConnection = DriverManager.getConnection(
-                /* you need to insert your own database information, refer to below
-               
-                "jdbc:mysql://localhost:3306/mysql","dbnamehere", "dbpasswordhere"
-                */
-                
-                );
-
-        System.out.println("Connected to database!");
+        myConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/mysql","root", "lordko539580");
+    //    System.out.println("Connected to database!");
         }
         catch(Exception e){
             System.out.println("Failed to get connection");

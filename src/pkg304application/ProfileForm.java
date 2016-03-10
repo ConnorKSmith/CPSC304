@@ -4,18 +4,41 @@
  * and open the template in the editor.
  */
 package pkg304application;
+import pkg304application.database.*;
+import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author jko
  */
 public class ProfileForm extends javax.swing.JFrame {
-
+    
+    
+    public Boolean editing = false;
+    Statement stmt = null;
+    ResultSet rs = null;
+    
     /**
      * Creates new form ProfileForm
      */
     public ProfileForm() {
-        initComponents();
+        try {
+            DatabaseConnection dbc = new DatabaseConnection();
+            dbc.init();
+            initComponents();
+            this.ProfileName.setText("Welcome back " + MainForm.userName + " !");
+            String queryString = "select a.description from Account a where a.username = '" +
+                    MainForm.userName.toString() + "'";
+            System.out.println(queryString);
+            stmt= dbc.getMyConnection().createStatement(); 
+            ResultSet rs = stmt.executeQuery(queryString);
+            rs.next();
+            this.descriptionTextField.setText(rs.getString("description"));
+        } catch (SQLException ex) {
+            Logger.getLogger(ProfileForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -27,37 +50,50 @@ public class ProfileForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        ProfileName = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        ProfileDescription = new javax.swing.JTextArea();
         advancedSearchBar = new javax.swing.JLabel();
         jLayeredPane1 = new javax.swing.JLayeredPane();
+        ProfileName = new javax.swing.JLabel();
         SearchBar = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        searchField = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        editButton = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        descriptionTextField = new javax.swing.JTextArea();
+        logoutButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        ProfileName.setText("Profile Name:");
-        getContentPane().add(ProfileName, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 183, -1, -1));
-
-        ProfileDescription.setColumns(20);
-        ProfileDescription.setRows(5);
-        jScrollPane1.setViewportView(ProfileDescription);
-
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 211, 463, 90));
-
         advancedSearchBar.setText("Advanced Search Options:");
         getContentPane().add(advancedSearchBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 100, -1, -1));
 
-        SearchBar.setIcon(new javax.swing.ImageIcon("/Users/jko/NetBeansProjects/304Application/src/dynamicImg/SearchBar.png")); // NOI18N
+        ProfileName.setFont(new java.awt.Font("PT Serif Caption", 1, 24)); // NOI18N
+        ProfileName.setText("Profile Name:");
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
-            }
-        });
+        jLayeredPane1.setLayer(ProfileName, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
+        jLayeredPane1.setLayout(jLayeredPane1Layout);
+        jLayeredPane1Layout.setHorizontalGroup(
+            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(ProfileName)
+                .addContainerGap(257, Short.MAX_VALUE))
+        );
+        jLayeredPane1Layout.setVerticalGroup(
+            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                .addGap(34, 34, 34)
+                .addComponent(ProfileName)
+                .addContainerGap(34, Short.MAX_VALUE))
+        );
+
+        getContentPane().add(jLayeredPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, 430, 100));
+
+        SearchBar.setIcon(new javax.swing.ImageIcon("/Users/jko/NetBeansProjects/304Application/src/dynamicImg/SearchBar.png")); // NOI18N
+        getContentPane().add(SearchBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, 430, -1));
 
         jButton1.setBorder(null);
         jButton1.setOpaque(true);
@@ -71,52 +107,39 @@ public class ProfileForm extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 130, 51, 49));
 
-        jLayeredPane1.setLayer(SearchBar, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(jTextField1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(jButton1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        searchField.setText("jTextField2");
+        getContentPane().add(searchField, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 140, 320, -1));
 
-        javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
-        jLayeredPane1.setLayout(jLayeredPane1Layout);
-        jLayeredPane1Layout.setHorizontalGroup(
-            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jLayeredPane1Layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(29, Short.MAX_VALUE))
-            .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jLayeredPane1Layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(SearchBar, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
-        );
-        jLayeredPane1Layout.setVerticalGroup(
-            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jLayeredPane1Layout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLayeredPane1Layout.createSequentialGroup()
-                .addContainerGap(25, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26))
-            .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jLayeredPane1Layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(SearchBar)
-                    .addGap(0, 0, Short.MAX_VALUE)))
-        );
+        jLabel1.setText("Profile Information:");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 240, 140, -1));
 
-        getContentPane().add(jLayeredPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, 430, 100));
+        editButton.setText("Edit");
+        editButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editButtonActionPerformed(evt);
+            }
+        });
+        getContentPane().add(editButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 490, -1, -1));
+
+        descriptionTextField.setColumns(20);
+        descriptionTextField.setRows(5);
+        jScrollPane1.setViewportView(descriptionTextField);
+        descriptionTextField.setEditable(false);
+
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 270, 460, 200));
+
+        logoutButton.setText("Log out");
+        logoutButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                logoutButtonMouseClicked(evt);
+            }
+        });
+        getContentPane().add(logoutButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 40, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
@@ -124,8 +147,45 @@ public class ProfileForm extends javax.swing.JFrame {
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         // TODO add your handling code here:
-        System.out.println("hi");
+        System.out.println(this.descriptionTextField.getText().length());
     }//GEN-LAST:event_jButton1MouseClicked
+
+    private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonActionPerformed
+        // TODO add your handling code here:
+        if (editing.equals(false)){
+          this.descriptionTextField.setEditable(true);
+          this.editButton.setText("Save changes");
+          editing = true;
+        } else {
+
+          if (this.descriptionTextField.getText().length() > 100){
+              System.out.println("Description can only be under 100 characters!");
+              this.descriptionTextField.setText(" ");
+            } else {
+              String updateStr = "update Account a set a.description = '" + this.descriptionTextField.getText() + 
+                      "' where a.username = '" + MainForm.userName.toString() + "'";
+              try {
+                  System.out.println(updateStr);
+                  stmt.executeUpdate(updateStr);
+              } catch (SQLException ex) {
+                  Logger.getLogger(ProfileForm.class.getName()).log(Level.SEVERE, null, ex);
+              }
+              System.out.println("Successfully stored the description");
+           }
+        
+          this.descriptionTextField.setEditable(false);
+          this.editButton.setText("Edit");
+          editing = false;
+        }
+    }//GEN-LAST:event_editButtonActionPerformed
+
+    private void logoutButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutButtonMouseClicked
+        // TODO add your handling code here:
+        new MainForm().setVisible(true);
+        MainForm.userName="";
+        this.setVisible(false);
+        this.dispose(); 
+    }//GEN-LAST:event_logoutButtonMouseClicked
 
     /**
      * @param args the command line arguments
@@ -163,13 +223,16 @@ public class ProfileForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextArea ProfileDescription;
     private javax.swing.JLabel ProfileName;
     private javax.swing.JLabel SearchBar;
     private javax.swing.JLabel advancedSearchBar;
+    private javax.swing.JTextArea descriptionTextField;
+    private javax.swing.JButton editButton;
     private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JButton logoutButton;
+    private javax.swing.JTextField searchField;
     // End of variables declaration//GEN-END:variables
 }
