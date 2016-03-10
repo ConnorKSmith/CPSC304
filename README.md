@@ -7,7 +7,8 @@ Install: MYSQL JDBC NetBeans
 
 To-do List:
 
-1. SQL file of the database
+1. SQL file of the database (please doublecheck them and update if necessary)
+   Note : I've tested the .sql file and made sure no compile error
 
 2. Clone project, set up mySQL, import it to NetBeans
 
