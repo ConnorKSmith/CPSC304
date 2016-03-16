@@ -62,6 +62,7 @@ public class DeveloperForm extends javax.swing.JFrame {
         gameList = new javax.swing.JList<>();
         searchField = new javax.swing.JTextField();
         searchButton = new javax.swing.JButton();
+        createGameButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -129,6 +130,7 @@ public class DeveloperForm extends javax.swing.JFrame {
 
         GroupAndGames.addTab("Groups", jScrollPane2);
 
+        gameList.setFont(new java.awt.Font("PT Serif Caption", 1, 14)); // NOI18N
         gameList.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -158,6 +160,14 @@ public class DeveloperForm extends javax.swing.JFrame {
             }
         });
         getContentPane().add(searchButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 40, 140, 50));
+
+        createGameButton.setText("Create Game");
+        createGameButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                createGameButtonMouseClicked(evt);
+            }
+        });
+        getContentPane().add(createGameButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 680, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -228,6 +238,11 @@ public class DeveloperForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_friendListMouseClicked
 
+    private void createGameButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_createGameButtonMouseClicked
+        // TODO add your handling code here:
+        new NewGameForm().setVisible(true);
+    }//GEN-LAST:event_createGameButtonMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -268,6 +283,7 @@ public class DeveloperForm extends javax.swing.JFrame {
     private javax.swing.JLabel Friends;
     private javax.swing.JTabbedPane GroupAndGames;
     private javax.swing.JLabel ProfileName;
+    private javax.swing.JButton createGameButton;
     private javax.swing.JTextArea descriptionTextField;
     public static javax.swing.JButton editButton;
     private javax.swing.JList<String> friendList;
@@ -318,7 +334,17 @@ public class DeveloperForm extends javax.swing.JFrame {
     }
 
     private void showGameList() {
-        return;
+        try {
+            String queryStr = "Select * from Game G, Developer D where G.creatorID = D.developerID and D.developerID = " + MainForm.userID;
+            rs = stmt.executeQuery(queryStr);
+            DefaultListModel gameListModel = new DefaultListModel();
+            while (rs.next()){
+                gameListModel.addElement(rs.getString("gName"));
+            }
+            gameList.setModel(gameListModel);
+        } catch (SQLException ex) {
+            Logger.getLogger(DeveloperForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     private void showGroupList() {
