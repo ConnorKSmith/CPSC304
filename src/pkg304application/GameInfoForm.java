@@ -5,17 +5,49 @@
  */
 package pkg304application;
 
+import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import pkg304application.database.DatabaseConnection;
+
 /**
  *
  * @author jko
  */
 public class GameInfoForm extends javax.swing.JFrame {
 
+       
     /**
      * Creates new form GameInfoForm
      */
+    ResultSet rs;
+    Statement stmt;
+    
     public GameInfoForm() {
-        initComponents();
+        try {
+            DatabaseConnection dbc = new DatabaseConnection();
+            dbc.init();
+            initComponents();
+            stmt = dbc.getMyConnection().createStatement();
+            setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        } catch (SQLException ex) {
+            Logger.getLogger(GameInfoForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+    
+    public GameInfoForm(String gameName, String gameDescription, int creatorID, int price){
+        try {
+            DatabaseConnection dbc = new DatabaseConnection();
+            dbc.init();
+            initComponents();
+            stmt = dbc.getMyConnection().createStatement();
+            showGameInfo(gameName, gameDescription, creatorID, price);
+            setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        } catch (SQLException ex) {
+            Logger.getLogger(GameInfoForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
     /**
@@ -27,17 +59,69 @@ public class GameInfoForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        gameName = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        gameDescription = new javax.swing.JTextArea();
+        jLabel1 = new javax.swing.JLabel();
+        developerName = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        priceLabel = new javax.swing.JLabel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        gameName.setText("jLabel1");
+
+        gameDescription.setColumns(20);
+        gameDescription.setRows(5);
+        jScrollPane1.setViewportView(gameDescription);
+
+        jLabel1.setText("Developer:");
+
+        developerName.setText("jLabel2");
+
+        jLabel2.setText("Price:");
+
+        priceLabel.setText("jLabel3");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(166, 166, 166)
+                        .addComponent(gameName))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(65, 65, 65)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(priceLabel))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(developerName)))))
+                .addContainerGap(91, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(41, 41, 41)
+                .addComponent(gameName)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(developerName))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(priceLabel))
+                .addContainerGap(62, Short.MAX_VALUE))
         );
 
         pack();
@@ -79,5 +163,27 @@ public class GameInfoForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel developerName;
+    private javax.swing.JTextArea gameDescription;
+    private javax.swing.JLabel gameName;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel priceLabel;
     // End of variables declaration//GEN-END:variables
+
+    private void showGameInfo(String g, String d, int dev, int p) {
+        try {
+            gameName.setText(g);
+            gameDescription.setText(d);
+            priceLabel.setText(Integer.toString(p));
+            String queryStr = "Select userName from Account where userID=" + dev;
+            rs = stmt.executeQuery(queryStr);
+            rs.next();
+            developerName.setText(rs.getString("userName"));
+        } catch (SQLException ex) {
+            Logger.getLogger(GameInfoForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
 }
