@@ -11,15 +11,13 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
-import javax.swing.JPanel;
 import javax.swing.ListModel;
-import javax.swing.SwingUtilities;
 
 /**
  *
  * @author jko
  */
-public class ProfileForm extends javax.swing.JFrame {
+public class DeveloperForm extends javax.swing.JFrame {
     
     
     public Boolean editing = false;
@@ -31,7 +29,7 @@ public class ProfileForm extends javax.swing.JFrame {
     /**
      * Creates new form ProfileForm
      */
-    public ProfileForm() {
+    public DeveloperForm() {
             initComponents();
             showProfileInfo();
             showFriendList();
@@ -64,10 +62,8 @@ public class ProfileForm extends javax.swing.JFrame {
         gameList = new javax.swing.JList<>();
         searchField = new javax.swing.JTextField();
         searchButton = new javax.swing.JButton();
-        refreshButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(900, 800));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         editButton.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
@@ -163,14 +159,6 @@ public class ProfileForm extends javax.swing.JFrame {
         });
         getContentPane().add(searchButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 40, 140, 50));
 
-        refreshButton.setText("Refresh");
-        refreshButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                refreshButtonMouseClicked(evt);
-            }
-        });
-        getContentPane().add(refreshButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 370, 90, 40));
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -192,7 +180,7 @@ public class ProfileForm extends javax.swing.JFrame {
                   System.out.println(updateStr);
                   stmt.executeUpdate(updateStr);
               } catch (SQLException ex) {
-                  Logger.getLogger(ProfileForm.class.getName()).log(Level.SEVERE, null, ex);
+                  Logger.getLogger(DeveloperForm.class.getName()).log(Level.SEVERE, null, ex);
               }
               System.out.println("Successfully stored the description");
            }
@@ -230,7 +218,7 @@ public class ProfileForm extends javax.swing.JFrame {
                 System.out.println("no user exists");
             }
         } catch (SQLException ex) {
-            Logger.getLogger(ProfileForm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DeveloperForm.class.getName()).log(Level.SEVERE, null, ex);
         }
        
         return;
@@ -239,17 +227,6 @@ public class ProfileForm extends javax.swing.JFrame {
     private void friendListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_friendListMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_friendListMouseClicked
-
-    private void refreshButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_refreshButtonMouseClicked
-        // TODO add your handling code here:
-         /*  this.setVisible(false);
-            new ProfileForm().setVisible(true);
-        */
-            JPanel contentPane = (JPanel) this.getContentPane();
-            friendList.revalidate(); 
-            contentPane.repaint();
-            System.out.println("refreshing");
-    }//GEN-LAST:event_refreshButtonMouseClicked
 
     /**
      * @param args the command line arguments
@@ -268,20 +245,21 @@ public class ProfileForm extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ProfileForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DeveloperForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ProfileForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DeveloperForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ProfileForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DeveloperForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ProfileForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DeveloperForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ProfileForm().setVisible(true);
+                new DeveloperForm().setVisible(true);
             }
         });
     }
@@ -300,7 +278,6 @@ public class ProfileForm extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JButton logoutButton;
-    private javax.swing.JButton refreshButton;
     private javax.swing.JButton searchButton;
     private javax.swing.JTextField searchField;
     // End of variables declaration//GEN-END:variables
@@ -319,7 +296,7 @@ public class ProfileForm extends javax.swing.JFrame {
             rs.next();
             this.descriptionTextField.setText(rs.getString("description"));
         } catch (SQLException ex) {
-            Logger.getLogger(ProfileForm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DeveloperForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -334,7 +311,7 @@ public class ProfileForm extends javax.swing.JFrame {
             }
             friendList.setModel(friendListModel);
         } catch (SQLException ex) {
-            Logger.getLogger(ProfileForm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DeveloperForm.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         

@@ -19,6 +19,7 @@ public class MainForm extends javax.swing.JFrame {
      * Creates new form MainForm
      */
     public static String userName = "";
+    public static int userID = 0;
     DatabaseConnection dbc = new DatabaseConnection();
     Statement stmt = null;
     ResultSet rs = null;
@@ -165,10 +166,31 @@ public class MainForm extends javax.swing.JFrame {
     private void loginButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginButtonMouseClicked
         // TODO add your handling code here:
         if (validateAccount()){
-       
-        ProfileForm.main();
-        this.setVisible(false);
-        this.dispose();
+            
+            try {
+                Boolean isPlayer = false;
+                
+                String queryStr = "Select playerID from Player P where P.playerID='" + userID + "'";
+                stmt = dbc.getMyConnection().createStatement(); 
+                rs = stmt.executeQuery(queryStr);
+                if (rs.next()){
+                    System.out.println("TEST");
+                    isPlayer = true;
+                }
+                
+                if (isPlayer) {
+                    ProfileForm.main();
+                    this.setVisible(false);
+                    this.dispose();
+                } else {
+                    System.out.println("opening develoepr view");
+                    DeveloperForm.main();
+                    this.setVisible(false);
+                    this.dispose();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+            }
         } 
     }//GEN-LAST:event_loginButtonMouseClicked
 
@@ -225,20 +247,23 @@ public class MainForm extends javax.swing.JFrame {
 
     private boolean validateAccount() {
         String u = userNameTextField.getText();
-        userName = u;
         String p = passwordTextField.getText();
         
         System.out.println("u is " + u + "and p is " + p);
         
         
         try {
-            Statement stmt = dbc.getMyConnection().createStatement();
-            
+            Statement stmt = dbc.getMyConnection().createStatement();         
             String queryStr = "Select * from Account a where a.userName='" + u + "' and a.password='"
                     + p +"'";
-
-            ResultSet rs = stmt.executeQuery(queryStr);
+            rs = stmt.executeQuery(queryStr);
+            
             if(rs.next()){
+                queryStr = "Select A.userID from Account A where A.userName='" + u + "'";
+                rs = stmt.executeQuery(queryStr);
+                rs.next();
+                userID = rs.getInt("userID");
+                userName = u;
                 return true;
             } else {
                 System.out.println("Incorrect username or password!");
@@ -246,7 +271,7 @@ public class MainForm extends javax.swing.JFrame {
             }
             
         } catch (SQLException ex) {
-            System.out.println("SQLException caught in MainForm.java");
+             Logger.getLogger(ProfileForm.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         

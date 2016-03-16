@@ -11,33 +11,34 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
-import javax.swing.JPanel;
 import javax.swing.ListModel;
-import javax.swing.SwingUtilities;
 
 /**
  *
  * @author jko
  */
-public class ProfileForm extends javax.swing.JFrame {
+public class SearchUserForm extends javax.swing.JFrame {
     
-    
-    public Boolean editing = false;
+    public int thisUserID = ProfileForm.searchUserID;
     Statement stmt = null;
     ResultSet rs = null;
-    public static int searchUserID;
-    String queryString;
     
     /**
      * Creates new form ProfileForm
      */
-    public ProfileForm() {
+    public SearchUserForm() {
             initComponents();
+            setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+            if (thisUserID == 0){
+                thisUserID = DeveloperForm.searchUserID;
+            }
             showProfileInfo();
             showFriendList();
             showGameList();
             showGroupList();
             showReviewList();
+            
     }
 
     /**
@@ -49,10 +50,8 @@ public class ProfileForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        editButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         descriptionTextField = new javax.swing.JTextArea();
-        logoutButton = new javax.swing.JButton();
         ProfileName = new javax.swing.JLabel();
         Friends = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -62,24 +61,10 @@ public class ProfileForm extends javax.swing.JFrame {
         groupList = new javax.swing.JList<>();
         jScrollPane4 = new javax.swing.JScrollPane();
         gameList = new javax.swing.JList<>();
-        searchField = new javax.swing.JTextField();
-        searchButton = new javax.swing.JButton();
-        refreshButton = new javax.swing.JButton();
+        addFriend = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(900, 800));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        editButton.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        editButton.setText("Edit");
-        editButton.setAutoscrolls(true);
-        editButton.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        editButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                editButtonActionPerformed(evt);
-            }
-        });
-        getContentPane().add(editButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 370, 100, 30));
 
         descriptionTextField.setColumns(20);
         descriptionTextField.setRows(5);
@@ -87,16 +72,6 @@ public class ProfileForm extends javax.swing.JFrame {
         descriptionTextField.setEditable(false);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 160, 550, 200));
-
-        logoutButton.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        logoutButton.setText("Log out");
-        logoutButton.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        logoutButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                logoutButtonMouseClicked(evt);
-            }
-        });
-        getContentPane().add(logoutButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 40, 120, 50));
 
         ProfileName.setFont(new java.awt.Font("PT Serif Caption", 1, 24)); // NOI18N
         ProfileName.setText("Profile Name:");
@@ -144,112 +119,36 @@ public class ProfileForm extends javax.swing.JFrame {
 
         getContentPane().add(GroupAndGames, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 430, 770, 220));
 
-        searchField.setFont(new java.awt.Font("PT Serif Caption", 0, 14)); // NOI18N
-        searchField.setText("   find a user");
-        searchField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchFieldActionPerformed(evt);
-            }
-        });
-        getContentPane().add(searchField, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 40, 400, 50));
-
-        searchButton.setFont(new java.awt.Font("PT Serif Caption", 0, 14)); // NOI18N
-        searchButton.setText("Search");
-        searchButton.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        searchButton.addMouseListener(new java.awt.event.MouseAdapter() {
+        addFriend.setText("Add Friend");
+        addFriend.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                searchButtonMouseClicked(evt);
+                addFriendMouseClicked(evt);
             }
         });
-        getContentPane().add(searchButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 40, 140, 50));
-
-        refreshButton.setText("Refresh");
-        refreshButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                refreshButtonMouseClicked(evt);
-            }
-        });
-        getContentPane().add(refreshButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 370, 90, 40));
+        getContentPane().add(addFriend, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 120, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonActionPerformed
-        // TODO add your handling code here:
-        if (editing.equals(false)){
-          this.descriptionTextField.setEditable(true);
-          this.editButton.setText("Save changes");
-          editing = true;
-        } else {
-
-          if (this.descriptionTextField.getText().length() > 100){
-              System.out.println("Description can only be under 100 characters!");
-              this.descriptionTextField.setText(" ");
-            } else {
-              String updateStr = "update Account a set a.description = '" + this.descriptionTextField.getText() + 
-                      "' where a.username = '" + MainForm.userName.toString() + "'";
-              try {
-                  System.out.println(updateStr);
-                  stmt.executeUpdate(updateStr);
-              } catch (SQLException ex) {
-                  Logger.getLogger(ProfileForm.class.getName()).log(Level.SEVERE, null, ex);
-              }
-              System.out.println("Successfully stored the description");
-           }
-        
-          this.descriptionTextField.setEditable(false);
-          this.editButton.setText("Edit");
-          editing = false;
-        }
-    }//GEN-LAST:event_editButtonActionPerformed
-
-    private void logoutButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutButtonMouseClicked
-        // TODO add your handling code here:
-        new MainForm().setVisible(true);
-        MainForm.userName="";
-        this.setVisible(false);
-        this.dispose(); 
-    }//GEN-LAST:event_logoutButtonMouseClicked
-
-    private void searchFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_searchFieldActionPerformed
-
-    private void searchButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchButtonMouseClicked
-        // TODO add your handling code here:
-        String name = searchField.getText();
-        System.out.println(name);
-        queryString = "Select A.userID from Account A where A.userName='" + name + "'";
-        try {
-            rs = stmt.executeQuery(queryString);
-            if (rs.next()){
-                searchUserID = rs.getInt("userID");
-                System.out.println("finished");
-                new SearchUserForm().setVisible(true);
-            } else {
-                System.out.println("no user exists");
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ProfileForm.class.getName()).log(Level.SEVERE, null, ex);
-        }
-       
-        return;
-    }//GEN-LAST:event_searchButtonMouseClicked
 
     private void friendListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_friendListMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_friendListMouseClicked
 
-    private void refreshButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_refreshButtonMouseClicked
+    private void addFriendMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addFriendMouseClicked
         // TODO add your handling code here:
-         /*  this.setVisible(false);
-            new ProfileForm().setVisible(true);
-        */
-            JPanel contentPane = (JPanel) this.getContentPane();
-            friendList.revalidate(); 
-            contentPane.repaint();
-            System.out.println("refreshing");
-    }//GEN-LAST:event_refreshButtonMouseClicked
+        try {
+            // TODO add your handling code here:
+            String insertStr = "Insert into FriendsWith(userID1, userID2) values(" + MainForm.userID + "," + thisUserID + ")";
+            stmt.executeUpdate(insertStr);
+            insertStr = "Insert into FriendsWith(userID1, userID2) values(" + thisUserID + "," + MainForm.userID + ")";
+            stmt.executeUpdate(insertStr);
+            System.out.println("added to friendlist");
+            addFriend.setText("Friends");
+            addFriend.setEnabled(false);
+        } catch (SQLException ex) {
+            Logger.getLogger(UserResultForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_addFriendMouseClicked
 
     /**
      * @param args the command line arguments
@@ -268,20 +167,21 @@ public class ProfileForm extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ProfileForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SearchUserForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ProfileForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SearchUserForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ProfileForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SearchUserForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ProfileForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SearchUserForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ProfileForm().setVisible(true);
+                new SearchUserForm().setVisible(true);
             }
         });
     }
@@ -290,8 +190,8 @@ public class ProfileForm extends javax.swing.JFrame {
     private javax.swing.JLabel Friends;
     private javax.swing.JTabbedPane GroupAndGames;
     private javax.swing.JLabel ProfileName;
+    private javax.swing.JButton addFriend;
     private javax.swing.JTextArea descriptionTextField;
-    public static javax.swing.JButton editButton;
     private javax.swing.JList<String> friendList;
     private javax.swing.JList<String> gameList;
     private javax.swing.JList<String> groupList;
@@ -299,10 +199,6 @@ public class ProfileForm extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JButton logoutButton;
-    private javax.swing.JButton refreshButton;
-    private javax.swing.JButton searchButton;
-    private javax.swing.JTextField searchField;
     // End of variables declaration//GEN-END:variables
 
     private void showProfileInfo() {
@@ -310,22 +206,28 @@ public class ProfileForm extends javax.swing.JFrame {
             DatabaseConnection dbc = new DatabaseConnection();
             dbc.init();
             this.setResizable(false); 
-            this.ProfileName.setText(MainForm.userName);
-            queryString = "select a.description from Account a where a.username = '" +
-                    MainForm.userName.toString() + "'";
-            System.out.println(queryString);
             stmt= dbc.getMyConnection().createStatement(); 
+            String queryString = "select * from Account a where a.userID=" + thisUserID;
             rs = stmt.executeQuery(queryString);
+            System.out.println(queryString);
             rs.next();
-            this.descriptionTextField.setText(rs.getString("description"));
+            ProfileName.setText(rs.getString("userName"));        
+            descriptionTextField.setText(rs.getString("description"));
+            queryString = "Select * from FriendsWith where userID1=" + MainForm.userID + " and userID2=" + thisUserID;
+            rs = stmt.executeQuery(queryString);
+            if (rs.next()){
+                System.out.println("Already friends");
+                addFriend.setText("Friends");
+                addFriend.setEnabled(false);
+            }
         } catch (SQLException ex) {
-            Logger.getLogger(ProfileForm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SearchUserForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     private void showFriendList() {
         try {
-            String queryString = "Select DISTINCT A.userName from Account A, FriendsWith F where F.userID1=" + MainForm.userID +
+            String queryString = "Select DISTINCT A.userName from Account A, FriendsWith F where F.userID1=" + thisUserID +
                     " and F.userID2=A.userID";
             rs = stmt.executeQuery(queryString);
             DefaultListModel friendListModel = new DefaultListModel();
@@ -334,7 +236,7 @@ public class ProfileForm extends javax.swing.JFrame {
             }
             friendList.setModel(friendListModel);
         } catch (SQLException ex) {
-            Logger.getLogger(ProfileForm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SearchUserForm.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         

@@ -118,12 +118,9 @@ public class SignUpForm extends javax.swing.JFrame {
                         .addGap(51, 51, 51)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(passwordLabel)
-                                    .addComponent(passwordLabel2))
+                                .addComponent(passwordLabel)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(passwordField2, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(playerButton)
@@ -131,18 +128,19 @@ public class SignUpForm extends javax.swing.JFrame {
                                         .addComponent(developerButton))))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel1)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(userNameLabel)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(userNameLabel, javax.swing.GroupLayout.Alignment.LEADING))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(userNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(alreadyExists)
                                     .addComponent(insufficientInfo)
-                                    .addComponent(mismatch))
+                                    .addComponent(passwordLabel2))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                                .addComponent(passwordField2, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(mismatch)
                                 .addGap(0, 0, Short.MAX_VALUE)))))
                 .addGap(60, 60, 60))
             .addGroup(layout.createSequentialGroup()
@@ -162,18 +160,18 @@ public class SignUpForm extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(alreadyExists)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(passwordLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(passwordLabel))
-                        .addGap(28, 28, 28))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGap(18, 18, 18)
                         .addComponent(passwordField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(passwordLabel2)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(4, 4, 4)))
+                .addGap(18, 18, 18)
                 .addComponent(mismatch)
-                .addGap(38, 38, 38)
+                .addGap(14, 14, 14)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(playerButton)
@@ -182,7 +180,7 @@ public class SignUpForm extends javax.swing.JFrame {
                 .addComponent(insufficientInfo)
                 .addGap(29, 29, 29)
                 .addComponent(createAccountButton)
-                .addContainerGap(52, Short.MAX_VALUE))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
 
         pack();
@@ -192,6 +190,7 @@ public class SignUpForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         String u = userNameTextField.getText();
         String p = passwordField.getText();
+        String insertStr;
         
         if ((u.equals(null) || p.equals(null)) || !(playerButton.isSelected() || developerButton.isSelected())){
             System.out.println("You are missing some information.");
@@ -207,8 +206,7 @@ public class SignUpForm extends javax.swing.JFrame {
             return;
         }
 
-        
-        String insertStr = "insert into Account(userName, password) "
+        insertStr = "insert into Account(userName, password) "
                 + "values('" + u + "' , '" + p + "')";
         
         System.out.println(insertStr);
@@ -216,6 +214,16 @@ public class SignUpForm extends javax.swing.JFrame {
         try{
             stmt= dbc.getMyConnection().createStatement(); 
             stmt.executeUpdate(insertStr);
+            
+            String queryStr = "select userID from Account A where A.userName='" + u + "'";
+            rs = stmt.executeQuery(queryStr);
+            rs.next();
+            int id = rs.getInt("userID");
+            
+            if (playerButton.isSelected()){ addPlayer(id);}
+
+            if (developerButton.isSelected()) {addDeveloper(id);}
+            
         } catch (SQLException ex) {
             Logger.getLogger(SignUpForm.class.getName()).log(Level.SEVERE, null, ex);
             alreadyExists.setVisible(true);
@@ -260,6 +268,26 @@ public class SignUpForm extends javax.swing.JFrame {
                 new SignUpForm().setVisible(true);
             }
         });
+    }
+    
+    private void addPlayer(int id){
+        String insertStr = "insert into Player(playerID) values('" + id + "')";
+        try {
+            stmt.executeUpdate(insertStr);
+        } catch (SQLException ex) {
+            Logger.getLogger(SignUpForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        System.out.println("new player has been added!");
+    }
+    
+    private void addDeveloper(int id){
+        String insertStr = "insert into Developer(developerID) values('" + id + "')";
+        try {
+            stmt.executeUpdate(insertStr);
+        } catch (SQLException ex) {
+            Logger.getLogger(SignUpForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        System.out.println("new developer has been added!");
     }
     
 

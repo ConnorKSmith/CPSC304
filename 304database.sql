@@ -84,7 +84,7 @@ create table OwnsGame (
     foreign key(gameID) references Game(gameID) on delete cascade on update cascade
 )
 
-create table hasGenre (
+create table HasGenre (
     gameID integer,
     genre varchar(30),
     foreign key(gameID) references Game(gameID) on delete cascade on update cascade,
