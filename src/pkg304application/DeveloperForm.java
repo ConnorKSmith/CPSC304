@@ -63,6 +63,8 @@ public class DeveloperForm extends javax.swing.JFrame {
         searchField = new javax.swing.JTextField();
         searchButton = new javax.swing.JButton();
         createGameButton = new javax.swing.JButton();
+        refreshButton = new javax.swing.JButton();
+        deleteFriend = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -174,6 +176,22 @@ public class DeveloperForm extends javax.swing.JFrame {
         });
         getContentPane().add(createGameButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 680, -1, -1));
 
+        refreshButton.setText("Refresh");
+        refreshButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                refreshButtonMouseClicked(evt);
+            }
+        });
+        getContentPane().add(refreshButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 680, 130, -1));
+
+        deleteFriend.setText("Delete");
+        deleteFriend.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                deleteFriendMouseClicked(evt);
+            }
+        });
+        getContentPane().add(deleteFriend, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 370, -1, -1));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -262,6 +280,34 @@ public class DeveloperForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_gameListMouseClicked
 
+    private void refreshButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_refreshButtonMouseClicked
+        // TODO add your handling code here:
+        this.setVisible(false);
+        new DeveloperForm().setVisible(true);
+    }//GEN-LAST:event_refreshButtonMouseClicked
+
+    private void deleteFriendMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteFriendMouseClicked
+        // TODO add your handling code here:
+        String insertStr;
+        String selected = friendList.getSelectedValue();
+        
+        try{
+            String selectStr = "select * from Account A where A.userName = '" + selected + "'";
+            rs = stmt.executeQuery(selectStr);
+            rs.next();
+            int Uid  = rs.getInt("userID");
+            int currID = MainForm.userID;
+            
+            insertStr = "delete from FriendsWith where userID1 = "+Uid+" and UserID2 = "+currID;                              
+            stmt.executeUpdate(insertStr);
+            insertStr = "delete from FriendsWith where userID1 = "+currID+" and UserID2 = "+Uid;                              
+            stmt.executeUpdate(insertStr);
+        } catch (SQLException ex) {
+            Logger.getLogger(GameInfoForm.class.getName()).log(Level.SEVERE, null, ex);
+            return;
+        }
+    }//GEN-LAST:event_deleteFriendMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -303,6 +349,7 @@ public class DeveloperForm extends javax.swing.JFrame {
     private javax.swing.JTabbedPane GroupAndGames;
     private javax.swing.JLabel ProfileName;
     private javax.swing.JButton createGameButton;
+    private javax.swing.JButton deleteFriend;
     private javax.swing.JTextArea descriptionTextField;
     public static javax.swing.JButton editButton;
     private javax.swing.JList<String> friendList;
@@ -313,6 +360,7 @@ public class DeveloperForm extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JButton logoutButton;
+    private javax.swing.JButton refreshButton;
     private javax.swing.JButton searchButton;
     private javax.swing.JTextField searchField;
     // End of variables declaration//GEN-END:variables

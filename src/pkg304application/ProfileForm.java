@@ -65,6 +65,9 @@ public class ProfileForm extends javax.swing.JFrame {
         searchField = new javax.swing.JTextField();
         searchButton = new javax.swing.JButton();
         refreshButton = new javax.swing.JButton();
+        libraryButton = new javax.swing.JButton();
+        deleteButton = new javax.swing.JButton();
+        deleteFriend = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(900, 800));
@@ -169,7 +172,31 @@ public class ProfileForm extends javax.swing.JFrame {
                 refreshButtonMouseClicked(evt);
             }
         });
-        getContentPane().add(refreshButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 370, 90, 40));
+        getContentPane().add(refreshButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 690, 260, 80));
+
+        libraryButton.setText("Go to Library");
+        libraryButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                libraryButtonMouseClicked(evt);
+            }
+        });
+        getContentPane().add(libraryButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 690, 260, 80));
+
+        deleteButton.setText("Delete");
+        deleteButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                deleteButtonMouseClicked(evt);
+            }
+        });
+        getContentPane().add(deleteButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 650, -1, -1));
+
+        deleteFriend.setText("Delete");
+        deleteFriend.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                deleteFriendMouseClicked(evt);
+            }
+        });
+        getContentPane().add(deleteFriend, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 370, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -246,10 +273,61 @@ public class ProfileForm extends javax.swing.JFrame {
             new ProfileForm().setVisible(true);
         */
             JPanel contentPane = (JPanel) this.getContentPane();
-            friendList.revalidate(); 
-            contentPane.repaint();
-            System.out.println("refreshing");
+           // friendList.revalidate(); 
+            //contentPane.repaint();
+            //System.out.println("refreshing");
+            this.setVisible(false);
+            new ProfileForm().setVisible(true);
     }//GEN-LAST:event_refreshButtonMouseClicked
+
+    private void libraryButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_libraryButtonMouseClicked
+        // TODO add your handling code here:
+        new GameLibraryForm().setVisible(true);
+    }//GEN-LAST:event_libraryButtonMouseClicked
+
+    private void deleteButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButtonMouseClicked
+        // TODO add your handling code here:
+        String insertStr;
+        String selected = gameList.getSelectedValue();
+        
+        try{
+            String selectStr = "select * from Game G where G.gName = '" + selected + "'";
+            rs = stmt.executeQuery(selectStr);
+            rs.next();
+            int Gid  = rs.getInt("gameID");
+            int currID = MainForm.userID;
+            
+            insertStr = "delete from OwnsGame where gameID = "+Gid+" and ownerID = "+currID;
+            System.out.println(insertStr);
+                              
+            stmt.executeUpdate(insertStr);                       
+        } catch (SQLException ex) {
+            Logger.getLogger(GameInfoForm.class.getName()).log(Level.SEVERE, null, ex);
+            return;
+        }
+    }//GEN-LAST:event_deleteButtonMouseClicked
+
+    private void deleteFriendMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteFriendMouseClicked
+        // TODO add your handling code here:
+        String insertStr;
+        String selected = friendList.getSelectedValue();
+        
+        try{
+            String selectStr = "select * from Account A where A.userName = '" + selected + "'";
+            rs = stmt.executeQuery(selectStr);
+            rs.next();
+            int Uid  = rs.getInt("userID");
+            int currID = MainForm.userID;
+            
+            insertStr = "delete from FriendsWith where userID1 = "+Uid+" and UserID2 = "+currID;                              
+            stmt.executeUpdate(insertStr);
+            insertStr = "delete from FriendsWith where userID1 = "+currID+" and UserID2 = "+Uid;                              
+            stmt.executeUpdate(insertStr);
+        } catch (SQLException ex) {
+            Logger.getLogger(GameInfoForm.class.getName()).log(Level.SEVERE, null, ex);
+            return;
+        }
+    }//GEN-LAST:event_deleteFriendMouseClicked
 
     /**
      * @param args the command line arguments
@@ -290,6 +368,8 @@ public class ProfileForm extends javax.swing.JFrame {
     private javax.swing.JLabel Friends;
     private javax.swing.JTabbedPane GroupAndGames;
     private javax.swing.JLabel ProfileName;
+    private javax.swing.JButton deleteButton;
+    private javax.swing.JButton deleteFriend;
     private javax.swing.JTextArea descriptionTextField;
     public static javax.swing.JButton editButton;
     private javax.swing.JList<String> friendList;
@@ -299,6 +379,7 @@ public class ProfileForm extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JButton libraryButton;
     private javax.swing.JButton logoutButton;
     private javax.swing.JButton refreshButton;
     private javax.swing.JButton searchButton;
@@ -341,7 +422,18 @@ public class ProfileForm extends javax.swing.JFrame {
     }
 
     private void showGameList() {
-        return;
+        
+         try {
+            String queryStr = "Select DISTINCT G.gName from OwnsGame O, Game G where G.gameID = O.gameID and O.ownerID=" + MainForm.userID;
+            rs = stmt.executeQuery(queryStr);
+            DefaultListModel gameListModel = new DefaultListModel();
+            while (rs.next()){
+                gameListModel.addElement(rs.getString("gName"));
+            }
+            gameList.setModel(gameListModel);
+        } catch (SQLException ex) {
+            Logger.getLogger(DeveloperForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     private void showGroupList() {
