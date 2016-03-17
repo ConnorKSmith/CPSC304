@@ -60,10 +60,10 @@ public class ProfileForm extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         friendList = new javax.swing.JList<>();
         GroupAndGames = new javax.swing.JTabbedPane();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        gameList = new javax.swing.JList<>();
         jScrollPane2 = new javax.swing.JScrollPane();
         groupList = new javax.swing.JList<>();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        gameList = new javax.swing.JList<>();
         searchField = new javax.swing.JTextField();
         searchButton = new javax.swing.JButton();
         refreshButton = new javax.swing.JButton();
@@ -129,17 +129,6 @@ public class ProfileForm extends javax.swing.JFrame {
 
         GroupAndGames.setFont(new java.awt.Font("PT Sans Caption", 1, 14)); // NOI18N
 
-        gameList.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        gameList.setFont(new java.awt.Font("PT Serif Caption", 1, 14)); // NOI18N
-        gameList.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane4.setViewportView(gameList);
-
-        GroupAndGames.addTab("Games", jScrollPane4);
-
         groupList.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         groupList.setFont(new java.awt.Font("PT Serif Caption", 1, 14)); // NOI18N
         groupList.setModel(new javax.swing.AbstractListModel<String>() {
@@ -150,6 +139,17 @@ public class ProfileForm extends javax.swing.JFrame {
         jScrollPane2.setViewportView(groupList);
 
         GroupAndGames.addTab("Groups", jScrollPane2);
+
+        gameList.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        gameList.setFont(new java.awt.Font("PT Serif Caption", 1, 14)); // NOI18N
+        gameList.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane4.setViewportView(gameList);
+
+        GroupAndGames.addTab("Games", jScrollPane4);
 
         getContentPane().add(GroupAndGames, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 480, 770, 220));
 
@@ -196,7 +196,12 @@ public class ProfileForm extends javax.swing.JFrame {
                 deleteButtonMouseClicked(evt);
             }
         });
-        getContentPane().add(deleteButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 650, -1, -1));
+        deleteButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteButtonActionPerformed(evt);
+            }
+        });
+        getContentPane().add(deleteButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 700, 110, 30));
 
         deleteFriend.setText("Delete");
         deleteFriend.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -347,6 +352,10 @@ public class ProfileForm extends javax.swing.JFrame {
             return;
         }
     }//GEN-LAST:event_deleteFriendMouseClicked
+
+    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_deleteButtonActionPerformed
 
     /**
      * @param args the command line arguments
