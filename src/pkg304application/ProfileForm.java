@@ -10,7 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.ListModel;
 import javax.swing.SwingUtilities;
@@ -58,19 +60,21 @@ public class ProfileForm extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         friendList = new javax.swing.JList<>();
         GroupAndGames = new javax.swing.JTabbedPane();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        groupList = new javax.swing.JList<>();
         jScrollPane4 = new javax.swing.JScrollPane();
         gameList = new javax.swing.JList<>();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        groupList = new javax.swing.JList<>();
         searchField = new javax.swing.JTextField();
         searchButton = new javax.swing.JButton();
         refreshButton = new javax.swing.JButton();
         libraryButton = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
         deleteFriend = new javax.swing.JButton();
+        user = new javax.swing.JRadioButton();
+        jRadioButton2 = new javax.swing.JRadioButton();
+        jRadioButton3 = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(900, 800));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         editButton.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
@@ -82,14 +86,14 @@ public class ProfileForm extends javax.swing.JFrame {
                 editButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(editButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 370, 100, 30));
+        getContentPane().add(editButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 420, 100, 30));
 
         descriptionTextField.setColumns(20);
         descriptionTextField.setRows(5);
         jScrollPane1.setViewportView(descriptionTextField);
         descriptionTextField.setEditable(false);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 160, 550, 200));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 210, 550, 200));
 
         logoutButton.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         logoutButton.setText("Log out");
@@ -103,11 +107,11 @@ public class ProfileForm extends javax.swing.JFrame {
 
         ProfileName.setFont(new java.awt.Font("PT Serif Caption", 1, 24)); // NOI18N
         ProfileName.setText("Profile Name:");
-        getContentPane().add(ProfileName, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 120, -1, -1));
+        getContentPane().add(ProfileName, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 170, -1, -1));
 
         Friends.setFont(new java.awt.Font("PT Serif Caption", 1, 24)); // NOI18N
         Friends.setText("Friends:");
-        getContentPane().add(Friends, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 120, -1, -1));
+        getContentPane().add(Friends, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 170, -1, -1));
 
         friendList.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -121,9 +125,20 @@ public class ProfileForm extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(friendList);
 
-        getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 160, 120, 200));
+        getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 210, 120, 200));
 
         GroupAndGames.setFont(new java.awt.Font("PT Sans Caption", 1, 14)); // NOI18N
+
+        gameList.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        gameList.setFont(new java.awt.Font("PT Serif Caption", 1, 14)); // NOI18N
+        gameList.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane4.setViewportView(gameList);
+
+        GroupAndGames.addTab("Games", jScrollPane4);
 
         groupList.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         groupList.setFont(new java.awt.Font("PT Serif Caption", 1, 14)); // NOI18N
@@ -136,16 +151,7 @@ public class ProfileForm extends javax.swing.JFrame {
 
         GroupAndGames.addTab("Groups", jScrollPane2);
 
-        gameList.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane4.setViewportView(gameList);
-
-        GroupAndGames.addTab("Games", jScrollPane4);
-
-        getContentPane().add(GroupAndGames, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 430, 770, 220));
+        getContentPane().add(GroupAndGames, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 480, 770, 220));
 
         searchField.setFont(new java.awt.Font("PT Serif Caption", 0, 14)); // NOI18N
         searchField.setText("   find a user");
@@ -164,15 +170,17 @@ public class ProfileForm extends javax.swing.JFrame {
                 searchButtonMouseClicked(evt);
             }
         });
-        getContentPane().add(searchButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 40, 140, 50));
+        getContentPane().add(searchButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 40, 60, 50));
 
+        refreshButton.setFont(new java.awt.Font("PT Serif Caption", 1, 14)); // NOI18N
         refreshButton.setText("Refresh");
+        refreshButton.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         refreshButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 refreshButtonMouseClicked(evt);
             }
         });
-        getContentPane().add(refreshButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 690, 260, 80));
+        getContentPane().add(refreshButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 40, 60, 50));
 
         libraryButton.setText("Go to Library");
         libraryButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -180,7 +188,7 @@ public class ProfileForm extends javax.swing.JFrame {
                 libraryButtonMouseClicked(evt);
             }
         });
-        getContentPane().add(libraryButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 690, 260, 80));
+        getContentPane().add(libraryButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 720, 260, 80));
 
         deleteButton.setText("Delete");
         deleteButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -196,7 +204,16 @@ public class ProfileForm extends javax.swing.JFrame {
                 deleteFriendMouseClicked(evt);
             }
         });
-        getContentPane().add(deleteFriend, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 370, -1, -1));
+        getContentPane().add(deleteFriend, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 420, -1, -1));
+
+        user.setText("user");
+        getContentPane().add(user, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, -1, -1));
+
+        jRadioButton2.setText("game");
+        getContentPane().add(jRadioButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 110, -1, -1));
+
+        jRadioButton3.setText("group");
+        getContentPane().add(jRadioButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 110, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -323,6 +340,8 @@ public class ProfileForm extends javax.swing.JFrame {
             stmt.executeUpdate(insertStr);
             insertStr = "delete from FriendsWith where userID1 = "+currID+" and UserID2 = "+Uid;                              
             stmt.executeUpdate(insertStr);
+   
+            System.out.println("TEST");
         } catch (SQLException ex) {
             Logger.getLogger(GameInfoForm.class.getName()).log(Level.SEVERE, null, ex);
             return;
@@ -375,6 +394,8 @@ public class ProfileForm extends javax.swing.JFrame {
     private javax.swing.JList<String> friendList;
     private javax.swing.JList<String> gameList;
     private javax.swing.JList<String> groupList;
+    private javax.swing.JRadioButton jRadioButton2;
+    private javax.swing.JRadioButton jRadioButton3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -384,6 +405,7 @@ public class ProfileForm extends javax.swing.JFrame {
     private javax.swing.JButton refreshButton;
     private javax.swing.JButton searchButton;
     private javax.swing.JTextField searchField;
+    private javax.swing.JRadioButton user;
     // End of variables declaration//GEN-END:variables
 
     private void showProfileInfo() {

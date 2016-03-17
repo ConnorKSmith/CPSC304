@@ -96,6 +96,8 @@ create table Achievement (
     aDesc varchar(200),
     aName varchar(30) not null,
     totalNeeded integer not null,
+    gameID integer,
+    foreign key (gameID) references Game(gameID) on delete cascade on update cascade,
     primary key(aID)
 )
 

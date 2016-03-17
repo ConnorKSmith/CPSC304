@@ -56,15 +56,16 @@ public class DeveloperForm extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         friendList = new javax.swing.JList<>();
         GroupAndGames = new javax.swing.JTabbedPane();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        groupList = new javax.swing.JList<>();
         jScrollPane4 = new javax.swing.JScrollPane();
         gameList = new javax.swing.JList<>();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        groupList = new javax.swing.JList<>();
         searchField = new javax.swing.JTextField();
         searchButton = new javax.swing.JButton();
         createGameButton = new javax.swing.JButton();
         refreshButton = new javax.swing.JButton();
         deleteFriend = new javax.swing.JButton();
+        editGameButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -78,7 +79,7 @@ public class DeveloperForm extends javax.swing.JFrame {
                 editButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(editButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 370, 100, 30));
+        getContentPane().add(editButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 370, 100, 30));
 
         descriptionTextField.setColumns(20);
         descriptionTextField.setRows(5);
@@ -121,17 +122,7 @@ public class DeveloperForm extends javax.swing.JFrame {
 
         GroupAndGames.setFont(new java.awt.Font("PT Sans Caption", 1, 14)); // NOI18N
 
-        groupList.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        groupList.setFont(new java.awt.Font("PT Serif Caption", 1, 14)); // NOI18N
-        groupList.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane2.setViewportView(groupList);
-
-        GroupAndGames.addTab("Groups", jScrollPane2);
-
+        gameList.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         gameList.setFont(new java.awt.Font("PT Serif Caption", 1, 14)); // NOI18N
         gameList.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -145,7 +136,18 @@ public class DeveloperForm extends javax.swing.JFrame {
         });
         jScrollPane4.setViewportView(gameList);
 
-        GroupAndGames.addTab("Games", jScrollPane4);
+        GroupAndGames.addTab("Developed Games", jScrollPane4);
+
+        groupList.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        groupList.setFont(new java.awt.Font("PT Serif Caption", 1, 14)); // NOI18N
+        groupList.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane2.setViewportView(groupList);
+
+        GroupAndGames.addTab("Groups", jScrollPane2);
 
         getContentPane().add(GroupAndGames, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 430, 770, 220));
 
@@ -166,31 +168,51 @@ public class DeveloperForm extends javax.swing.JFrame {
                 searchButtonMouseClicked(evt);
             }
         });
-        getContentPane().add(searchButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 40, 140, 50));
+        getContentPane().add(searchButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 40, 60, 50));
 
+        createGameButton.setFont(new java.awt.Font("PT Serif Caption", 1, 14)); // NOI18N
         createGameButton.setText("Create Game");
+        createGameButton.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         createGameButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 createGameButtonMouseClicked(evt);
             }
         });
-        getContentPane().add(createGameButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 680, -1, -1));
+        getContentPane().add(createGameButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 670, 180, 60));
 
         refreshButton.setText("Refresh");
+        refreshButton.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         refreshButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 refreshButtonMouseClicked(evt);
             }
         });
-        getContentPane().add(refreshButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 680, 130, -1));
+        getContentPane().add(refreshButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 40, 60, 50));
 
+        deleteFriend.setFont(new java.awt.Font("PT Serif Caption", 1, 14)); // NOI18N
         deleteFriend.setText("Delete");
+        deleteFriend.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         deleteFriend.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 deleteFriendMouseClicked(evt);
             }
         });
-        getContentPane().add(deleteFriend, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 370, -1, -1));
+        deleteFriend.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteFriendActionPerformed(evt);
+            }
+        });
+        getContentPane().add(deleteFriend, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 370, 120, 30));
+
+        editGameButton.setFont(new java.awt.Font("PT Serif Caption", 1, 14)); // NOI18N
+        editGameButton.setText("Edit Game");
+        editGameButton.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        editGameButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editGameButtonMouseClicked(evt);
+            }
+        });
+        getContentPane().add(editGameButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 670, 190, 60));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -308,6 +330,16 @@ public class DeveloperForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_deleteFriendMouseClicked
 
+    private void deleteFriendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteFriendActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_deleteFriendActionPerformed
+
+    private void editGameButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editGameButtonMouseClicked
+        // TODO add your handling code here:
+        String selected = gameList.getSelectedValue();
+        new EditGameForm(selected).setVisible(true);
+    }//GEN-LAST:event_editGameButtonMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -352,6 +384,7 @@ public class DeveloperForm extends javax.swing.JFrame {
     private javax.swing.JButton deleteFriend;
     private javax.swing.JTextArea descriptionTextField;
     public static javax.swing.JButton editButton;
+    private javax.swing.JButton editGameButton;
     private javax.swing.JList<String> friendList;
     private javax.swing.JList<String> gameList;
     private javax.swing.JList<String> groupList;

@@ -57,6 +57,11 @@ public class GameLibraryForm extends javax.swing.JFrame {
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
+        gameList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                gameListMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(gameList);
 
         addButton.setText("Add");
@@ -108,8 +113,10 @@ public class GameLibraryForm extends javax.swing.JFrame {
             
             System.out.println(insertStr);
             
-            stmt.executeUpdate(insertStr);           
-          //  if (addButton.isSelected()) {addGame(currID,Gid,price);}
+            stmt.executeUpdate(insertStr); 
+            this.setVisible(false);
+            this.dispose();
+
           System.out.println("good job jin");
             
         } catch (SQLException ex) {
@@ -118,6 +125,21 @@ public class GameLibraryForm extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_addButtonMouseClicked
+
+    private void gameListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_gameListMouseClicked
+        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            String selectedGame = gameList.getSelectedValue();
+            String queryStr = "Select * from Game where gName='" + selectedGame + "'";
+            rs = stmt.executeQuery(queryStr);
+            rs.next();
+            new GameInfoForm(rs.getString("gName"), rs.getString("gDescription"), rs.getInt("creatorID"), rs.getInt("currentPrice")).setVisible(true);
+            System.out.println("Showing game info of " + rs.getString("gName"));
+        } catch (SQLException ex) {
+            Logger.getLogger(DeveloperForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_gameListMouseClicked
 
     /**
      * @param args the command line arguments

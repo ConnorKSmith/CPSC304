@@ -3,12 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/jko/NetBeansProjects/304Application/src/pkg304application/UserResultForm.java</file>
-            <file>file:/Users/jko/NetBeansProjects/304Application/src/pkg304application/GameInfoForm.java</file>
-            <file>file:/Users/jko/NetBeansProjects/304Application/src/pkg304application/SearchUserForm.java</file>
-            <file>file:/Users/jko/NetBeansProjects/304Application/src/pkg304application/DeveloperForm.java</file>
-            <file>file:/Users/jko/NetBeansProjects/304Application/src/pkg304application/ProfileForm.java</file>
-            <file>file:/Users/jko/NetBeansProjects/304Application/src/pkg304application/SignUpForm.java</file>
+            <file>file:/Users/jko/CPSC304Project/CPSC304/src/pkg304application/database/DatabaseConnection.java</file>
         </group>
     </open-files>
 </project-private>
