@@ -66,6 +66,7 @@ public class DeveloperForm extends javax.swing.JFrame {
         refreshButton = new javax.swing.JButton();
         deleteFriend = new javax.swing.JButton();
         editGameButton = new javax.swing.JButton();
+        deleteGameButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -214,6 +215,14 @@ public class DeveloperForm extends javax.swing.JFrame {
         });
         getContentPane().add(editGameButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 670, 190, 60));
 
+        deleteGameButton.setText("Delete Game");
+        deleteGameButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                deleteGameButtonMouseClicked(evt);
+            }
+        });
+        getContentPane().add(deleteGameButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 670, 150, 160));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -340,6 +349,26 @@ public class DeveloperForm extends javax.swing.JFrame {
         new EditGameForm(selected).setVisible(true);
     }//GEN-LAST:event_editGameButtonMouseClicked
 
+    private void deleteGameButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteGameButtonMouseClicked
+        // TODO add your handling code here:
+        String insertStr;
+        String selected = gameList.getSelectedValue();
+        
+        try{
+            String selectStr = "select * from Game G where G.gName = '" + selected + "'";
+            rs = stmt.executeQuery(selectStr);
+            rs.next();
+            int gid  = rs.getInt("gameID");
+            int currID = MainForm.userID;
+            
+            insertStr = "delete from Game where gameID = "+gid+" and creatorID = "+currID+"";                              
+            stmt.executeUpdate(insertStr);
+        } catch (SQLException ex) {
+            Logger.getLogger(DeveloperForm.class.getName()).log(Level.SEVERE, null, ex);
+            return;
+        }
+    }//GEN-LAST:event_deleteGameButtonMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -382,6 +411,7 @@ public class DeveloperForm extends javax.swing.JFrame {
     private javax.swing.JLabel ProfileName;
     private javax.swing.JButton createGameButton;
     private javax.swing.JButton deleteFriend;
+    private javax.swing.JButton deleteGameButton;
     private javax.swing.JTextArea descriptionTextField;
     public static javax.swing.JButton editButton;
     private javax.swing.JButton editGameButton;
