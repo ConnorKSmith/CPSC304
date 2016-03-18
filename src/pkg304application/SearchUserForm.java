@@ -19,25 +19,26 @@ import javax.swing.ListModel;
  */
 public class SearchUserForm extends javax.swing.JFrame {
     
-    public int thisUserID = ProfileForm.searchUserID;
     Statement stmt = null;
     ResultSet rs = null;
-    
+    int thisUserID;
+    Boolean isDev;
     /**
      * Creates new form ProfileForm
      */
-    public SearchUserForm() {
+    public SearchUserForm(int searchUserID, boolean dev) {
             initComponents();
             setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-            if (thisUserID == 0){
-                thisUserID = DeveloperForm.searchUserID;
+            if (searchUserID == 0){
+                searchUserID = DeveloperForm.searchUserID;
             }
+            thisUserID = searchUserID;
+            isDev= dev;
             showProfileInfo();
             showFriendList();
             showGameList();
             showGroupList();
-            showReviewList();
             
     }
 
@@ -157,38 +158,6 @@ public class SearchUserForm extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main() {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(SearchUserForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(SearchUserForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(SearchUserForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(SearchUserForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new SearchUserForm().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Friends;
@@ -247,16 +216,45 @@ public class SearchUserForm extends javax.swing.JFrame {
     }
 
     private void showGameList() {
-        return;
+        
+         try {
+            if (isDev){
+                 String queryStr = "Select * from Game G, Developer D where G.creatorID = D.developerID and D.developerID = " + thisUserID;
+                rs = stmt.executeQuery(queryStr);
+                DefaultListModel gameListModel = new DefaultListModel();
+                 while (rs.next()){
+                gameListModel.addElement(rs.getString("gName"));
+                 }
+                gameList.setModel(gameListModel);
+            } else {
+            String queryStr = "Select DISTINCT G.gName from OwnsGame O, Game G where G.gameID = O.gameID and O.ownerID=" + thisUserID;
+            rs = stmt.executeQuery(queryStr);
+            DefaultListModel gameListModel = new DefaultListModel();
+            while (rs.next()){
+                gameListModel.addElement(rs.getString("gName"));
+            }
+            gameList.setModel(gameListModel);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DeveloperForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     private void showGroupList() {
-        return;
+        try {
+            String queryStrGroup = "Select DISTINCT G.groupName from FriendGroup G , WithinGroup W where G.gID = W.withinGroupID and W.memberUserID=" + thisUserID;
+            rs = stmt.executeQuery(queryStrGroup);
+            DefaultListModel groupListModel = new DefaultListModel();
+            while (rs.next()){
+                groupListModel.addElement(rs.getString("groupName"));
+            }
+            groupList.setModel(groupListModel);
+        } catch (SQLException ex) {
+            Logger.getLogger(DeveloperForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
-    private void showReviewList() {
-        return;
-    }
+
     
     
 }

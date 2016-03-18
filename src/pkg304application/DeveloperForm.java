@@ -72,6 +72,7 @@ public class DeveloperForm extends javax.swing.JFrame {
         deleteFriend = new javax.swing.JButton();
         editGameButton = new javax.swing.JButton();
         deleteGameButton = new javax.swing.JButton();
+        createGroupButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -233,6 +234,14 @@ public class DeveloperForm extends javax.swing.JFrame {
         });
         getContentPane().add(deleteGameButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 670, 150, 160));
 
+        createGroupButton.setText("Create Fucking Group guys ");
+        createGroupButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                createGroupButtonMouseClicked(evt);
+            }
+        });
+        getContentPane().add(createGroupButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 740, 190, 80));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -285,7 +294,7 @@ public class DeveloperForm extends javax.swing.JFrame {
             if (rs.next()){
                 searchUserID = rs.getInt("userID");
                 System.out.println("finished");
-                new SearchUserForm().setVisible(true);
+                new SearchUserForm(searchUserID, true).setVisible(true);
             } else {
                 System.out.println("no user exists");
             }
@@ -389,12 +398,17 @@ public class DeveloperForm extends javax.swing.JFrame {
             String queryStr = "Select * from FriendGroup F where F.groupName='" + selectedGroup + "'";
             rs = stmt.executeQuery(queryStr);
             rs.next();
-            new GroupInfoForm(rs.getString("groupName"), rs.getString("groupDesc"), rs.getInt("creatorUserID"), rs.getInt("dateCreated")).setVisible(true);
+            new GroupInfoForm(rs.getString("groupName"), rs.getString("groupDesc"), rs.getInt("creatorUserID"), rs.getString("dateCreated")).setVisible(true);
             System.out.println("Showing group info of " + rs.getString("groupName"));
         } catch (SQLException ex) {
             Logger.getLogger(DeveloperForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_groupListMouseClicked
+
+    private void createGroupButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_createGroupButtonMouseClicked
+        // TODO add your handling code here:
+        new CreateGroupForm().setVisible(true);
+    }//GEN-LAST:event_createGroupButtonMouseClicked
 
     /**
      * @param args the command line arguments
@@ -437,6 +451,7 @@ public class DeveloperForm extends javax.swing.JFrame {
     private javax.swing.JTabbedPane GroupAndGames;
     private javax.swing.JLabel ProfileName;
     private javax.swing.JButton createGameButton;
+    private javax.swing.JButton createGroupButton;
     private javax.swing.JButton deleteFriend;
     private javax.swing.JButton deleteGameButton;
     private javax.swing.JTextArea descriptionTextField;
