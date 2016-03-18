@@ -60,9 +60,9 @@ public class ProfileForm extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         friendList = new javax.swing.JList<>();
         GroupAndGames = new javax.swing.JTabbedPane();
-        jScrollPane2 = new javax.swing.JScrollPane();
+        groupTab = new javax.swing.JScrollPane();
         groupList = new javax.swing.JList<>();
-        jScrollPane4 = new javax.swing.JScrollPane();
+        GameTab = new javax.swing.JScrollPane();
         gameList = new javax.swing.JList<>();
         searchField = new javax.swing.JTextField();
         searchButton = new javax.swing.JButton();
@@ -136,9 +136,14 @@ public class ProfileForm extends javax.swing.JFrame {
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane2.setViewportView(groupList);
+        groupList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                groupListMouseClicked(evt);
+            }
+        });
+        groupTab.setViewportView(groupList);
 
-        GroupAndGames.addTab("Groups", jScrollPane2);
+        GroupAndGames.addTab("Groups", groupTab);
 
         gameList.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         gameList.setFont(new java.awt.Font("PT Serif Caption", 1, 14)); // NOI18N
@@ -147,9 +152,9 @@ public class ProfileForm extends javax.swing.JFrame {
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane4.setViewportView(gameList);
+        GameTab.setViewportView(gameList);
 
-        GroupAndGames.addTab("Games", jScrollPane4);
+        GroupAndGames.addTab("Games", GameTab);
 
         getContentPane().add(GroupAndGames, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 480, 770, 220));
 
@@ -357,6 +362,21 @@ public class ProfileForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_deleteButtonActionPerformed
 
+    private void groupListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_groupListMouseClicked
+        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            String selectedGroup = groupList.getSelectedValue();
+            String queryStr = "Select * from FriendGroup F where F.groupName='" + selectedGroup + "'";
+            rs = stmt.executeQuery(queryStr);
+            rs.next();
+            new GroupInfoForm(rs.getString("groupName"), rs.getString("groupDesc"), rs.getInt("creatorUserID"), rs.getInt("dateCreated")).setVisible(true);
+            System.out.println("Showing group info of " + rs.getString("groupName"));
+        } catch (SQLException ex) {
+            Logger.getLogger(DeveloperForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_groupListMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -394,6 +414,7 @@ public class ProfileForm extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Friends;
+    private javax.swing.JScrollPane GameTab;
     private javax.swing.JTabbedPane GroupAndGames;
     private javax.swing.JLabel ProfileName;
     private javax.swing.JButton deleteButton;
@@ -403,12 +424,11 @@ public class ProfileForm extends javax.swing.JFrame {
     private javax.swing.JList<String> friendList;
     private javax.swing.JList<String> gameList;
     private javax.swing.JList<String> groupList;
+    private javax.swing.JScrollPane groupTab;
     private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JRadioButton jRadioButton3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JButton libraryButton;
     private javax.swing.JButton logoutButton;
     private javax.swing.JButton refreshButton;
@@ -468,7 +488,17 @@ public class ProfileForm extends javax.swing.JFrame {
     }
 
     private void showGroupList() {
-        return;
+        try {
+            String queryStrGroup = "Select DISTINCT G.groupName from FriendGroup G , WithinGroup W where G.gID = W.withinGroupID and W.memberUserID=" + MainForm.userID;
+            rs = stmt.executeQuery(queryStrGroup);
+            DefaultListModel groupListModel = new DefaultListModel();
+            while (rs.next()){
+                groupListModel.addElement(rs.getString("groupName"));
+            }
+            groupList.setModel(groupListModel);
+        } catch (SQLException ex) {
+            Logger.getLogger(DeveloperForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     private void showReviewList() {

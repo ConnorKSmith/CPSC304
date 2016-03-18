@@ -146,6 +146,11 @@ public class DeveloperForm extends javax.swing.JFrame {
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
+        groupList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                groupListMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(groupList);
 
         GroupAndGames.addTab("Groups", jScrollPane2);
@@ -369,6 +374,21 @@ public class DeveloperForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_deleteGameButtonMouseClicked
 
+    private void groupListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_groupListMouseClicked
+        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            String selectedGroup = groupList.getSelectedValue();
+            String queryStr = "Select * from FriendGroup F where F.groupName='" + selectedGroup + "'";
+            rs = stmt.executeQuery(queryStr);
+            rs.next();
+            new GroupInfoForm(rs.getString("groupName"), rs.getString("groupDesc"), rs.getInt("creatorUserID"), rs.getInt("dateCreated")).setVisible(true);
+            System.out.println("Showing group info of " + rs.getString("groupName"));
+        } catch (SQLException ex) {
+            Logger.getLogger(DeveloperForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_groupListMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -478,7 +498,17 @@ public class DeveloperForm extends javax.swing.JFrame {
     }
 
     private void showGroupList() {
-        return;
+        try {
+            String queryStrGroup = "Select DISTINCT G.groupName from FriendGroup G , WithinGroup W where G.gID = W.withinGroupID and W.memberUserID=" + MainForm.userID;
+            rs = stmt.executeQuery(queryStrGroup);
+            DefaultListModel groupListModel = new DefaultListModel();
+            while (rs.next()){
+                groupListModel.addElement(rs.getString("groupName"));
+            }
+            groupList.setModel(groupListModel);
+        } catch (SQLException ex) {
+            Logger.getLogger(DeveloperForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     private void showReviewList() {
