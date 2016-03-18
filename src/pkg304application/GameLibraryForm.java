@@ -24,13 +24,13 @@ public class GameLibraryForm extends javax.swing.JFrame {
     /**
      * Creates new form GameLibraryForm
      */
-    public GameLibraryForm() {
+    public GameLibraryForm(String searchField) {
         try {
             initComponents();
             DatabaseConnection dbc = new DatabaseConnection();
             dbc.init();
             stmt = dbc.getMyConnection().createStatement();
-            showGameList();
+            showGameList(searchField);
             setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         } catch (SQLException ex) {
             Logger.getLogger(GameInfoForm.class.getName()).log(Level.SEVERE, null, ex);
@@ -144,54 +144,33 @@ public class GameLibraryForm extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GameLibraryForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GameLibraryForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GameLibraryForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GameLibraryForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new GameLibraryForm().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
     private javax.swing.JList<String> gameList;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
-private void showGameList() {
+private void showGameList(String searchField) {
          try {
-            //String queryStr = "Select DISTINCT G.gName from OwnsGame O, Account A, Game G where O.ownerID = A.userID and G.gameID = O.gameID";
-            String queryStr = "Select DISTINCT G.gName from Game G";
-            rs = stmt.executeQuery(queryStr);
-            DefaultListModel gameListModel = new DefaultListModel();
-            while (rs.next()){
-                gameListModel.addElement(rs.getString("gName"));
+            if (searchField.equals("")){
+                String queryStr = "Select DISTINCT G.gName from Game G";
+                rs = stmt.executeQuery(queryStr);
+                DefaultListModel gameListModel = new DefaultListModel();
+                while (rs.next()){
+                    gameListModel.addElement(rs.getString("gName"));
+                }
+                gameList.setModel(gameListModel);
+            } else {
+                String queryStr = "Select DISTINCT G.gName from Game G where G.gName LIKE '%" + searchField + "%'";
+                
+                System.out.println(queryStr);
+                rs = stmt.executeQuery(queryStr);
+                DefaultListModel gameListModel = new DefaultListModel();
+                while (rs.next()){
+                    gameListModel.addElement(rs.getString("gName"));
+                }
+                gameList.setModel(gameListModel);
             }
-            System.out.println("fuck you jin");
-            gameList.setModel(gameListModel);
         } catch (SQLException ex) {
             Logger.getLogger(DeveloperForm.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -285,7 +285,7 @@ public class DeveloperForm extends javax.swing.JFrame {
             if (rs.next()){
                 searchUserID = rs.getInt("userID");
                 System.out.println("finished");
-                new SearchUserForm().setVisible(true);
+                new SearchUserForm(searchUserID, true).setVisible(true);
             } else {
                 System.out.println("no user exists");
             }
