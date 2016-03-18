@@ -138,6 +138,10 @@ public class SearchUserForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             // TODO add your handling code here:
+            if (!addFriend.isEnabled()){
+                System.out.println("button is not enabled");
+                return;
+            }
             String insertStr = "Insert into FriendsWith(userID1, userID2) values(" + MainForm.userID + "," + thisUserID + ")";
             stmt.executeUpdate(insertStr);
             insertStr = "Insert into FriendsWith(userID1, userID2) values(" + thisUserID + "," + MainForm.userID + ")";

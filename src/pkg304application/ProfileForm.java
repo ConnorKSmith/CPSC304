@@ -60,10 +60,12 @@ public class ProfileForm extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         friendList = new javax.swing.JList<>();
         GroupAndGames = new javax.swing.JTabbedPane();
-        jScrollPane4 = new javax.swing.JScrollPane();
+        gamesTab = new javax.swing.JScrollPane();
         gameList = new javax.swing.JList<>();
-        jScrollPane2 = new javax.swing.JScrollPane();
+        groupsTab = new javax.swing.JScrollPane();
         groupList = new javax.swing.JList<>();
+        reviewsTab = new javax.swing.JScrollPane();
+        reviewList = new javax.swing.JList<>();
         searchField = new javax.swing.JTextField();
         searchButton = new javax.swing.JButton();
         refreshButton = new javax.swing.JButton();
@@ -136,9 +138,14 @@ public class ProfileForm extends javax.swing.JFrame {
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane4.setViewportView(gameList);
+        gameList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                gameListMouseClicked(evt);
+            }
+        });
+        gamesTab.setViewportView(gameList);
 
-        GroupAndGames.addTab("Games", jScrollPane4);
+        GroupAndGames.addTab("Games", gamesTab);
 
         groupList.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         groupList.setFont(new java.awt.Font("PT Serif Caption", 1, 14)); // NOI18N
@@ -147,9 +154,20 @@ public class ProfileForm extends javax.swing.JFrame {
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane2.setViewportView(groupList);
+        groupsTab.setViewportView(groupList);
 
-        GroupAndGames.addTab("Groups", jScrollPane2);
+        GroupAndGames.addTab("Groups", groupsTab);
+
+        reviewList.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        reviewList.setFont(new java.awt.Font("PT Serif Caption", 1, 14)); // NOI18N
+        reviewList.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        reviewsTab.setViewportView(reviewList);
+
+        GroupAndGames.addTab("Reviews", reviewsTab);
 
         getContentPane().add(GroupAndGames, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 480, 770, 220));
 
@@ -348,6 +366,21 @@ public class ProfileForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_deleteFriendMouseClicked
 
+    private void gameListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_gameListMouseClicked
+        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            String selectedGame = gameList.getSelectedValue();
+            String queryStr = "Select * from Game where gName='" + selectedGame + "'";
+            rs = stmt.executeQuery(queryStr);
+            rs.next();
+            new GameInfoForm(rs.getString("gName"), rs.getString("gDescription"), rs.getInt("creatorID"), rs.getInt("currentPrice")).setVisible(true);
+            System.out.println("Showing game info of " + rs.getString("gName"));
+        } catch (SQLException ex) {
+            Logger.getLogger(DeveloperForm.class.getName()).log(Level.SEVERE, null, ex);
+        }        
+    }//GEN-LAST:event_gameListMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -393,16 +426,18 @@ public class ProfileForm extends javax.swing.JFrame {
     public static javax.swing.JButton editButton;
     private javax.swing.JList<String> friendList;
     private javax.swing.JList<String> gameList;
+    private javax.swing.JScrollPane gamesTab;
     private javax.swing.JList<String> groupList;
+    private javax.swing.JScrollPane groupsTab;
     private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JRadioButton jRadioButton3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JButton libraryButton;
     private javax.swing.JButton logoutButton;
     private javax.swing.JButton refreshButton;
+    private javax.swing.JList<String> reviewList;
+    private javax.swing.JScrollPane reviewsTab;
     private javax.swing.JButton searchButton;
     private javax.swing.JTextField searchField;
     private javax.swing.JRadioButton user;
@@ -463,7 +498,17 @@ public class ProfileForm extends javax.swing.JFrame {
     }
 
     private void showReviewList() {
-        return;
+        try {
+            String queryStr = "select * from Review where reviewerID=" + MainForm.userID;
+            rs = stmt.executeQuery(queryStr);
+            DefaultListModel reviewListModel = new DefaultListModel();
+            while (rs.next()){
+                reviewListModel.addElement(Integer.toString(rs.getInt("gameID")));
+            }
+            reviewList.setModel(reviewListModel);
+        } catch (SQLException ex) {
+            Logger.getLogger(ProfileForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     
