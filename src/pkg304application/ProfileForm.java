@@ -6,6 +6,9 @@
 package pkg304application;
 import pkg304application.database.*;
 import java.sql.*;
+import java.text.DateFormat;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -78,6 +81,7 @@ public class ProfileForm extends javax.swing.JFrame {
         usersRadioButton = new javax.swing.JRadioButton();
         groupRadioButton = new javax.swing.JRadioButton();
         gameRadioButton = new javax.swing.JRadioButton();
+        createGroupButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -237,6 +241,14 @@ public class ProfileForm extends javax.swing.JFrame {
 
         gameRadioButton.setText("games");
         getContentPane().add(gameRadioButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 110, -1, -1));
+
+        createGroupButton.setText("Create Group");
+        createGroupButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                createGroupButtonMouseClicked(evt);
+            }
+        });
+        getContentPane().add(createGroupButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 700, 190, 80));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -465,12 +477,17 @@ public class ProfileForm extends javax.swing.JFrame {
             String queryStr = "Select * from FriendGroup F where F.groupName='" + selectedGroup + "'";
             rs = stmt.executeQuery(queryStr);
             rs.next();
-            new GroupInfoForm(rs.getString("groupName"), rs.getString("groupDesc"), rs.getInt("creatorUserID"), rs.getInt("dateCreated")).setVisible(true);
+            new GroupInfoForm(rs.getString("groupName"), rs.getString("groupDesc"), rs.getInt("creatorUserID"), rs.getString("dateCreated")).setVisible(true);
             System.out.println("Showing group info of " + rs.getString("groupName"));
         } catch (SQLException ex) {
             Logger.getLogger(ProfileForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_groupListMouseClicked
+
+    private void createGroupButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_createGroupButtonMouseClicked
+        // TODO add your handling code here:
+        new CreateGroupForm().setVisible(true);
+    }//GEN-LAST:event_createGroupButtonMouseClicked
 
     /**
      * @param args the command line arguments
@@ -514,6 +531,7 @@ public class ProfileForm extends javax.swing.JFrame {
     private javax.swing.JLabel Friends;
     private javax.swing.JLabel ProfileName;
     private javax.swing.JTabbedPane Tabs;
+    private javax.swing.JButton createGroupButton;
     private javax.swing.JButton deleteButton;
     private javax.swing.JButton deleteFriend;
     private javax.swing.JTextArea descriptionTextField;

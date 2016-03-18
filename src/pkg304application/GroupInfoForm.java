@@ -6,8 +6,12 @@
 package pkg304application;
 
 import java.sql.*;
+import java.text.DateFormat;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
 import pkg304application.database.DatabaseConnection;
 
 /**
@@ -21,6 +25,7 @@ public class GroupInfoForm extends javax.swing.JFrame {
      */
     ResultSet rs;
     Statement stmt;
+    int thisGroupID;
     public GroupInfoForm() {
         try {
             DatabaseConnection dbc = new DatabaseConnection();
@@ -33,13 +38,17 @@ public class GroupInfoForm extends javax.swing.JFrame {
         }
     }
     
-    public GroupInfoForm(String groupName, String groupDesc, int creatorUserID, int dateCreated){
+    public GroupInfoForm(String groupName, String groupDesc, int creatorUserID, String dateCreated){
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        
+        
         try {
             DatabaseConnection dbc = new DatabaseConnection();
             dbc.init();
             initComponents();
             stmt = dbc.getMyConnection().createStatement();
             showGroupInfo(groupName, groupDesc, creatorUserID, dateCreated);
+            showUserList();
             setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         } catch (SQLException ex) {
             Logger.getLogger(GameInfoForm.class.getName()).log(Level.SEVERE, null, ex);
@@ -90,7 +99,7 @@ public class GroupInfoForm extends javax.swing.JFrame {
 
         creatorName.setText("jLabel2");
 
-        jLabel3.setText("Data Created");
+        jLabel3.setText("Date Created");
 
         dateCreated.setText("jLabel4");
 
@@ -187,12 +196,16 @@ public class GroupInfoForm extends javax.swing.JFrame {
     private javax.swing.JList<String> userList;
     private javax.swing.JScrollPane userListTab;
     // End of variables declaration//GEN-END:variables
-private void showGroupInfo(String g, String d, int cre, int date) {
+private void showGroupInfo(String g, String d, int cre, String date) {
         try {
+            String queryStr = "Select gID from FriendGroup where groupName='" + g + "'";
+            rs = stmt.executeQuery(queryStr);
+            rs.next();
+            thisGroupID = rs.getInt("gID");
             groupName.setText(g);
             descriptionArea.setText(d);
-            dateCreated.setText(Integer.toString(date));
-            String queryStr = "Select userName from Account where userID=" + cre;
+            dateCreated.setText(date);
+            queryStr = "Select userName from Account where userID=" + cre;
             rs = stmt.executeQuery(queryStr);
             rs.next();
             creatorName.setText(rs.getString("userName"));
@@ -202,6 +215,23 @@ private void showGroupInfo(String g, String d, int cre, int date) {
             //playerPopulation.setText(rs.getString("count(ownerID)"));
         } catch (SQLException ex) {
             Logger.getLogger(GameInfoForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+}
+private void showUserList() {
+        try {
+            System.out.println("test");
+            String queryString = "Select A.userName from Account A, WithinGroup W where W.withinGroupID=" 
+                                    + thisGroupID + " and  W.memberUserID = A.userID";
+                      System.out.println(queryString);
+
+            rs = stmt.executeQuery(queryString);
+            DefaultListModel userListModel = new DefaultListModel();
+            while(rs.next()){
+                userListModel.addElement(rs.getString("userName"));
+            }
+            userList.setModel(userListModel);
+        } catch (SQLException ex) {
+            Logger.getLogger(ProfileForm.class.getName()).log(Level.SEVERE, null, ex);
         }
 }
 }

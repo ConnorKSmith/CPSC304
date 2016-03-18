@@ -146,7 +146,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel3">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Data Created"/>
+        <Property name="text" type="java.lang.String" value="Date Created"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="dateCreated">
