@@ -177,10 +177,6 @@ public class ProfileForm extends javax.swing.JFrame {
 
         GroupAndGames.addTab("Reviews", reviewsTab);
 
-        GameTab.setViewportView(gameList);
-
-        GroupAndGames.addTab("Games", GameTab);
-
         getContentPane().add(GroupAndGames, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 480, 770, 220));
 
         searchField.setFont(new java.awt.Font("PT Serif Caption", 0, 14)); // NOI18N
