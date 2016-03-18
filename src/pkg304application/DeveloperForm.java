@@ -19,7 +19,6 @@ import javax.swing.ListModel;
  */
 public class DeveloperForm extends javax.swing.JFrame {
     
-    
     public Boolean editing = false;
     Statement stmt = null;
     ResultSet rs = null;
@@ -30,12 +29,18 @@ public class DeveloperForm extends javax.swing.JFrame {
      * Creates new form ProfileForm
      */
     public DeveloperForm() {
+        try {
+            DatabaseConnection dbc = new DatabaseConnection();
+            dbc.init();
+            stmt = dbc.getMyConnection().createStatement();
             initComponents();
             showProfileInfo();
             showFriendList();
             showGameList();
             showGroupList();
-            showReviewList();
+        } catch (SQLException ex) {
+            Logger.getLogger(DeveloperForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -238,7 +243,6 @@ public class DeveloperForm extends javax.swing.JFrame {
           this.editButton.setText("Save changes");
           editing = true;
         } else {
-
           if (this.descriptionTextField.getText().length() > 100){
               System.out.println("Description can only be under 100 characters!");
               this.descriptionTextField.setText(" ");
@@ -253,7 +257,6 @@ public class DeveloperForm extends javax.swing.JFrame {
               }
               System.out.println("Successfully stored the description");
            }
-        
           this.descriptionTextField.setEditable(false);
           this.editButton.setText("Edit");
           editing = false;
@@ -289,7 +292,6 @@ public class DeveloperForm extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(DeveloperForm.class.getName()).log(Level.SEVERE, null, ex);
         }
-       
         return;
     }//GEN-LAST:event_searchButtonMouseClicked
 
@@ -306,6 +308,9 @@ public class DeveloperForm extends javax.swing.JFrame {
         try {
             // TODO add your handling code here:
             String selectedGame = gameList.getSelectedValue();
+            if (selectedGame == null){
+                return;
+            }
             String queryStr = "Select * from Game where gName='" + selectedGame + "'";
             rs = stmt.executeQuery(queryStr);
             rs.next();
@@ -326,14 +331,12 @@ public class DeveloperForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         String insertStr;
         String selected = friendList.getSelectedValue();
-        
         try{
             String selectStr = "select * from Account A where A.userName = '" + selected + "'";
             rs = stmt.executeQuery(selectStr);
             rs.next();
             int Uid  = rs.getInt("userID");
             int currID = MainForm.userID;
-            
             insertStr = "delete from FriendsWith where userID1 = "+Uid+" and UserID2 = "+currID;                              
             stmt.executeUpdate(insertStr);
             insertStr = "delete from FriendsWith where userID1 = "+currID+" and UserID2 = "+Uid;                              
@@ -351,6 +354,10 @@ public class DeveloperForm extends javax.swing.JFrame {
     private void editGameButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editGameButtonMouseClicked
         // TODO add your handling code here:
         String selected = gameList.getSelectedValue();
+        if (selected == null){
+            System.out.println("Please select a game you'd like to edit");
+            return;
+        }
         new EditGameForm(selected).setVisible(true);
     }//GEN-LAST:event_editGameButtonMouseClicked
 
@@ -450,14 +457,10 @@ public class DeveloperForm extends javax.swing.JFrame {
 
     private void showProfileInfo() {
         try {
-            DatabaseConnection dbc = new DatabaseConnection();
-            dbc.init();
             this.setResizable(false); 
             this.ProfileName.setText(MainForm.userName);
             queryString = "select a.description from Account a where a.username = '" +
                     MainForm.userName.toString() + "'";
-            System.out.println(queryString);
-            stmt= dbc.getMyConnection().createStatement(); 
             rs = stmt.executeQuery(queryString);
             rs.next();
             this.descriptionTextField.setText(rs.getString("description"));
@@ -479,8 +482,6 @@ public class DeveloperForm extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(DeveloperForm.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
     }
 
     private void showGameList() {
@@ -498,6 +499,7 @@ public class DeveloperForm extends javax.swing.JFrame {
     }
 
     private void showGroupList() {
+
         try {
             String queryStrGroup = "Select DISTINCT G.groupName from FriendGroup G , WithinGroup W where G.gID = W.withinGroupID and W.memberUserID=" + MainForm.userID;
             rs = stmt.executeQuery(queryStrGroup);
@@ -510,10 +512,5 @@ public class DeveloperForm extends javax.swing.JFrame {
             Logger.getLogger(DeveloperForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
-    private void showReviewList() {
-        return;
-    }
-    
     
 }

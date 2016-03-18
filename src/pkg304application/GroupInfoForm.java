@@ -6,6 +6,9 @@
 package pkg304application;
 
 import java.sql.*;
+import java.text.DateFormat;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import pkg304application.database.DatabaseConnection;
@@ -34,6 +37,9 @@ public class GroupInfoForm extends javax.swing.JFrame {
     }
     
     public GroupInfoForm(String groupName, String groupDesc, int creatorUserID, int dateCreated){
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        
+        
         try {
             DatabaseConnection dbc = new DatabaseConnection();
             dbc.init();

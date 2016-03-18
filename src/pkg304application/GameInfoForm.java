@@ -8,6 +8,7 @@ package pkg304application;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
 import pkg304application.database.DatabaseConnection;
 
 /**
@@ -22,26 +23,23 @@ public class GameInfoForm extends javax.swing.JFrame {
      */
     ResultSet rs;
     Statement stmt;
+    String thisGame;
+    static int thisGameID;
     
-    public GameInfoForm() {
-        try {
-            DatabaseConnection dbc = new DatabaseConnection();
-            dbc.init();
-            initComponents();
-            stmt = dbc.getMyConnection().createStatement();
-            setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        } catch (SQLException ex) {
-            Logger.getLogger(GameInfoForm.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }
     
     public GameInfoForm(String gameName, String gameDescription, int creatorID, int price){
         try {
             DatabaseConnection dbc = new DatabaseConnection();
             dbc.init();
             initComponents();
+            thisGame = gameName;
             stmt = dbc.getMyConnection().createStatement();
+            String query = "select gameID from Game where gName='" + thisGame + "'";
+            rs = stmt.executeQuery(query);
+            rs.next();
+            thisGameID = rs.getInt("gameID");
+            initializeReviewButton();
+            showReviewList();
             showGameInfo(gameName, gameDescription, creatorID, price);
             setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         } catch (SQLException ex) {
@@ -73,6 +71,7 @@ public class GameInfoForm extends javax.swing.JFrame {
         achievementList = new javax.swing.JList<>();
         populationLabel = new javax.swing.JLabel();
         playerPopulation = new javax.swing.JLabel();
+        reviewButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -115,33 +114,42 @@ public class GameInfoForm extends javax.swing.JFrame {
 
         playerPopulation.setText("jLabel4");
 
+        reviewButton.setText("Write a Review");
+        reviewButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                reviewButtonMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(265, 265, 265)
-                        .addComponent(gameName))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(90, 90, 90)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(populationLabel))
-                                .addGap(309, 309, 309)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(priceLabel)
-                                    .addComponent(playerPopulation)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(developerName))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(73, 73, 73)
-                        .addComponent(infoTab, javax.swing.GroupLayout.PREFERRED_SIZE, 437, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(reviewButton)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(265, 265, 265)
+                            .addComponent(gameName))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(90, 90, 90)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel2)
+                                        .addComponent(populationLabel))
+                                    .addGap(309, 309, 309)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(priceLabel)
+                                        .addComponent(playerPopulation)))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabel1)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(developerName))))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(73, 73, 73)
+                            .addComponent(infoTab, javax.swing.GroupLayout.PREFERRED_SIZE, 437, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(122, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -163,49 +171,28 @@ public class GameInfoForm extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(populationLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(playerPopulation))
-                .addGap(172, 172, 172))
+                .addGap(62, 62, 62)
+                .addComponent(reviewButton)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void reviewButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reviewButtonMouseClicked
+        // TODO add your handling code here:
+        if (!reviewButton.isEnabled()){
+            System.out.println("you must own the game to make a review!");
+            return;
+        }
+        System.out.println("User writing the review: " + MainForm.userName);
+        new ReviewForm(MainForm.userName, thisGame).setVisible(true);
+    }//GEN-LAST:event_reviewButtonMouseClicked
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GameInfoForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GameInfoForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GameInfoForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GameInfoForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new GameInfoForm().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList<String> achievementList;
@@ -220,6 +207,7 @@ public class GameInfoForm extends javax.swing.JFrame {
     private javax.swing.JLabel playerPopulation;
     private javax.swing.JLabel populationLabel;
     private javax.swing.JLabel priceLabel;
+    private javax.swing.JButton reviewButton;
     private javax.swing.JList<String> reviewList;
     private javax.swing.JScrollPane reviewsTab;
     // End of variables declaration//GEN-END:variables
@@ -242,5 +230,34 @@ public class GameInfoForm extends javax.swing.JFrame {
             Logger.getLogger(GameInfoForm.class.getName()).log(Level.SEVERE, null, ex);
         }
         
+    }
+
+    private void initializeReviewButton() {
+        try {  
+            String query = "select * from OwnsGame O, Game G where O.gameID =" + thisGameID + " and G.gName='"
+                    + thisGame + "' and O.ownerID =" + MainForm.userID;
+            rs = stmt.executeQuery(query);
+            if (!rs.next()){
+                
+                reviewButton.setEnabled(false);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(GameInfoForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+ }
+
+    private void showReviewList() {
+        try {
+            System.out.println("showing review!");
+            String queryStr = "select * from Review where gameID=" + thisGameID;
+            rs = stmt.executeQuery(queryStr);
+            DefaultListModel reviewListModel = new DefaultListModel();
+            while (rs.next()){
+                reviewListModel.addElement(Integer.toString(rs.getInt("reviewerID")));
+            }
+            reviewList.setModel(reviewListModel);
+        } catch (SQLException ex) {
+            Logger.getLogger(ProfileForm.class.getName()).log(Level.SEVERE, null, ex);
+        }    
     }
 }
