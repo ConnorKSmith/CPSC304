@@ -90,7 +90,7 @@ public class GroupInfoForm extends javax.swing.JFrame {
 
         creatorName.setText("jLabel2");
 
-        jLabel3.setText("Data Created");
+        jLabel3.setText("Date Created");
 
         dateCreated.setText("jLabel4");
 
