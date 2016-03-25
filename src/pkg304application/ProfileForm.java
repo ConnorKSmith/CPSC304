@@ -354,6 +354,7 @@ public class ProfileForm extends javax.swing.JFrame {
              
          if (groups){
                System.out.println("opening groups library");
+               new GroupLibraryForm(textField).setVisible(true);
                  // need group library form
          }
          if (games){
@@ -447,7 +448,7 @@ public class ProfileForm extends javax.swing.JFrame {
                     stmt.executeUpdate(deleteStr);
                 } else {
                     System.out.println("You are a member, we will remove you from the group");
-                    String deleteStr = "delete from WithinGroup where withinGroupID=" + groupID + " , and memberUserID " + MainForm.userID;
+                    String deleteStr = "delete from WithinGroup where withinGroupID=" + groupID + "  and memberUserID= " + MainForm.userID;
                     stmt.executeUpdate(deleteStr);
                 }
             }
