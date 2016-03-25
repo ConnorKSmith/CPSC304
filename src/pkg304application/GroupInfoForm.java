@@ -75,6 +75,8 @@ public class GroupInfoForm extends javax.swing.JFrame {
         creatorName = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         dateCreated = new javax.swing.JLabel();
+        deleteGroupButton = new javax.swing.JButton();
+        editGroupButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -103,37 +105,56 @@ public class GroupInfoForm extends javax.swing.JFrame {
 
         dateCreated.setText("jLabel4");
 
+        deleteGroupButton.setText("Delete Group");
+        deleteGroupButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                deleteGroupButtonMouseClicked(evt);
+            }
+        });
+
+        editGroupButton.setText("Edit Group");
+        editGroupButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editGroupButtonMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(104, 104, 104)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(creatorName)
+                    .addComponent(dateCreated))
+                .addGap(118, 118, 118))
+            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(groupName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(23, 23, 23)
-                        .addComponent(infoTab, javax.swing.GroupLayout.PREFERRED_SIZE, 612, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 38, Short.MAX_VALUE))
+                        .addComponent(infoTab, javax.swing.GroupLayout.PREFERRED_SIZE, 612, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(104, 104, 104)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel1))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(creatorName)
-                            .addComponent(dateCreated))
-                        .addGap(112, 112, 112)))
-                .addContainerGap())
+                        .addGap(211, 211, 211)
+                        .addComponent(groupName, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(44, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(editGroupButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(deleteGroupButton)
+                .addGap(29, 29, 29))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addComponent(groupName, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34)
+                .addGap(22, 22, 22)
+                .addComponent(groupName, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(infoTab, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(37, 37, 37)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -143,11 +164,42 @@ public class GroupInfoForm extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(dateCreated))
-                .addContainerGap(57, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(deleteGroupButton)
+                    .addComponent(editGroupButton))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void deleteGroupButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteGroupButtonMouseClicked
+        // TODO add your handling code here:
+        String insertStr;
+        String selected = groupName.getText();
+        try{
+            String selectStr = "select * from FriendGroup F where F.groupName = '" + selected + "'";
+            rs = stmt.executeQuery(selectStr);
+            rs.next();
+            int Gid  = rs.getInt("gID");
+            int currID = MainForm.userID;
+            insertStr = "delete from FriendGroup where creatorUserID = "+currID+" and gID = "+Gid+"";                              
+            stmt.executeUpdate(insertStr);
+           // insertStr = "delete from WithinGroup where withinGroupID = "+Gid+"";                              
+           // stmt.executeUpdate(insertStr);
+ 
+        } catch (SQLException ex) {
+            Logger.getLogger(GameInfoForm.class.getName()).log(Level.SEVERE, null, ex);
+            return;
+        }
+    }//GEN-LAST:event_deleteGroupButtonMouseClicked
+
+    private void editGroupButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editGroupButtonMouseClicked
+        // TODO add your handling code here:
+        String gName = groupName.getText();
+        new EditGroupForm(gName).setVisible(true);
+    }//GEN-LAST:event_editGroupButtonMouseClicked
 
     /**
      * @param args the command line arguments
@@ -187,8 +239,10 @@ public class GroupInfoForm extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel creatorName;
     private javax.swing.JLabel dateCreated;
+    private javax.swing.JButton deleteGroupButton;
     private javax.swing.JTextArea descriptionArea;
     private javax.swing.JScrollPane descriptionTab;
+    private javax.swing.JButton editGroupButton;
     private javax.swing.JLabel groupName;
     private javax.swing.JTabbedPane infoTab;
     private javax.swing.JLabel jLabel1;

@@ -54,7 +54,6 @@ public class CreateGroupForm extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        groupName.setText("jTextField1");
         groupName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 groupNameActionPerformed(evt);

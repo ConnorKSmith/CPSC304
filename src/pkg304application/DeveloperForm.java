@@ -21,6 +21,7 @@ public class DeveloperForm extends javax.swing.JFrame {
     
     public Boolean editing = false;
     Statement stmt = null;
+    Statement stmt2 = null;
     ResultSet rs = null;
     public static int searchUserID;
     String queryString;
@@ -73,6 +74,9 @@ public class DeveloperForm extends javax.swing.JFrame {
         editGameButton = new javax.swing.JButton();
         deleteGameButton = new javax.swing.JButton();
         createGroupButton = new javax.swing.JButton();
+        userRadioButton = new javax.swing.JRadioButton();
+        groupRadioButton = new javax.swing.JRadioButton();
+        gameRadioButton = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -242,6 +246,15 @@ public class DeveloperForm extends javax.swing.JFrame {
         });
         getContentPane().add(createGroupButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 740, 190, 80));
 
+        userRadioButton.setText("users");
+        getContentPane().add(userRadioButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 100, -1, -1));
+
+        groupRadioButton.setText("groups");
+        getContentPane().add(groupRadioButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 100, -1, -1));
+
+        gameRadioButton.setText("games");
+        getContentPane().add(gameRadioButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 100, -1, -1));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -286,7 +299,7 @@ public class DeveloperForm extends javax.swing.JFrame {
 
     private void searchButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchButtonMouseClicked
         // TODO add your handling code here:
-        String name = searchField.getText();
+       /* String name = searchField.getText();
         System.out.println(name);
         queryString = "Select A.userID from Account A where A.userName='" + name + "'";
         try {
@@ -301,7 +314,54 @@ public class DeveloperForm extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(DeveloperForm.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return;
+        return;*/
+       Boolean users = userRadioButton.isSelected();
+         Boolean groups = groupRadioButton.isSelected();
+         Boolean games = gameRadioButton.isSelected();
+         String textField = searchField.getText();
+         
+         if (! ( users || groups || games )){
+             System.out.println("nothing is selected");
+             return;
+         }
+         
+      
+          if (users){
+                 System.out.println("opening users library");
+                 // need users library form
+                 //temp:
+                         System.out.println(textField);
+                    queryString = "Select A.userID from Account A where A.userName='" + textField + "'";
+                    try {
+                        rs = stmt.executeQuery(queryString);
+                        System.out.println(queryString);
+                        if (rs.next()){
+                            String check = "select * from Developer where developerID=" + rs.getInt("userID");
+                            ResultSet rs2 = stmt2.executeQuery(check);
+                            if (rs2.next()){
+                                new SearchUserForm(rs.getInt("userID"), true).setVisible(true);
+                            } else {
+                                new SearchUserForm(rs.getInt("userID"), false).setVisible(true);
+                            }
+                        } else {
+                            System.out.println("no user exists");
+                        }
+                    } catch (SQLException ex) {
+                        Logger.getLogger(ProfileForm.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    return;
+                 
+          }
+             
+         if (groups){
+               System.out.println("opening groups library");
+               new GroupLibraryForm(textField).setVisible(true);
+                 // need group library form
+         }
+         if (games){
+                 System.out.println("games group library");
+                 new GameLibraryForm(textField).setVisible(true);
+         }
     }//GEN-LAST:event_searchButtonMouseClicked
 
     private void friendListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_friendListMouseClicked
@@ -459,7 +519,9 @@ public class DeveloperForm extends javax.swing.JFrame {
     private javax.swing.JButton editGameButton;
     private javax.swing.JList<String> friendList;
     private javax.swing.JList<String> gameList;
+    private javax.swing.JRadioButton gameRadioButton;
     private javax.swing.JList<String> groupList;
+    private javax.swing.JRadioButton groupRadioButton;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -468,6 +530,7 @@ public class DeveloperForm extends javax.swing.JFrame {
     private javax.swing.JButton refreshButton;
     private javax.swing.JButton searchButton;
     private javax.swing.JTextField searchField;
+    private javax.swing.JRadioButton userRadioButton;
     // End of variables declaration//GEN-END:variables
 
     private void showProfileInfo() {
