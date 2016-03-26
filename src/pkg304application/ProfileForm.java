@@ -343,6 +343,7 @@ public class ProfileForm extends javax.swing.JFrame {
          if (groups){
                System.out.println("opening groups library");
                  // need group library form
+                new GroupLibraryForm(textField).setVisible(true);
          }
          if (games){
                  System.out.println("games group library");
