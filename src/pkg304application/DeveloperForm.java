@@ -194,7 +194,7 @@ public class DeveloperForm extends javax.swing.JFrame {
                 createGameButtonMouseClicked(evt);
             }
         });
-        getContentPane().add(createGameButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 670, 180, 60));
+        getContentPane().add(createGameButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 670, 180, 60));
 
         refreshButton.setText("Refresh");
         refreshButton.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -228,7 +228,7 @@ public class DeveloperForm extends javax.swing.JFrame {
                 editGameButtonMouseClicked(evt);
             }
         });
-        getContentPane().add(editGameButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 670, 190, 60));
+        getContentPane().add(editGameButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 670, 150, 60));
 
         deleteGameButton.setText("Delete Game");
         deleteGameButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -236,15 +236,15 @@ public class DeveloperForm extends javax.swing.JFrame {
                 deleteGameButtonMouseClicked(evt);
             }
         });
-        getContentPane().add(deleteGameButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 670, 150, 160));
+        getContentPane().add(deleteGameButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 660, 150, 70));
 
-        createGroupButton.setText("Create Fucking Group guys ");
+        createGroupButton.setText("Create Group");
         createGroupButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 createGroupButtonMouseClicked(evt);
             }
         });
-        getContentPane().add(createGroupButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 740, 190, 80));
+        getContentPane().add(createGroupButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 660, 190, 80));
 
         userRadioButton.setText("users");
         getContentPane().add(userRadioButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 100, -1, -1));
@@ -299,68 +299,27 @@ public class DeveloperForm extends javax.swing.JFrame {
 
     private void searchButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchButtonMouseClicked
         // TODO add your handling code here:
-       /* String name = searchField.getText();
-        System.out.println(name);
-        queryString = "Select A.userID from Account A where A.userName='" + name + "'";
-        try {
-            rs = stmt.executeQuery(queryString);
-            if (rs.next()){
-                searchUserID = rs.getInt("userID");
-                System.out.println("finished");
-                new SearchUserForm(searchUserID, true).setVisible(true);
-            } else {
-                System.out.println("no user exists");
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(DeveloperForm.class.getName()).log(Level.SEVERE, null, ex);
+        Boolean users = userRadioButton.isSelected();
+        Boolean groups = groupRadioButton.isSelected();
+        Boolean games = gameRadioButton.isSelected();
+        String textField = searchField.getText();
+         
+        if (! ( users || groups || games )){
+            System.out.println("nothing is selected");
+            return;
         }
-        return;*/
-       Boolean users = userRadioButton.isSelected();
-         Boolean groups = groupRadioButton.isSelected();
-         Boolean games = gameRadioButton.isSelected();
-         String textField = searchField.getText();
-         
-         if (! ( users || groups || games )){
-             System.out.println("nothing is selected");
-             return;
-         }
-         
-      
-               if (users){
-                 System.out.println("opening users library");
-                 // need users library form
-                 //temp:
-                         System.out.println(textField);
-                    queryString = "Select A.userID from Account A where A.userName='" + textField + "'";
-                    try {
-                        rs = stmt.executeQuery(queryString);
-                        System.out.println(queryString);
-                        if (rs.next()){
-                            String check = "select * from Developer where developerID=" + rs.getInt("userID");
-                            ResultSet rs2 = stmt2.executeQuery(check);
-                            if (rs2.next()){
-                                new SearchUserForm(rs.getInt("userID"), true).setVisible(true);
-                            } else {
-                                new SearchUserForm(rs.getInt("userID"), false).setVisible(true);
-                            }
-                        } else {
-                            System.out.println("no user exists");
-                        }
-                    } catch (SQLException ex) {
-                        Logger.getLogger(ProfileForm.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    return;
-                 
-          }
+
+        if (users){
+            new UserLibraryForm(textField).setVisible(true);      
+        }
              
-         if (groups){
-               System.out.println("opening groups library");
-               new GroupLibraryForm(textField).setVisible(true);
-                 // need group library form
+        if (groups){
+            System.out.println("opening groups library");
+            new GroupLibraryForm(textField).setVisible(true);
          }
          if (games){
-                 System.out.println("games group library");
-                 new GameLibraryForm(textField).setVisible(true);
+            System.out.println("games group library");
+            new GameLibraryForm(textField).setVisible(true);
          }
     }//GEN-LAST:event_searchButtonMouseClicked
 

@@ -3,14 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/jko/CPSC304Project/CPSC304/src/pkg304application/SignUpForm.java</file>
+            <file>file:/Users/jko/CPSC304Project/CPSC304/src/pkg304application/ReviewForm.java</file>
             <file>file:/Users/jko/CPSC304Project/CPSC304/src/pkg304application/ProfileForm.java</file>
-            <file>file:/Users/jko/CPSC304Project/CPSC304/src/pkg304application/database/DatabaseConnection.java</file>
-            <file>file:/Users/jko/CPSC304Project/CPSC304/src/pkg304application/EditGameForm.java</file>
-            <file>file:/Users/jko/CPSC304Project/CPSC304/src/pkg304application/DeveloperForm.java</file>
-            <file>file:/Users/jko/CPSC304Project/CPSC304/src/pkg304application/UserResultForm.java</file>
-            <file>file:/Users/jko/CPSC304Project/CPSC304/src/pkg304application/GroupLibraryForm.java</file>
-            <file>file:/Users/jko/CPSC304Project/CPSC304/src/pkg304application/GameLibraryForm.java</file>
+            <file>file:/Users/jko/CPSC304Project/CPSC304/src/pkg304application/SearchReviewForm.java</file>
+            <file>file:/Users/jko/CPSC304Project/CPSC304/src/pkg304application/SearchUserForm.java</file>
             <file>file:/Users/jko/CPSC304Project/CPSC304/src/pkg304application/GameInfoForm.java</file>
         </group>
     </open-files>

@@ -299,79 +299,29 @@ public class ProfileForm extends javax.swing.JFrame {
 
     private void searchButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchButtonMouseClicked
         // TODO add your handling code here:
-        
-       /*
-        String name = searchField.getText();
-        System.out.println(name);
-        queryString = "Select A.userID from Account A where A.userName='" + name + "'";
-        try {
-            rs = stmt.executeQuery(queryString);
-            if (rs.next()){
-                searchUserID = rs.getInt("userID");
-                System.out.println("finished");
-                new SearchUserForm().setVisible(true);
-            } else {
-                System.out.println("no user exists");
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ProfileForm.class.getName()).log(Level.SEVERE, null, ex);
+        Boolean users = usersRadioButton.isSelected();
+        Boolean groups = groupRadioButton.isSelected();
+        Boolean games = gameRadioButton.isSelected();
+        String textField = searchField.getText();
+         
+        if (! ( users || groups || games )){
+            System.out.println("nothing is selected");
+            return;
         }
-        return;
-        */
+               
+        if (users){
+          new UserLibraryForm(textField).setVisible(true);      
+        }
+             
+        if (groups){
+            System.out.println("opening groups library");
+            new GroupLibraryForm(textField).setVisible(true);
+        }
         
-         Boolean users = usersRadioButton.isSelected();
-         Boolean groups = groupRadioButton.isSelected();
-         Boolean games = gameRadioButton.isSelected();
-         String textField = searchField.getText();
-         
-         if (! ( users || groups || games )){
-             System.out.println("nothing is selected");
-             return;
-         }
-         
-      
-          if (users){
-                 System.out.println("opening users library");
-                 // need users library form
-                 //temp:
-                         System.out.println(textField);
-                    queryString = "Select A.userID from Account A where A.userName='" + textField + "'";
-                    try {
-                        rs = stmt.executeQuery(queryString);
-                        System.out.println(queryString);
-                        if (rs.next()){
-                            String check = "select * from Developer where developerID=" + rs.getInt("userID");
-                            ResultSet rs2 = stmt2.executeQuery(check);
-                            if (rs2.next()){
-                                new SearchUserForm(rs.getInt("userID"), true).setVisible(true);
-                            } else {
-                                new SearchUserForm(rs.getInt("userID"), false).setVisible(true);
-                            }
-                        } else {
-                            System.out.println("no user exists");
-                        }
-                    } catch (SQLException ex) {
-                        Logger.getLogger(ProfileForm.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    return;
-                 
-          }
-             
-         if (groups){
-               System.out.println("opening groups library");
-               new GroupLibraryForm(textField).setVisible(true);
-                 // need group library form
-                new GroupLibraryForm(textField).setVisible(true);
-         }
-         if (games){
-                 System.out.println("games group library");
-                 new GameLibraryForm(textField).setVisible(true);
-         }
-             
-             
-         
-         
-       
+        if (games){
+            System.out.println("games group library");
+            new GameLibraryForm(textField).setVisible(true);
+        }                     
        
     }//GEN-LAST:event_searchButtonMouseClicked
 

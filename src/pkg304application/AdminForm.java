@@ -217,7 +217,15 @@ public class AdminForm extends javax.swing.JFrame {
             }
             if (Tabs.getSelectedIndex()==3){
                 selected = reviewList.getSelectedValue();
-                String delete = "delete from Review where reviewID = '"+selected+"'";
+                String reviewID = " ";
+                int i = selected.length() - 1;
+                System.out.println("i is : "+ i );
+                System.out.println("substring is " + selected.substring(i));
+                while (i > 0 && selected.charAt(i) != ' '){
+                    reviewID = selected.substring(i);
+                    i --;
+                }
+                String delete = "delete from Review where reviewID =" + Integer.parseInt(reviewID);
                 stmt.executeUpdate(delete);
             }
                     
@@ -305,19 +313,27 @@ public class AdminForm extends javax.swing.JFrame {
     }//GEN-LAST:event_groupListMouseClicked
 
     private void reviewListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reviewListMouseClicked
-        // TODO add your handling code here:
-        try {
-            // TODO add your handling code here:
+        try {            
             String selectedReview = reviewList.getSelectedValue();
-            String queryStr = "Select * from Review  where reviewID='" + selectedReview + "'";
-            rs = stmt.executeQuery(queryStr);
+            String reviewID = " ";
+
+            int i = selectedReview.length() - 1;
+            System.out.println("i is : "+ i );
+            System.out.println("substring is " + selectedReview.substring(i));
+            while (i > 0 && selectedReview.charAt(i) != ' '){
+                reviewID = selectedReview.substring(i);
+                i --;
+            }
+            
+            String query = "select * from Review where reviewID = " + Integer.parseInt(reviewID);
+            rs = stmt.executeQuery(query);
             rs.next();
             new SearchReviewForm(rs.getInt("reviewerID"), rs.getInt("gameReviewedID")).setVisible(true);
-            System.out.println(rs.getInt("reviewerID"));
-            System.out.println(rs.getInt("gameReviewedID"));
+
         } catch (SQLException ex) {
-            Logger.getLogger(ProfileForm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AdminForm.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }//GEN-LAST:event_reviewListMouseClicked
 
     /**
@@ -371,7 +387,7 @@ public class AdminForm extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
     private void showUserList() {
         try {
-            String queryString = "Select DISTINCT userName from Account";
+            String queryString = "Select userName from Account, Admin where adminID != userID";
             rs = stmt.executeQuery(queryString);
             DefaultListModel userListModel = new DefaultListModel();
             while(rs.next()){
@@ -414,11 +430,12 @@ public class AdminForm extends javax.swing.JFrame {
 
     private void showReviewList() {
         try {
-            String queryStr = "select * from Review";
-            rs = stmt.executeQuery(queryStr);
+            String query = "select R.reviewID, A.userName, G.gName from Account A, Review R, Game G where A.userID=R.reviewerID and G.gameID=gameReviewedID";
+            rs = stmt.executeQuery(query);
             DefaultListModel reviewListModel = new DefaultListModel();
             while (rs.next()){
-                reviewListModel.addElement(Integer.toString(rs.getInt("reviewID")));
+                reviewListModel.addElement("Player: " + rs.getString("userName") + " || Review of: " + rs.getString("gName") + " || Review ID: " + 
+                            Integer.toString(rs.getInt("reviewID")));
             }
             reviewList.setModel(reviewListModel);
         } catch (SQLException ex) {
