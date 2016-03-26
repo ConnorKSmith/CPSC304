@@ -34,6 +34,7 @@ public class DeveloperForm extends javax.swing.JFrame {
             DatabaseConnection dbc = new DatabaseConnection();
             dbc.init();
             stmt = dbc.getMyConnection().createStatement();
+            stmt2 = dbc.getMyConnection().createStatement();
             initComponents();
             showProfileInfo();
             showFriendList();
@@ -168,7 +169,6 @@ public class DeveloperForm extends javax.swing.JFrame {
         getContentPane().add(GroupAndGames, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 430, 770, 220));
 
         searchField.setFont(new java.awt.Font("PT Serif Caption", 0, 14)); // NOI18N
-        searchField.setText("   find a user");
         searchField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 searchFieldActionPerformed(evt);
@@ -326,7 +326,7 @@ public class DeveloperForm extends javax.swing.JFrame {
          }
          
       
-          if (users){
+               if (users){
                  System.out.println("opening users library");
                  // need users library form
                  //temp:
