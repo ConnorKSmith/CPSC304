@@ -177,6 +177,11 @@ public class ProfileForm extends javax.swing.JFrame {
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
+        reviewList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                reviewListMouseClicked(evt);
+            }
+        });
         reviewsTab.setViewportView(reviewList);
 
         Tabs.addTab("Reviews", reviewsTab);
@@ -491,6 +496,23 @@ public class ProfileForm extends javax.swing.JFrame {
         new CreateGroupForm().setVisible(true);
     }//GEN-LAST:event_createGroupButtonMouseClicked
 
+    private void reviewListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reviewListMouseClicked
+        try {
+            // TODO add your handling code here:
+            String selectedReview = reviewList.getSelectedValue();
+            String query = "select G.gameID from Game G, Review R where R.reviewerID="+ MainForm.userID + " and G.gameID = R.gameReviewedID and G.gName='" + selectedReview + "'";
+            System.out.println(query);
+            rs = stmt.executeQuery(query);
+            rs.next();
+            int gameID = rs.getInt("gameID");
+            new SearchReviewForm(MainForm.userID, gameID).setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(ProfileForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+    }//GEN-LAST:event_reviewListMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -616,11 +638,13 @@ public class ProfileForm extends javax.swing.JFrame {
 
     private void showReviewList() {
         try {
-            String queryStr = "select * from Review where reviewerID=" + MainForm.userID;
+            String queryStr = "select G.gName, G.gameID from Review R, Game G where R.reviewerID="+ MainForm.userID 
+                                    + " and R.gameReviewedID = G.gameID group by gName";
+            System.out.println(queryStr);
             rs = stmt.executeQuery(queryStr);
             DefaultListModel reviewListModel = new DefaultListModel();
             while (rs.next()){
-                reviewListModel.addElement(Integer.toString(rs.getInt("gameID")));
+                reviewListModel.addElement(rs.getString("gName"));
             }
             reviewList.setModel(reviewListModel);
         } catch (SQLException ex) {

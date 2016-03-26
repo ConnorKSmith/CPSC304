@@ -64,10 +64,10 @@ create table Review (
     rating integer not null,
     datePosted Date not null,
     reviewerID integer,
-    gameID integer,
+    gameReviewedID integer,
     primary key(reviewID),
     foreign key(reviewerID) references Account(userID) on delete cascade on update cascade,
-    foreign key(gameID) references Game(gameID) on delete cascade on update cascade
+    foreign key(gameReviewedID) references Game(gameID) on delete cascade on update cascade
 )
 
 create table Genre (

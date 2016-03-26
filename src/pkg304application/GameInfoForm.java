@@ -97,6 +97,11 @@ public class GameInfoForm extends javax.swing.JFrame {
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
+        reviewList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                reviewListMouseClicked(evt);
+            }
+        });
         reviewsTab.setViewportView(reviewList);
 
         infoTab.addTab("Reviews", reviewsTab);
@@ -189,6 +194,21 @@ public class GameInfoForm extends javax.swing.JFrame {
         new ReviewForm(MainForm.userName, thisGame).setVisible(true);
     }//GEN-LAST:event_reviewButtonMouseClicked
 
+    private void reviewListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reviewListMouseClicked
+        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            String selectedReview = reviewList.getSelectedValue();
+            String query = "select R.reviewerID, G.gameID from Game G, Review R, Account A where R.reviewerID=A.userID and A.userName='"
+                                    + selectedReview + "' and G.gameID = " + thisGameID;
+            rs = stmt.executeQuery(query);
+            rs.next();
+            new SearchReviewForm(rs.getInt("reviewerID"), rs.getInt("gameID")).setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(ProfileForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_reviewListMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -248,12 +268,12 @@ public class GameInfoForm extends javax.swing.JFrame {
 
     private void showReviewList() {
         try {
-            System.out.println("showing review!");
-            String queryStr = "select * from Review where gameID=" + thisGameID;
+            String queryStr = "select A.userName from Review R, Account A where R.gameReviewedID=" + thisGameID + " and R.reviewerID=A.userID";
+
             rs = stmt.executeQuery(queryStr);
             DefaultListModel reviewListModel = new DefaultListModel();
             while (rs.next()){
-                reviewListModel.addElement(Integer.toString(rs.getInt("reviewerID")));
+                reviewListModel.addElement(rs.getString("userName"));
             }
             reviewList.setModel(reviewListModel);
         } catch (SQLException ex) {

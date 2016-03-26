@@ -125,19 +125,19 @@ public class ReviewForm extends javax.swing.JFrame {
                 return;
             }
             
-            String query = "select * from Review where reviewerID=" + MainForm.userID + " and gameID= " 
+            String query = "select * from Review where reviewerID=" + MainForm.userID + " and gameReviewedID= " 
                             + GameInfoForm.thisGameID;
             rs = stmt.executeQuery(query);
             if (rs.next()){
                 String update = "update Review set reviewDesc='" + reviewDescField.getText() + "' , rating="
-                                + Integer.parseInt(ratingField.getText()) + " where reviewerID=" + MainForm.userID;
+                                + Integer.parseInt(ratingField.getText()) + " where reviewerID=" + MainForm.userID + " and gameReviewedID= " + GameInfoForm.thisGameID;
                 System.out.println(update);
                 stmt.executeUpdate(update);
                 this.setVisible(false);
                 this.dispose(); 
             } else {
             
-            String insert = "Insert into Review(reviewDesc, rating, datePosted, reviewerID, gameID) values('"
+            String insert = "Insert into Review(reviewDesc, rating, datePosted, reviewerID, gameReviewedID) values('"
                     + reviewDescField.getText() + "' , " + Integer.parseInt(ratingField.getText()) +  " , '" + dateFormat.format(date) +
                     "' , " + MainForm.userID + " , " + GameInfoForm.thisGameID + ")";
             stmt.executeUpdate(insert);
