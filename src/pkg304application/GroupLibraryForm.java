@@ -22,19 +22,23 @@ public class GroupLibraryForm extends javax.swing.JFrame {
     /**
      * Creates new form GroupLibraryForm
      */
-    public Statement stmt;
-    public ResultSet rs;
+    ResultSet rs;
+    Statement stmt;
+    String textField;
+    
     public GroupLibraryForm(String searchField) {
-        try {
+      try {
             initComponents();
             DatabaseConnection dbc = new DatabaseConnection();
             dbc.init();
+            textField = searchField;
             stmt = dbc.getMyConnection().createStatement();
-            showGroupList(searchField);
+            showGroupList(textField);
             setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         } catch (SQLException ex) {
             Logger.getLogger(GameInfoForm.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }
 
     /**
@@ -200,5 +204,5 @@ private void showGroupList(String searchField) {
         } catch (SQLException ex) {
             Logger.getLogger(DeveloperForm.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
+       }
 }

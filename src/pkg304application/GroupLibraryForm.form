@@ -23,6 +23,15 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
+<<<<<<< HEAD
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                  <Component id="jScrollPane1" min="-2" pref="331" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace pref="27" max="32767" attributes="0"/>
+=======
           <Group type="102" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
@@ -35,23 +44,38 @@
                   </Group>
               </Group>
               <EmptySpace pref="19" max="32767" attributes="0"/>
+>>>>>>> fa8585561f5fe1a6ab77de945d9df1d5568d809e
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
+<<<<<<< HEAD
+              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="jScrollPane1" min="-2" pref="170" max="-2" attributes="0"/>
+              <EmptySpace pref="86" max="32767" attributes="0"/>
+=======
               <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
               <Component id="jScrollPane1" min="-2" pref="202" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="joinButton" min="-2" max="-2" attributes="0"/>
               <EmptySpace pref="35" max="32767" attributes="0"/>
+>>>>>>> fa8585561f5fe1a6ab77de945d9df1d5568d809e
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+<<<<<<< HEAD
+      <AuxValues>
+        <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+      </AuxValues>
+=======
+>>>>>>> fa8585561f5fe1a6ab77de945d9df1d5568d809e
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
@@ -67,15 +91,24 @@
               </StringArray>
             </Property>
           </Properties>
+<<<<<<< HEAD
+=======
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="groupListMouseClicked"/>
           </Events>
+>>>>>>> fa8585561f5fe1a6ab77de945d9df1d5568d809e
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
         </Component>
       </SubComponents>
     </Container>
+<<<<<<< HEAD
+    <Component class="javax.swing.JLabel" name="jLabel1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Groups:"/>
+      </Properties>
+=======
     <Component class="javax.swing.JButton" name="joinButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="Join"/>
@@ -83,6 +116,7 @@
       <Events>
         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="joinButtonMouseClicked"/>
       </Events>
+>>>>>>> fa8585561f5fe1a6ab77de945d9df1d5568d809e
     </Component>
   </SubComponents>
 </Form>
