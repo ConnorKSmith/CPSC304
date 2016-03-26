@@ -168,7 +168,6 @@ public class DeveloperForm extends javax.swing.JFrame {
         getContentPane().add(GroupAndGames, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 430, 770, 220));
 
         searchField.setFont(new java.awt.Font("PT Serif Caption", 0, 14)); // NOI18N
-        searchField.setText("   find a user");
         searchField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 searchFieldActionPerformed(evt);
@@ -194,7 +193,7 @@ public class DeveloperForm extends javax.swing.JFrame {
                 createGameButtonMouseClicked(evt);
             }
         });
-        getContentPane().add(createGameButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 670, 180, 60));
+        getContentPane().add(createGameButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 670, 180, 60));
 
         refreshButton.setText("Refresh");
         refreshButton.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -228,7 +227,7 @@ public class DeveloperForm extends javax.swing.JFrame {
                 editGameButtonMouseClicked(evt);
             }
         });
-        getContentPane().add(editGameButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 670, 190, 60));
+        getContentPane().add(editGameButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 670, 150, 60));
 
         deleteGameButton.setText("Delete Game");
         deleteGameButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -236,15 +235,15 @@ public class DeveloperForm extends javax.swing.JFrame {
                 deleteGameButtonMouseClicked(evt);
             }
         });
-        getContentPane().add(deleteGameButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 670, 150, 160));
+        getContentPane().add(deleteGameButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 660, 150, 70));
 
-        createGroupButton.setText("Create Fucking Group guys ");
+        createGroupButton.setText("Create Group");
         createGroupButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 createGroupButtonMouseClicked(evt);
             }
         });
-        getContentPane().add(createGroupButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 740, 190, 80));
+        getContentPane().add(createGroupButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 660, 190, 80));
 
         userRadioButton.setText("users");
         getContentPane().add(userRadioButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 100, -1, -1));
