@@ -34,6 +34,7 @@ public class DeveloperForm extends javax.swing.JFrame {
             DatabaseConnection dbc = new DatabaseConnection();
             dbc.init();
             stmt = dbc.getMyConnection().createStatement();
+            stmt2 = dbc.getMyConnection().createStatement();
             initComponents();
             showProfileInfo();
             showFriendList();

@@ -125,7 +125,7 @@ public class UserLibraryForm extends javax.swing.JFrame {
     private void showUserList(String searchField) {
         try {
             if (searchField.equals("")){
-                String queryStr = "Select DISTINCT A.userName from Account A";
+                String queryStr = "Select userName from Account A where userID != " + MainForm.userID;
                 rs = stmt.executeQuery(queryStr);
                 DefaultListModel userListModel = new DefaultListModel();
                 while (rs.next()){
@@ -133,7 +133,7 @@ public class UserLibraryForm extends javax.swing.JFrame {
                 }
                 userList.setModel(userListModel);
             } else {
-                String queryStr = "Select DISTINCT A.userName from Account A where A.userName LIKE '%" + searchField + "%'";          
+                String queryStr = "Select userName from Account where userName LIKE '%" + searchField + "%' and userID!= " + MainForm.userID;          
                 System.out.println(queryStr);
                 rs = stmt.executeQuery(queryStr);
                 DefaultListModel userListModel = new DefaultListModel();

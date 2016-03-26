@@ -169,6 +169,7 @@ public class MainForm extends javax.swing.JFrame {
             
             try {
                 Boolean isPlayer = false;
+                Boolean isAdmin = false;
                 
                 String queryStr = "Select playerID from Player P where P.playerID='" + userID + "'";
                 stmt = dbc.getMyConnection().createStatement(); 
@@ -177,12 +178,23 @@ public class MainForm extends javax.swing.JFrame {
                     System.out.println("TEST");
                     isPlayer = true;
                 }
-                
+                String adminStr = "Select AdminID from Admin where AdminID ="+userID+"";
+                stmt = dbc.getMyConnection().createStatement();
+                rs = stmt.executeQuery(adminStr);
+                if(rs.next()){
+                    isAdmin = true;
+                }
                 if (isPlayer) {
                     ProfileForm.main();
                     this.setVisible(false);
                     this.dispose();
-                } else {
+                }
+                else if(isAdmin){
+                  new AdminForm().setVisible(true);
+                  this.setVisible(false);
+                  this.dispose();
+                }
+                else {
                     System.out.println("opening develoepr view");
                     DeveloperForm.main();
                     this.setVisible(false);

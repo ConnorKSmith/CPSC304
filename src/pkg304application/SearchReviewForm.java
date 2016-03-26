@@ -109,7 +109,7 @@ public class SearchReviewForm extends javax.swing.JFrame {
     private void showReview(int reviewerID, int gameID) {
         try {
             String query = "select * from Review R, Game G, Account A where R.reviewerID="
-                    + MainForm.userID +" and R.gameReviewedID=" + gameID +" and A.userID=" + MainForm.userID; 
+                    + reviewerID +" and R.gameReviewedID=" + gameID +" and A.userID=" + reviewerID; 
             rs = stmt.executeQuery(query);
             rs.next();
             rating.setText(Integer.toString(rs.getInt("rating")));
