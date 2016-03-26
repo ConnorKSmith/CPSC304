@@ -5,7 +5,9 @@
  */
 package pkg304application;
 
-import java.sql.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
@@ -13,7 +15,7 @@ import pkg304application.database.DatabaseConnection;
 
 /**
  *
- * @author jko
+ * @author jinyou
  */
 public class GroupLibraryForm extends javax.swing.JFrame {
 
@@ -31,7 +33,7 @@ public class GroupLibraryForm extends javax.swing.JFrame {
             dbc.init();
             textField = searchField;
             stmt = dbc.getMyConnection().createStatement();
-            showGroupLibrary();
+            showGroupList(textField);
             setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         } catch (SQLException ex) {
             Logger.getLogger(GameInfoForm.class.getName()).log(Level.SEVERE, null, ex);
@@ -50,7 +52,7 @@ public class GroupLibraryForm extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         groupList = new javax.swing.JList<>();
-        jLabel1 = new javax.swing.JLabel();
+        joinButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -59,49 +61,130 @@ public class GroupLibraryForm extends javax.swing.JFrame {
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
+        groupList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                groupListMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(groupList);
 
-        jLabel1.setText("Groups:");
+        joinButton.setText("Join");
+        joinButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                joinButtonMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(42, 42, 42)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(27, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 363, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(joinButton)))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(86, Short.MAX_VALUE))
+                .addGap(22, 22, 22)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(joinButton)
+                .addContainerGap(35, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void joinButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_joinButtonMouseClicked
+        // TODO add your handling code here:
+        String insertStr;
+        String selected = groupList.getSelectedValue();
+        
+        try{
+            String selectStr = "select * from FriendGroup G where G.groupName = '" + selected + "'";
+            rs = stmt.executeQuery(selectStr);
+            rs.next();
+            int Gid  = rs.getInt("gID");
+            int currID = MainForm.userID;
+            
+            insertStr = "insert into WithinGroup(memberUserID, withinGroupID) "
+                + "values(" + currID + " , " + Gid + ")";
+                        
+            stmt.executeUpdate(insertStr); 
+            this.setVisible(false);
+            this.dispose();
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(GameInfoForm.class.getName()).log(Level.SEVERE, null, ex);
+            return;
+        }
+    }//GEN-LAST:event_joinButtonMouseClicked
+
+    private void groupListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_groupListMouseClicked
+        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            String selectedGroup = groupList.getSelectedValue();
+            String queryStr = "Select * from FriendGroup where groupName='" + selectedGroup + "'";
+            rs = stmt.executeQuery(queryStr);
+            rs.next();
+            new GroupInfoForm(rs.getString("groupName"), rs.getString("groupDesc"), rs.getInt("creatorUserID"), rs.getString("dateCreated")).setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(DeveloperForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_groupListMouseClicked
+
     /**
      * @param args the command line arguments
      */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(GroupLibraryForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(GroupLibraryForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(GroupLibraryForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(GroupLibraryForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
 
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                //new GroupLibraryForm().setVisible(true);
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList<String> groupList;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton joinButton;
     // End of variables declaration//GEN-END:variables
-
-    private void showGroupLibrary() {
-        try {
-            if (textField.equals("")){
-                String queryStr = "Select * from FriendGroup";
+private void showGroupList(String searchField) {
+         try {
+            if (searchField.equals("")){
+                String queryStr = "Select DISTINCT G.groupName from FriendGroup G";
                 rs = stmt.executeQuery(queryStr);
                 DefaultListModel groupListModel = new DefaultListModel();
                 while (rs.next()){
@@ -109,17 +192,17 @@ public class GroupLibraryForm extends javax.swing.JFrame {
                 }
                 groupList.setModel(groupListModel);
             } else {
-               String queryStr = "Select DISTINCT groupName from Group where groupName LIKE '%" + textField + "%'";
-               rs = stmt.executeQuery(queryStr);
-               DefaultListModel groupListModel = new DefaultListModel();
-               while (rs.next()){
-                 groupListModel.addElement(rs.getString("groupName"));
-               }
-               groupList.setModel(groupListModel);
+                String queryStr = "Select DISTINCT G.groupName from FriendGroup G where G.groupName LIKE '%" + searchField + "%'";
+                
+                rs = stmt.executeQuery(queryStr);
+                DefaultListModel groupListModel = new DefaultListModel();
+                while (rs.next()){
+                    groupListModel.addElement(rs.getString("groupName"));
+                }
+                groupList.setModel(groupListModel);
             }
-           
         } catch (SQLException ex) {
             Logger.getLogger(DeveloperForm.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
+       }
 }
