@@ -61,7 +61,7 @@ public class SearchReviewForm extends javax.swing.JFrame {
         reviewArea.setRows(5);
         jScrollPane1.setViewportView(reviewArea);
 
-        ratingLabel.setText("jLabel1");
+        ratingLabel.setText("Rated (out of 10) :");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -72,12 +72,12 @@ public class SearchReviewForm extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(ratingLabel)
-                        .addGap(179, 179, 179)
+                        .addGap(111, 111, 111)
                         .addComponent(rating, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(reviewerLabel)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(57, Short.MAX_VALUE))
+                .addContainerGap(62, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
