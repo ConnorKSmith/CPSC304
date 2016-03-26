@@ -217,7 +217,15 @@ public class AdminForm extends javax.swing.JFrame {
             }
             if (Tabs.getSelectedIndex()==3){
                 selected = reviewList.getSelectedValue();
-                String delete = "delete from Review where reviewID = '"+selected+"'";
+                String reviewID = " ";
+                int i = selected.length() - 1;
+                System.out.println("i is : "+ i );
+                System.out.println("substring is " + selected.substring(i));
+                while (i > 0 && selected.charAt(i) != ' '){
+                    reviewID = selected.substring(i);
+                    i --;
+                }
+                String delete = "delete from Review where reviewID =" + Integer.parseInt(reviewID);
                 stmt.executeUpdate(delete);
             }
                     
