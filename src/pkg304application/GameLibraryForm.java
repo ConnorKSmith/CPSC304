@@ -24,13 +24,13 @@ public class GameLibraryForm extends javax.swing.JFrame {
     /**
      * Creates new form GameLibraryForm
      */
-    public GameLibraryForm() {
+    public GameLibraryForm(String searchField) {
         try {
             initComponents();
             DatabaseConnection dbc = new DatabaseConnection();
             dbc.init();
             stmt = dbc.getMyConnection().createStatement();
-            showGameList();
+            showGameList(searchField);
             setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         } catch (SQLException ex) {
             Logger.getLogger(GameInfoForm.class.getName()).log(Level.SEVERE, null, ex);
@@ -49,6 +49,7 @@ public class GameLibraryForm extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         gameList = new javax.swing.JList<>();
         addButton = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -71,6 +72,8 @@ public class GameLibraryForm extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setText("Search Result for Games:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -78,6 +81,7 @@ public class GameLibraryForm extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
                     .addComponent(addButton)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 355, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(25, Short.MAX_VALUE))
@@ -85,11 +89,13 @@ public class GameLibraryForm extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(22, 22, 22)
+                .addContainerGap(22, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(addButton)
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addGap(23, 23, 23))
         );
 
         pack();
@@ -144,54 +150,34 @@ public class GameLibraryForm extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GameLibraryForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GameLibraryForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GameLibraryForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GameLibraryForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new GameLibraryForm().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
     private javax.swing.JList<String> gameList;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
-private void showGameList() {
+private void showGameList(String searchField) {
          try {
-            //String queryStr = "Select DISTINCT G.gName from OwnsGame O, Account A, Game G where O.ownerID = A.userID and G.gameID = O.gameID";
-            String queryStr = "Select DISTINCT G.gName from Game G";
-            rs = stmt.executeQuery(queryStr);
-            DefaultListModel gameListModel = new DefaultListModel();
-            while (rs.next()){
-                gameListModel.addElement(rs.getString("gName"));
+            if (searchField.equals("")){
+                String queryStr = "Select DISTINCT G.gName from Game G";
+                rs = stmt.executeQuery(queryStr);
+                DefaultListModel gameListModel = new DefaultListModel();
+                while (rs.next()){
+                    gameListModel.addElement(rs.getString("gName"));
+                }
+                gameList.setModel(gameListModel);
+            } else {
+                String queryStr = "Select DISTINCT G.gName from Game G where G.gName LIKE '%" + searchField + "%'";
+                
+                System.out.println(queryStr);
+                rs = stmt.executeQuery(queryStr);
+                DefaultListModel gameListModel = new DefaultListModel();
+                while (rs.next()){
+                    gameListModel.addElement(rs.getString("gName"));
+                }
+                gameList.setModel(gameListModel);
             }
-            System.out.println("fuck you jin");
-            gameList.setModel(gameListModel);
         } catch (SQLException ex) {
             Logger.getLogger(DeveloperForm.class.getName()).log(Level.SEVERE, null, ex);
         }

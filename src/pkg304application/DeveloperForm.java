@@ -19,9 +19,9 @@ import javax.swing.ListModel;
  */
 public class DeveloperForm extends javax.swing.JFrame {
     
-    
     public Boolean editing = false;
     Statement stmt = null;
+    Statement stmt2 = null;
     ResultSet rs = null;
     public static int searchUserID;
     String queryString;
@@ -30,12 +30,19 @@ public class DeveloperForm extends javax.swing.JFrame {
      * Creates new form ProfileForm
      */
     public DeveloperForm() {
+        try {
+            DatabaseConnection dbc = new DatabaseConnection();
+            dbc.init();
+            stmt = dbc.getMyConnection().createStatement();
+            stmt2 = dbc.getMyConnection().createStatement();
             initComponents();
             showProfileInfo();
             showFriendList();
             showGameList();
             showGroupList();
-            showReviewList();
+        } catch (SQLException ex) {
+            Logger.getLogger(DeveloperForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -67,6 +74,10 @@ public class DeveloperForm extends javax.swing.JFrame {
         deleteFriend = new javax.swing.JButton();
         editGameButton = new javax.swing.JButton();
         deleteGameButton = new javax.swing.JButton();
+        createGroupButton = new javax.swing.JButton();
+        userRadioButton = new javax.swing.JRadioButton();
+        groupRadioButton = new javax.swing.JRadioButton();
+        gameRadioButton = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -158,7 +169,6 @@ public class DeveloperForm extends javax.swing.JFrame {
         getContentPane().add(GroupAndGames, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 430, 770, 220));
 
         searchField.setFont(new java.awt.Font("PT Serif Caption", 0, 14)); // NOI18N
-        searchField.setText("   find a user");
         searchField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 searchFieldActionPerformed(evt);
@@ -184,7 +194,7 @@ public class DeveloperForm extends javax.swing.JFrame {
                 createGameButtonMouseClicked(evt);
             }
         });
-        getContentPane().add(createGameButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 670, 180, 60));
+        getContentPane().add(createGameButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 670, 180, 60));
 
         refreshButton.setText("Refresh");
         refreshButton.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -218,7 +228,7 @@ public class DeveloperForm extends javax.swing.JFrame {
                 editGameButtonMouseClicked(evt);
             }
         });
-        getContentPane().add(editGameButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 670, 190, 60));
+        getContentPane().add(editGameButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 670, 150, 60));
 
         deleteGameButton.setText("Delete Game");
         deleteGameButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -226,7 +236,24 @@ public class DeveloperForm extends javax.swing.JFrame {
                 deleteGameButtonMouseClicked(evt);
             }
         });
-        getContentPane().add(deleteGameButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 670, 150, 160));
+        getContentPane().add(deleteGameButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 660, 150, 70));
+
+        createGroupButton.setText("Create Group");
+        createGroupButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                createGroupButtonMouseClicked(evt);
+            }
+        });
+        getContentPane().add(createGroupButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 660, 190, 80));
+
+        userRadioButton.setText("users");
+        getContentPane().add(userRadioButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 100, -1, -1));
+
+        groupRadioButton.setText("groups");
+        getContentPane().add(groupRadioButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 100, -1, -1));
+
+        gameRadioButton.setText("games");
+        getContentPane().add(gameRadioButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 100, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -238,7 +265,6 @@ public class DeveloperForm extends javax.swing.JFrame {
           this.editButton.setText("Save changes");
           editing = true;
         } else {
-
           if (this.descriptionTextField.getText().length() > 100){
               System.out.println("Description can only be under 100 characters!");
               this.descriptionTextField.setText(" ");
@@ -253,7 +279,6 @@ public class DeveloperForm extends javax.swing.JFrame {
               }
               System.out.println("Successfully stored the description");
            }
-        
           this.descriptionTextField.setEditable(false);
           this.editButton.setText("Edit");
           editing = false;
@@ -274,23 +299,28 @@ public class DeveloperForm extends javax.swing.JFrame {
 
     private void searchButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchButtonMouseClicked
         // TODO add your handling code here:
-        String name = searchField.getText();
-        System.out.println(name);
-        queryString = "Select A.userID from Account A where A.userName='" + name + "'";
-        try {
-            rs = stmt.executeQuery(queryString);
-            if (rs.next()){
-                searchUserID = rs.getInt("userID");
-                System.out.println("finished");
-                new SearchUserForm().setVisible(true);
-            } else {
-                System.out.println("no user exists");
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(DeveloperForm.class.getName()).log(Level.SEVERE, null, ex);
+        Boolean users = userRadioButton.isSelected();
+        Boolean groups = groupRadioButton.isSelected();
+        Boolean games = gameRadioButton.isSelected();
+        String textField = searchField.getText();
+         
+        if (! ( users || groups || games )){
+            System.out.println("nothing is selected");
+            return;
         }
-       
-        return;
+
+        if (users){
+            new UserLibraryForm(textField).setVisible(true);      
+        }
+             
+        if (groups){
+            System.out.println("opening groups library");
+            new GroupLibraryForm(textField).setVisible(true);
+         }
+         if (games){
+            System.out.println("games group library");
+            new GameLibraryForm(textField).setVisible(true);
+         }
     }//GEN-LAST:event_searchButtonMouseClicked
 
     private void friendListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_friendListMouseClicked
@@ -306,6 +336,9 @@ public class DeveloperForm extends javax.swing.JFrame {
         try {
             // TODO add your handling code here:
             String selectedGame = gameList.getSelectedValue();
+            if (selectedGame == null){
+                return;
+            }
             String queryStr = "Select * from Game where gName='" + selectedGame + "'";
             rs = stmt.executeQuery(queryStr);
             rs.next();
@@ -326,14 +359,12 @@ public class DeveloperForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         String insertStr;
         String selected = friendList.getSelectedValue();
-        
         try{
             String selectStr = "select * from Account A where A.userName = '" + selected + "'";
             rs = stmt.executeQuery(selectStr);
             rs.next();
             int Uid  = rs.getInt("userID");
             int currID = MainForm.userID;
-            
             insertStr = "delete from FriendsWith where userID1 = "+Uid+" and UserID2 = "+currID;                              
             stmt.executeUpdate(insertStr);
             insertStr = "delete from FriendsWith where userID1 = "+currID+" and UserID2 = "+Uid;                              
@@ -351,6 +382,10 @@ public class DeveloperForm extends javax.swing.JFrame {
     private void editGameButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editGameButtonMouseClicked
         // TODO add your handling code here:
         String selected = gameList.getSelectedValue();
+        if (selected == null){
+            System.out.println("Please select a game you'd like to edit");
+            return;
+        }
         new EditGameForm(selected).setVisible(true);
     }//GEN-LAST:event_editGameButtonMouseClicked
 
@@ -382,12 +417,17 @@ public class DeveloperForm extends javax.swing.JFrame {
             String queryStr = "Select * from FriendGroup F where F.groupName='" + selectedGroup + "'";
             rs = stmt.executeQuery(queryStr);
             rs.next();
-            new GroupInfoForm(rs.getString("groupName"), rs.getString("groupDesc"), rs.getInt("creatorUserID"), rs.getInt("dateCreated")).setVisible(true);
+            new GroupInfoForm(rs.getString("groupName"), rs.getString("groupDesc"), rs.getInt("creatorUserID"), rs.getString("dateCreated")).setVisible(true);
             System.out.println("Showing group info of " + rs.getString("groupName"));
         } catch (SQLException ex) {
             Logger.getLogger(DeveloperForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_groupListMouseClicked
+
+    private void createGroupButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_createGroupButtonMouseClicked
+        // TODO add your handling code here:
+        new CreateGroupForm().setVisible(true);
+    }//GEN-LAST:event_createGroupButtonMouseClicked
 
     /**
      * @param args the command line arguments
@@ -430,6 +470,7 @@ public class DeveloperForm extends javax.swing.JFrame {
     private javax.swing.JTabbedPane GroupAndGames;
     private javax.swing.JLabel ProfileName;
     private javax.swing.JButton createGameButton;
+    private javax.swing.JButton createGroupButton;
     private javax.swing.JButton deleteFriend;
     private javax.swing.JButton deleteGameButton;
     private javax.swing.JTextArea descriptionTextField;
@@ -437,7 +478,9 @@ public class DeveloperForm extends javax.swing.JFrame {
     private javax.swing.JButton editGameButton;
     private javax.swing.JList<String> friendList;
     private javax.swing.JList<String> gameList;
+    private javax.swing.JRadioButton gameRadioButton;
     private javax.swing.JList<String> groupList;
+    private javax.swing.JRadioButton groupRadioButton;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -446,18 +489,15 @@ public class DeveloperForm extends javax.swing.JFrame {
     private javax.swing.JButton refreshButton;
     private javax.swing.JButton searchButton;
     private javax.swing.JTextField searchField;
+    private javax.swing.JRadioButton userRadioButton;
     // End of variables declaration//GEN-END:variables
 
     private void showProfileInfo() {
         try {
-            DatabaseConnection dbc = new DatabaseConnection();
-            dbc.init();
             this.setResizable(false); 
             this.ProfileName.setText(MainForm.userName);
             queryString = "select a.description from Account a where a.username = '" +
                     MainForm.userName.toString() + "'";
-            System.out.println(queryString);
-            stmt= dbc.getMyConnection().createStatement(); 
             rs = stmt.executeQuery(queryString);
             rs.next();
             this.descriptionTextField.setText(rs.getString("description"));
@@ -479,8 +519,6 @@ public class DeveloperForm extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(DeveloperForm.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
     }
 
     private void showGameList() {
@@ -498,6 +536,7 @@ public class DeveloperForm extends javax.swing.JFrame {
     }
 
     private void showGroupList() {
+
         try {
             String queryStrGroup = "Select DISTINCT G.groupName from FriendGroup G , WithinGroup W where G.gID = W.withinGroupID and W.memberUserID=" + MainForm.userID;
             rs = stmt.executeQuery(queryStrGroup);
@@ -510,10 +549,5 @@ public class DeveloperForm extends javax.swing.JFrame {
             Logger.getLogger(DeveloperForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
-    private void showReviewList() {
-        return;
-    }
-    
     
 }
