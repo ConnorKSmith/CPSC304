@@ -40,8 +40,8 @@ public class GameInfoForm extends javax.swing.JFrame {
             thisGameID = rs.getInt("gameID");
             initializeReviewButton();
             showReviewList();
+            showAchievementList();
             showGameInfo(gameName, gameDescription, creatorID, price);
-            showAchievements();
             setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         } catch (SQLException ex) {
             Logger.getLogger(GameInfoForm.class.getName()).log(Level.SEVERE, null, ex);
@@ -217,8 +217,18 @@ public class GameInfoForm extends javax.swing.JFrame {
 
     private void achievementListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_achievementListMouseClicked
         // TODO add your handling code here:
-        String selectedReview = achievementList.getSelectedValue();
-
+        try {
+            // TODO add your handling code here:
+            String selectedAchievement = achievementList.getSelectedValue();
+            String query = "select A.aID, G.gameID from Achievement A, Game G where A.aName='"
+                                    + selectedAchievement + "' and G.gameID = " + thisGameID;
+            rs = stmt.executeQuery(query);
+            if (rs.next()){
+            new SearchAchievementForm(rs.getInt("aID"), rs.getInt("gameID")).setVisible(true);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProfileForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_achievementListMouseClicked
 
     /**
@@ -292,11 +302,11 @@ public class GameInfoForm extends javax.swing.JFrame {
             Logger.getLogger(ProfileForm.class.getName()).log(Level.SEVERE, null, ex);
         }    
     }
-
-    private void showAchievements() {
+    
+    private void showAchievementList() {
         try {
-            String queryStr = "select * from Achievement where gameID=" + thisGameID;
-            
+            String queryStr = "select A.aName from Achievement A where gameID=" + thisGameID;
+
             rs = stmt.executeQuery(queryStr);
             DefaultListModel achievementListModel = new DefaultListModel();
             while (rs.next()){
@@ -305,6 +315,6 @@ public class GameInfoForm extends javax.swing.JFrame {
             achievementList.setModel(achievementListModel);
         } catch (SQLException ex) {
             Logger.getLogger(ProfileForm.class.getName()).log(Level.SEVERE, null, ex);
-        }  
+        }    
     }
 }
