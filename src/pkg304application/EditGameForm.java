@@ -63,6 +63,7 @@ public class EditGameForm extends javax.swing.JFrame {
         saveChangesButton = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         deleteAchievementButton = new javax.swing.JButton();
+        editAchievementButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -108,6 +109,23 @@ public class EditGameForm extends javax.swing.JFrame {
                 deleteAchievementButtonMouseClicked(evt);
             }
         });
+        deleteAchievementButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteAchievementButtonActionPerformed(evt);
+            }
+        });
+
+        editAchievementButton.setText("Edit Achievement");
+        editAchievementButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editAchievementButtonMouseClicked(evt);
+            }
+        });
+        editAchievementButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editAchievementButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -131,12 +149,13 @@ public class EditGameForm extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(27, 27, 27)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(addAchievementButton, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(deleteAchievementButton))
-                            .addComponent(saveChangesButton))))
-                .addContainerGap(54, Short.MAX_VALUE))
+                            .addComponent(addAchievementButton)
+                            .addComponent(saveChangesButton))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(deleteAchievementButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(editAchievementButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap(123, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -156,9 +175,11 @@ public class EditGameForm extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addAchievementButton)
-                    .addComponent(deleteAchievementButton))
+                    .addComponent(editAchievementButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(saveChangesButton))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(saveChangesButton)
+                    .addComponent(deleteAchievementButton)))
         );
 
         pack();
@@ -220,6 +241,32 @@ public class EditGameForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_deleteAchievementButtonMouseClicked
 
+    private void deleteAchievementButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteAchievementButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_deleteAchievementButtonActionPerformed
+
+    private void editAchievementButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editAchievementButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_editAchievementButtonActionPerformed
+
+    private void editAchievementButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editAchievementButtonMouseClicked
+        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            String selectedAchievement = achievementList.getSelectedValue();
+            String query = "select A.aID, G.gameID from Game G, Achievement A where A.aName='"
+                                    + selectedAchievement + "' and G.gameID = " + thisGameID;
+            rs = stmt.executeQuery(query);
+            
+            
+            if (rs.next()){
+            new EditAchievementForm(rs.getInt("aID"), rs.getInt("gameID")).setVisible(true);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProfileForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_editAchievementButtonMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -259,6 +306,7 @@ public class EditGameForm extends javax.swing.JFrame {
     private javax.swing.JList<String> achievementList;
     private javax.swing.JButton addAchievementButton;
     private javax.swing.JButton deleteAchievementButton;
+    private javax.swing.JButton editAchievementButton;
     private javax.swing.JTextArea gameDescriptionArea;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

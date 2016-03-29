@@ -46,16 +46,17 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Component id="addAchievementButton" min="-2" pref="247" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="deleteAchievementButton" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Component id="saveChangesButton" min="-2" max="-2" attributes="0"/>
+                          <Component id="addAchievementButton" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="saveChangesButton" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="deleteAchievementButton" max="32767" attributes="0"/>
+                          <Component id="editAchievementButton" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace pref="54" max="32767" attributes="0"/>
+              <EmptySpace pref="123" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -78,10 +79,13 @@
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="addAchievementButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="deleteAchievementButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="editAchievementButton" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="saveChangesButton" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="saveChangesButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="deleteAchievementButton" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
           </Group>
       </Group>
     </DimensionLayout>
@@ -169,6 +173,16 @@
       </Properties>
       <Events>
         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="deleteAchievementButtonMouseClicked"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deleteAchievementButtonActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="editAchievementButton">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Edit Achievement"/>
+      </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="editAchievementButtonMouseClicked"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="editAchievementButtonActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>
