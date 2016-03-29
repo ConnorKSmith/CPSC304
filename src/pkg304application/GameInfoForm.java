@@ -40,6 +40,7 @@ public class GameInfoForm extends javax.swing.JFrame {
             thisGameID = rs.getInt("gameID");
             initializeReviewButton();
             showReviewList();
+            showAchievementList();
             showGameInfo(gameName, gameDescription, creatorID, price);
             setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         } catch (SQLException ex) {
@@ -110,6 +111,11 @@ public class GameInfoForm extends javax.swing.JFrame {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
+        });
+        achievementList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                achievementListMouseClicked(evt);
+            }
         });
         achievementTab.setViewportView(achievementList);
 
@@ -209,6 +215,22 @@ public class GameInfoForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_reviewListMouseClicked
 
+    private void achievementListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_achievementListMouseClicked
+        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            String selectedAchievement = achievementList.getSelectedValue();
+            String query = "select A.aID, G.gameID from Achievement A, Game G where A.aName='"
+                                    + selectedAchievement + "' and G.gameID = " + thisGameID;
+            rs = stmt.executeQuery(query);
+            if (rs.next()){
+            new SearchAchievementForm(rs.getInt("aID"), rs.getInt("gameID")).setVisible(true);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProfileForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_achievementListMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -276,6 +298,21 @@ public class GameInfoForm extends javax.swing.JFrame {
                 reviewListModel.addElement(rs.getString("userName"));
             }
             reviewList.setModel(reviewListModel);
+        } catch (SQLException ex) {
+            Logger.getLogger(ProfileForm.class.getName()).log(Level.SEVERE, null, ex);
+        }    
+    }
+    
+    private void showAchievementList() {
+        try {
+            String queryStr = "select A.aName from Achievement A where gameID=" + thisGameID;
+
+            rs = stmt.executeQuery(queryStr);
+            DefaultListModel achievementListModel = new DefaultListModel();
+            while (rs.next()){
+                achievementListModel.addElement(rs.getString("aName"));
+            }
+            achievementList.setModel(achievementListModel);
         } catch (SQLException ex) {
             Logger.getLogger(ProfileForm.class.getName()).log(Level.SEVERE, null, ex);
         }    
