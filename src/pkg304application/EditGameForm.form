@@ -46,8 +46,13 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="saveChangesButton" min="-2" max="-2" attributes="0"/>
-                          <Component id="editAchievement" min="-2" pref="158" max="-2" attributes="0"/>
+                          <Component id="addAchievementButton" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="saveChangesButton" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="deleteAchievementButton" max="32767" attributes="0"/>
+                          <Component id="editAchievementButton" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="addAchievementButton" min="-2" pref="155" max="-2" attributes="0"/>
@@ -76,10 +81,13 @@
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="addAchievementButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="editAchievement" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="editAchievementButton" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="saveChangesButton" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="saveChangesButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="deleteAchievementButton" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
           </Group>
       </Group>
     </DimensionLayout>
@@ -139,6 +147,9 @@
               </StringArray>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="achievementListMouseClicked"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
@@ -158,10 +169,23 @@
         <Property name="text" type="java.lang.String" value="Game Achievements:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="editAchievement">
+    <Component class="javax.swing.JButton" name="deleteAchievementButton">
+      <Properties>
+        <Property name="label" type="java.lang.String" value="Delete Achievement"/>
+      </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="deleteAchievementButtonMouseClicked"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deleteAchievementButtonActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="editAchievementButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="Edit Achievement"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="editAchievementButtonMouseClicked"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="editAchievementButtonActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

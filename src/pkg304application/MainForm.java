@@ -49,6 +49,7 @@ public class MainForm extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(480, 380));
         setResizable(false);
+        setSize(new java.awt.Dimension(480, 380));
         getContentPane().setLayout(null);
 
         logInTitle.setFont(new java.awt.Font("Nanum Brush Script", 0, 36)); // NOI18N
@@ -81,8 +82,9 @@ public class MainForm extends javax.swing.JFrame {
 
         signUpButton.setFont(new java.awt.Font("Nanum Brush Script", 0, 20)); // NOI18N
         signUpButton.setForeground(new java.awt.Color(255, 255, 255));
-        signUpButton.setText("Sign up!");
+        signUpButton.setText("[  Sign up!  ]");
         signUpButton.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 2, true));
+        signUpButton.setBorderPainted(false);
         signUpButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 signUpButtonMouseClicked(evt);
@@ -93,8 +95,9 @@ public class MainForm extends javax.swing.JFrame {
 
         loginButton.setFont(new java.awt.Font("Nanum Brush Script", 0, 20)); // NOI18N
         loginButton.setForeground(new java.awt.Color(255, 255, 255));
-        loginButton.setText("Enter!");
+        loginButton.setText("[         Enter!           ]");
         loginButton.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 2, true));
+        loginButton.setBorderPainted(false);
         loginButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 loginButtonMouseClicked(evt);
@@ -133,7 +136,6 @@ public class MainForm extends javax.swing.JFrame {
                 stmt = dbc.getMyConnection().createStatement(); 
                 rs = stmt.executeQuery(queryStr);
                 if (rs.next()){
-                    System.out.println("TEST");
                     isPlayer = true;
                 }
                 String adminStr = "Select AdminID from Admin where AdminID ="+userID+"";
@@ -153,7 +155,6 @@ public class MainForm extends javax.swing.JFrame {
                   this.dispose();
                 }
                 else {
-                    System.out.println("opening develoepr view");
                     new DeveloperForm().setVisible(true);
                     this.setVisible(false);
                     this.dispose();

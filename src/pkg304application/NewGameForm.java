@@ -8,6 +8,7 @@ import pkg304application.database.*;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -50,8 +51,6 @@ public class NewGameForm extends javax.swing.JFrame {
         gameDescriptionField = new javax.swing.JTextArea();
         priceField = new javax.swing.JTextField();
         gameNameField = new javax.swing.JTextField();
-        creatorNameLabel = new javax.swing.JLabel();
-        creatorNameField = new javax.swing.JTextField();
         genreLabel = new javax.swing.JLabel();
         genreList = new java.awt.Choice();
         createButton = new javax.swing.JButton();
@@ -68,19 +67,12 @@ public class NewGameForm extends javax.swing.JFrame {
         gameDescriptionField.setRows(5);
         jScrollPane1.setViewportView(gameDescriptionField);
 
-        creatorNameLabel.setText("Creator Name:");
-
         genreLabel.setText("Genre:");
 
         createButton.setText("Create.");
         createButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 createButtonMouseClicked(evt);
-            }
-        });
-        createButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                createButtonActionPerformed(evt);
             }
         });
 
@@ -107,24 +99,16 @@ public class NewGameForm extends javax.swing.JFrame {
                             .addComponent(jScrollPane1)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(gameNameLabel)
-                                    .addComponent(creatorNameLabel))
-                                .addGap(181, 181, 181)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(gameNameField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(creatorNameField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(gameNameLabel)
+                                .addGap(192, 192, 192)
+                                .addComponent(gameNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(createButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(45, 45, 45))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(creatorNameLabel)
-                    .addComponent(creatorNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(67, 67, 67)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(gameNameLabel)
                     .addComponent(gameNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -132,7 +116,6 @@ public class NewGameForm extends javax.swing.JFrame {
                 .addComponent(gameDescriptionLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(priceLabel)
@@ -150,10 +133,6 @@ public class NewGameForm extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void createButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_createButtonActionPerformed
-
     private void createButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_createButtonMouseClicked
         try {
             // TODO add your handling code here:
@@ -163,10 +142,13 @@ public class NewGameForm extends javax.swing.JFrame {
             double currentPrice = Double.parseDouble(priceField.getText());
             String genre = genreList.getSelectedItem();
             
-            if (gameNameField.getText().equals(null)){
-                System.out.println("You must enter game name");
+            if (gameNameField.getText().equals("")){
+                JOptionPane.showMessageDialog(null, "Please enter a game name!", "Missing Information:", JOptionPane.INFORMATION_MESSAGE);
                 return;
             }
+            
+            int reply = JOptionPane.showConfirmDialog(null, "Confirm the information.", "Creating a new game:", JOptionPane.YES_NO_OPTION);
+            if (reply == JOptionPane.YES_OPTION){            
             
             String insertStr = "insert into Game(gName, gDescription, creatorID, currentPrice) values('" + gameName + "' , '" + gameDescription + "' , "
                     + creatorID + " , " + currentPrice + ")";
@@ -181,12 +163,12 @@ public class NewGameForm extends javax.swing.JFrame {
             
             this.setVisible(false);
             this.dispose();
-            
+            }
             
         } catch (SQLException ex) {
             Logger.getLogger(NewGameForm.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NumberFormatException nfe){
-            System.out.println("You must enter a valid price!");
+            JOptionPane.showMessageDialog(null, "Please enter a valid price!", "Missing Information:", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
          
@@ -197,8 +179,6 @@ public class NewGameForm extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton createButton;
-    private javax.swing.JTextField creatorNameField;
-    private javax.swing.JLabel creatorNameLabel;
     private javax.swing.JTextArea gameDescriptionField;
     private javax.swing.JLabel gameDescriptionLabel;
     private javax.swing.JTextField gameNameField;

@@ -5,40 +5,46 @@
  */
 package pkg304application;
 
-import java.sql.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static pkg304application.GameInfoForm.thisGameID;
 import pkg304application.database.DatabaseConnection;
 
 /**
  *
- * @author jko
+ * @author Connor
  */
 public class AchievementForm extends javax.swing.JFrame {
 
     /**
-     * Creates new form AchievementForm
+     * Creates new form NewJFrame
      */
     
+    ResultSet rs;
     Statement stmt;
-    ResultSet rs; 
-    String thisGameName;
+    String gName;
     
+    public AchievementForm(){
+        initComponents();
+    }
     
-    public AchievementForm(String gameName) {
+    public AchievementForm(String gName) {
+        
         try {
             DatabaseConnection dbc = new DatabaseConnection();
             dbc.init();
-            thisGameName = gameName;
-            stmt = dbc.getMyConnection().createStatement();
             initComponents();
+            stmt = dbc.getMyConnection().createStatement();
+            
             setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         } catch (SQLException ex) {
-            Logger.getLogger(AchievementForm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GameInfoForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -48,96 +54,174 @@ public class AchievementForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel3 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        nameField = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        descField = new javax.swing.JTextArea();
-        addButton = new javax.swing.JButton();
-
-        jLabel3.setText("jLabel3");
+        achievementDescription = new javax.swing.JTextPane();
+        Description = new java.awt.Label();
+        confirmButton = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        achievementName = new javax.swing.JTextArea();
+        label1 = new java.awt.Label();
+        gameName = new java.awt.Label();
+        totalNeeded = new java.awt.TextArea();
+        totalDescription = new java.awt.Label();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("Achievement Name:");
+        jScrollPane1.setViewportView(achievementDescription);
 
-        jLabel2.setText("Achievement Description:");
-
-        descField.setColumns(20);
-        descField.setRows(5);
-        jScrollPane1.setViewportView(descField);
-
-        addButton.setText("Add");
-        addButton.addMouseListener(new java.awt.event.MouseAdapter() {
+        Description.setText("Achievement description:");
+        Description.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                addButtonMouseClicked(evt);
+                DescriptionMouseClicked(evt);
             }
         });
+
+        confirmButton.setText("Confirm");
+        confirmButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                confirmButtonMouseClicked(evt);
+            }
+        });
+        confirmButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                confirmButtonActionPerformed(evt);
+            }
+        });
+
+        achievementName.setColumns(20);
+        achievementName.setRows(5);
+        jScrollPane2.setViewportView(achievementName);
+
+        label1.setText("Achievement name:");
+
+        gameName.setText(gName);
+
+        totalDescription.setText("Total Needed:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(36, 36, 36)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(addButton)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(49, Short.MAX_VALUE))
+                .addGap(44, 44, 44)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(totalDescription, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(31, 31, 31)
+                        .addComponent(totalNeeded, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(16, 16, 16)
+                        .addComponent(confirmButton))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(gameName, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(Description, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jScrollPane1)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)))
+                .addGap(0, 40, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(58, 58, 58)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(20, Short.MAX_VALUE)
+                .addComponent(gameName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29)
+                .addComponent(Description, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel2)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(addButton)
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(totalNeeded, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(totalDescription, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(confirmButton))
+                .addContainerGap(64, Short.MAX_VALUE))
         );
+
+        totalDescription.getAccessibleContext().setAccessibleName("Total Needed:");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void addButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addButtonMouseClicked
+    private void DescriptionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DescriptionMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_DescriptionMouseClicked
+
+    private void confirmButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirmButtonMouseClicked
+        // TODO add your handling code here:
+            
         try {
-            // TODO add your handling code here:
-            String query = "select gameID from Game where gName='" + thisGameName + "'";
-            rs = stmt.executeQuery(query);
-            rs.next();
-            String insert = "insert into Achievement(aDesc, aName, totalNeeded, gameID) values('" + descField.getText() + "', '" + nameField.getText() 
-                                + "' , 100," + Integer.toString(rs.getInt("gameID")) + ")";
+            
+            if (achievementName.getText().equals(null)){
+                System.out.println("You must enter game name");
+                return;
+            }
+            
+            String insert = "Insert into Achievement(aDesc, aName, totalNeeded, gameID) values('"
+                    + achievementDescription.getText() + "' , '" + achievementName.getText() +  "' , '" + 
+                    Integer.parseInt(totalNeeded.getText()) + "' , " + GameInfoForm.thisGameID + ")";
             stmt.executeUpdate(insert);
-            System.out.println(insert);
             this.setVisible(false);
             this.dispose();
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(AchievementForm.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        catch (SQLException ex) {
+            Logger.getLogger(ReviewForm.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_addButtonMouseClicked
+    }//GEN-LAST:event_confirmButtonMouseClicked
 
+    private void confirmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_confirmButtonActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(AchievementForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(AchievementForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(AchievementForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(AchievementForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new AchievementForm().setVisible(true);
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton addButton;
-    private javax.swing.JTextArea descField;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
+    private java.awt.Label Description;
+    private javax.swing.JTextPane achievementDescription;
+    private javax.swing.JTextArea achievementName;
+    private javax.swing.JButton confirmButton;
+    private java.awt.Label gameName;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField nameField;
+    private javax.swing.JScrollPane jScrollPane2;
+    private java.awt.Label label1;
+    private java.awt.Label totalDescription;
+    private java.awt.TextArea totalNeeded;
     // End of variables declaration//GEN-END:variables
 }

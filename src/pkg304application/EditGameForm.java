@@ -9,6 +9,8 @@ import pkg304application.database.DatabaseConnection;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
+import static pkg304application.GameInfoForm.thisGameID;
 
 /**
  *
@@ -27,10 +29,14 @@ public class EditGameForm extends javax.swing.JFrame {
     public EditGameForm(String gameName) {
         try {
             initComponents();
+            gName = gameName;
             DatabaseConnection dbc = new DatabaseConnection();
             dbc.init();
             stmt = dbc.getMyConnection().createStatement();
             showGameInfo(gameName);
+            showAchievementList();
+            setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
         } catch (SQLException ex) {
             Logger.getLogger(EditGameForm.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -55,7 +61,8 @@ public class EditGameForm extends javax.swing.JFrame {
         achievementList = new javax.swing.JList<>();
         saveChangesButton = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        editAchievement = new javax.swing.JButton();
+        deleteAchievementButton = new javax.swing.JButton();
+        editAchievementButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -67,7 +74,7 @@ public class EditGameForm extends javax.swing.JFrame {
 
         jLabel2.setText("Game Price: ");
 
-        addAchievementButton.setText("Add Achievement");
+        addAchievementButton.setText("Add New Achievements");
         addAchievementButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 addAchievementButtonMouseClicked(evt);
@@ -78,6 +85,11 @@ public class EditGameForm extends javax.swing.JFrame {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
+        });
+        achievementList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                achievementListMouseClicked(evt);
+            }
         });
         jScrollPane2.setViewportView(achievementList);
 
@@ -90,7 +102,29 @@ public class EditGameForm extends javax.swing.JFrame {
 
         jLabel3.setText("Game Achievements:");
 
-        editAchievement.setText("Edit Achievement");
+        deleteAchievementButton.setLabel("Delete Achievement");
+        deleteAchievementButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                deleteAchievementButtonMouseClicked(evt);
+            }
+        });
+        deleteAchievementButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteAchievementButtonActionPerformed(evt);
+            }
+        });
+
+        editAchievementButton.setText("Edit Achievement");
+        editAchievementButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editAchievementButtonMouseClicked(evt);
+            }
+        });
+        editAchievementButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editAchievementButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -114,10 +148,12 @@ public class EditGameForm extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(27, 27, 27)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(saveChangesButton)
-                            .addComponent(editAchievement, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(addAchievementButton)
+                            .addComponent(saveChangesButton))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(addAchievementButton, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(deleteAchievementButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(editAchievementButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(123, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -138,9 +174,11 @@ public class EditGameForm extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addAchievementButton)
-                    .addComponent(editAchievement))
+                    .addComponent(editAchievementButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(saveChangesButton))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(saveChangesButton)
+                    .addComponent(deleteAchievementButton)))
         );
 
         pack();
@@ -162,14 +200,79 @@ public class EditGameForm extends javax.swing.JFrame {
     }//GEN-LAST:event_saveChangesButtonMouseClicked
 
     private void addAchievementButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addAchievementButtonMouseClicked
-        // TODO add your handling code here:
         new AchievementForm(gName).setVisible(true);
     }//GEN-LAST:event_addAchievementButtonMouseClicked
+
+    private void achievementListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_achievementListMouseClicked
+        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            String selectedAchievement = achievementList.getSelectedValue();
+            String query = "select A.aID, G.gameID from Game G, Achievement A where A.aName='"
+                                    + selectedAchievement + "' and G.gameID = " + thisGameID;
+            rs = stmt.executeQuery(query);
+            
+            
+            if (rs.next()){
+            new SearchAchievementForm(rs.getInt("aID"), rs.getInt("gameID")).setVisible(true);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProfileForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_achievementListMouseClicked
+
+    private void deleteAchievementButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteAchievementButtonMouseClicked
+        // TODO add your handling code here:
+        String insertStr;
+        String selected = achievementList.getSelectedValue();
+        
+        try{
+            String selectStr = "select * from Achievement A where A.aName = '" + selected + "'";
+            rs = stmt.executeQuery(selectStr);
+            rs.next();
+            int aid  = rs.getInt("aID");
+            
+            insertStr = "delete from Achievement where aID = "+aid+"";                              
+            stmt.executeUpdate(insertStr);
+            refresh();
+        } catch (SQLException ex) {
+            Logger.getLogger(DeveloperForm.class.getName()).log(Level.SEVERE, null, ex);
+            return;
+        }
+    }//GEN-LAST:event_deleteAchievementButtonMouseClicked
+
+    private void deleteAchievementButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteAchievementButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_deleteAchievementButtonActionPerformed
+
+    private void editAchievementButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editAchievementButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_editAchievementButtonActionPerformed
+
+    private void editAchievementButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editAchievementButtonMouseClicked
+        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            String selectedAchievement = achievementList.getSelectedValue();
+            String query = "select A.aID, G.gameID from Game G, Achievement A where A.aName='"
+                                    + selectedAchievement + "' and G.gameID = " + thisGameID;
+            rs = stmt.executeQuery(query);
+            
+            
+            if (rs.next()){
+            new EditAchievementForm(rs.getInt("aID"), rs.getInt("gameID")).setVisible(true);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProfileForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_editAchievementButtonMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList<String> achievementList;
     private javax.swing.JButton addAchievementButton;
-    private javax.swing.JButton editAchievement;
+    private javax.swing.JButton deleteAchievementButton;
+    private javax.swing.JButton editAchievementButton;
     private javax.swing.JTextArea gameDescriptionArea;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -194,4 +297,25 @@ public class EditGameForm extends javax.swing.JFrame {
         }
         
     }
+    
+    private void showAchievementList() {
+        try {
+            String queryStr = "select A.aName from Achievement A where gameID=" + thisGameID;
+
+            rs = stmt.executeQuery(queryStr);
+            DefaultListModel achievementListModel = new DefaultListModel();
+            while (rs.next()){
+                achievementListModel.addElement(rs.getString("aName"));
+            }
+            achievementList.setModel(achievementListModel);
+        } catch (SQLException ex) {
+            Logger.getLogger(ProfileForm.class.getName()).log(Level.SEVERE, null, ex);
+        }    
+    }
+    
+    private void refresh() {
+        this.setVisible(false);
+        new EditGameForm(gName).setVisible(true);
+    }
+    
 }

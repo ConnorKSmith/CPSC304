@@ -320,10 +320,10 @@ public class ProfileForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         int reply = JOptionPane.showConfirmDialog(null, "Log out?", "Leaving?", JOptionPane.YES_NO_OPTION);
         if (reply == JOptionPane.YES_OPTION){
-        new MainForm().setVisible(true);
-        MainForm.userName="";
-        this.setVisible(false);
-        this.dispose(); 
+            new MainForm().setVisible(true);
+            MainForm.userName="";
+            this.setVisible(false);
+            this.dispose(); 
         }
     }//GEN-LAST:event_logoutButtonMouseClicked
 
