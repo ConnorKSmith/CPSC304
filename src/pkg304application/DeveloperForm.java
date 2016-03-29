@@ -78,8 +78,10 @@ public class DeveloperForm extends javax.swing.JFrame {
         userRadioButton = new javax.swing.JRadioButton();
         groupRadioButton = new javax.swing.JRadioButton();
         gameRadioButton = new javax.swing.JRadioButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(860, 700));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         editButton.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
@@ -166,7 +168,7 @@ public class DeveloperForm extends javax.swing.JFrame {
 
         GroupAndGames.addTab("Groups", jScrollPane2);
 
-        getContentPane().add(GroupAndGames, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 430, 770, 220));
+        getContentPane().add(GroupAndGames, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 430, 370, 220));
 
         searchField.setFont(new java.awt.Font("PT Serif Caption", 0, 14)); // NOI18N
         searchField.addActionListener(new java.awt.event.ActionListener() {
@@ -194,7 +196,7 @@ public class DeveloperForm extends javax.swing.JFrame {
                 createGameButtonMouseClicked(evt);
             }
         });
-        getContentPane().add(createGameButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 670, 180, 60));
+        getContentPane().add(createGameButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 470, 150, 40));
 
         refreshButton.setText("Refresh");
         refreshButton.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -228,7 +230,7 @@ public class DeveloperForm extends javax.swing.JFrame {
                 editGameButtonMouseClicked(evt);
             }
         });
-        getContentPane().add(editGameButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 670, 150, 60));
+        getContentPane().add(editGameButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 520, 150, 50));
 
         deleteGameButton.setText("Delete Game");
         deleteGameButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -236,7 +238,7 @@ public class DeveloperForm extends javax.swing.JFrame {
                 deleteGameButtonMouseClicked(evt);
             }
         });
-        getContentPane().add(deleteGameButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 660, 150, 70));
+        getContentPane().add(deleteGameButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 580, 150, 50));
 
         createGroupButton.setText("Create Group");
         createGroupButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -244,7 +246,7 @@ public class DeveloperForm extends javax.swing.JFrame {
                 createGroupButtonMouseClicked(evt);
             }
         });
-        getContentPane().add(createGroupButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 660, 190, 80));
+        getContentPane().add(createGroupButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 470, 150, 40));
 
         userRadioButton.setText("users");
         getContentPane().add(userRadioButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 100, -1, -1));
@@ -254,6 +256,9 @@ public class DeveloperForm extends javax.swing.JFrame {
 
         gameRadioButton.setText("games");
         getContentPane().add(gameRadioButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 100, -1, -1));
+
+        jButton1.setText("Check Achievements");
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 520, 160, 50));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -481,6 +486,7 @@ public class DeveloperForm extends javax.swing.JFrame {
     private javax.swing.JRadioButton gameRadioButton;
     private javax.swing.JList<String> groupList;
     private javax.swing.JRadioButton groupRadioButton;
+    private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
