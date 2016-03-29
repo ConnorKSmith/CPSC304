@@ -21,7 +21,7 @@ public class SearchUserForm extends javax.swing.JFrame {
     
     Statement stmt = null;
     ResultSet rs = null;
-    int thisUserID;
+    static int thisUserID;
     Boolean isDev;
     /**
      * Creates new form ProfileForm
@@ -29,7 +29,6 @@ public class SearchUserForm extends javax.swing.JFrame {
     public SearchUserForm(int searchUserID, boolean dev) {
             initComponents();
             setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-
             if (searchUserID == 0){
                 searchUserID = DeveloperForm.searchUserID;
             }
@@ -39,7 +38,7 @@ public class SearchUserForm extends javax.swing.JFrame {
             showFriendList();
             showGameList();
             showGroupList();
-            
+            showReviewList();
     }
 
     /**
@@ -57,12 +56,14 @@ public class SearchUserForm extends javax.swing.JFrame {
         Friends = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         friendList = new javax.swing.JList<>();
-        GroupAndGames = new javax.swing.JTabbedPane();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        groupList = new javax.swing.JList<>();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        gameList = new javax.swing.JList<>();
         addFriend = new javax.swing.JButton();
+        Tabs = new javax.swing.JTabbedPane();
+        gamesTab = new javax.swing.JScrollPane();
+        gameList = new javax.swing.JList<>();
+        groupsTab = new javax.swing.JScrollPane();
+        groupList = new javax.swing.JList<>();
+        reviewsTab = new javax.swing.JScrollPane();
+        reviewList = new javax.swing.JList<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -96,30 +97,6 @@ public class SearchUserForm extends javax.swing.JFrame {
 
         getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 160, 120, 200));
 
-        GroupAndGames.setFont(new java.awt.Font("PT Sans Caption", 1, 14)); // NOI18N
-
-        groupList.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        groupList.setFont(new java.awt.Font("PT Serif Caption", 1, 14)); // NOI18N
-        groupList.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane2.setViewportView(groupList);
-
-        GroupAndGames.addTab("Groups", jScrollPane2);
-
-        gameList.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane4.setViewportView(gameList);
-
-        GroupAndGames.addTab("Games", jScrollPane4);
-
-        getContentPane().add(GroupAndGames, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 430, 770, 220));
-
         addFriend.setText("Add Friend");
         addFriend.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -127,6 +104,58 @@ public class SearchUserForm extends javax.swing.JFrame {
             }
         });
         getContentPane().add(addFriend, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 120, -1, -1));
+
+        Tabs.setFont(new java.awt.Font("Univers LT 45 Light", 1, 12)); // NOI18N
+
+        gameList.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        gameList.setFont(new java.awt.Font("Univers LT 45 Light", 1, 14)); // NOI18N
+        gameList.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        gameList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                gameListMouseClicked(evt);
+            }
+        });
+        gamesTab.setViewportView(gameList);
+
+        Tabs.addTab("Games", gamesTab);
+
+        groupList.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        groupList.setFont(new java.awt.Font("Univers LT 45 Light", 1, 14)); // NOI18N
+        groupList.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        groupList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                groupListMouseClicked(evt);
+            }
+        });
+        groupsTab.setViewportView(groupList);
+
+        Tabs.addTab("Groups", groupsTab);
+
+        reviewList.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        reviewList.setFont(new java.awt.Font("Univers LT 45 Light", 1, 14)); // NOI18N
+        reviewList.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        reviewList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                reviewListMouseClicked(evt);
+            }
+        });
+        reviewsTab.setViewportView(reviewList);
+
+        Tabs.addTab("Reviews", reviewsTab);
+
+        getContentPane().add(Tabs, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 390, 740, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -155,23 +184,73 @@ public class SearchUserForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_addFriendMouseClicked
 
+    private void gameListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_gameListMouseClicked
+        try {
+            // TODO add your handling code here:
+            String selectedGame = gameList.getSelectedValue();
+            if (selectedGame == null){
+                return;
+            }
+            String queryStr = "Select * from Game where gName='" + selectedGame + "'";
+            rs = stmt.executeQuery(queryStr);
+            rs.next();
+            new GameInfoForm(rs.getString("gName"), rs.getString("gDescription"), rs.getInt("creatorID"), rs.getInt("currentPrice")).setVisible(true);
+            System.out.println("Showing game info of " + rs.getString("gName"));
+        } catch (SQLException ex) {
+            Logger.getLogger(ProfileForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_gameListMouseClicked
+
+    private void groupListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_groupListMouseClicked
+        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            String selectedGroup = groupList.getSelectedValue();
+            String queryStr = "Select * from FriendGroup F where F.groupName='" + selectedGroup + "'";
+            rs = stmt.executeQuery(queryStr);
+            rs.next();
+            new GroupInfoForm(rs.getString("groupName"), rs.getString("groupDesc"), rs.getInt("creatorUserID"), rs.getString("dateCreated")).setVisible(true);
+            System.out.println("Showing group info of " + rs.getString("groupName"));
+        } catch (SQLException ex) {
+            Logger.getLogger(ProfileForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_groupListMouseClicked
+
+    private void reviewListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reviewListMouseClicked
+        try {
+            // TODO add your handling code here:
+            String selectedReview = reviewList.getSelectedValue();
+            String query = "select G.gameID from Game G, Review R where R.reviewerID="+ thisUserID + " and G.gameID = R.gameReviewedID and G.gName='" + selectedReview + "'";
+            System.out.println(query);
+            rs = stmt.executeQuery(query);
+            rs.next();
+            int gameID = rs.getInt("gameID");
+            new SearchReviewForm(MainForm.userID, gameID).setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(ProfileForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_reviewListMouseClicked
+
     /**
      * @param args the command line arguments
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Friends;
-    private javax.swing.JTabbedPane GroupAndGames;
     private javax.swing.JLabel ProfileName;
+    private javax.swing.JTabbedPane Tabs;
     private javax.swing.JButton addFriend;
     private javax.swing.JTextArea descriptionTextField;
     private javax.swing.JList<String> friendList;
     private javax.swing.JList<String> gameList;
+    private javax.swing.JScrollPane gamesTab;
     private javax.swing.JList<String> groupList;
+    private javax.swing.JScrollPane groupsTab;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JList<String> reviewList;
+    private javax.swing.JScrollPane reviewsTab;
     // End of variables declaration//GEN-END:variables
 
     private void showProfileInfo() {
@@ -254,7 +333,19 @@ public class SearchUserForm extends javax.swing.JFrame {
         }
     }
 
-
-    
+    private void showReviewList() {
+        try {
+            String queryStr = "select G.gName, G.gameID from Review R, Game G where R.reviewerID="+ thisUserID 
+                                    + " and R.gameReviewedID = G.gameID group by gName";
+            rs = stmt.executeQuery(queryStr);
+            DefaultListModel reviewListModel = new DefaultListModel();
+            while (rs.next()){
+                reviewListModel.addElement(rs.getString("gName"));
+            }
+            reviewList.setModel(reviewListModel);
+        } catch (SQLException ex) {
+            Logger.getLogger(ProfileForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     
 }

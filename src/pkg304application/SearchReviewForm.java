@@ -111,6 +111,7 @@ public class SearchReviewForm extends javax.swing.JFrame {
             String query = "select * from Review R, Game G, Account A where R.reviewerID="
                     + reviewerID +" and R.gameReviewedID=" + gameID +" and A.userID=" + reviewerID; 
             rs = stmt.executeQuery(query);
+            System.out.println(query);
             rs.next();
             rating.setText(Integer.toString(rs.getInt("rating")));
             reviewArea.setText(rs.getString("reviewDesc"));

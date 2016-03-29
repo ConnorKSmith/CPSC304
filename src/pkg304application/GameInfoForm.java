@@ -218,7 +218,7 @@ public class GameInfoForm extends javax.swing.JFrame {
     private void achievementListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_achievementListMouseClicked
         // TODO add your handling code here:
         String selectedReview = achievementList.getSelectedValue();
-        new SearchAchievementForm(selectedReview).setVisible(true);
+
     }//GEN-LAST:event_achievementListMouseClicked
 
     /**

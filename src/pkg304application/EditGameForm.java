@@ -163,7 +163,6 @@ public class EditGameForm extends javax.swing.JFrame {
 
     private void addAchievementButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addAchievementButtonMouseClicked
         // TODO add your handling code here:
-        new AchievementForm(gName).setVisible(true);
     }//GEN-LAST:event_addAchievementButtonMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
