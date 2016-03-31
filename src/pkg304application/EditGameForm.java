@@ -74,7 +74,7 @@ public class EditGameForm extends javax.swing.JFrame {
 
         jLabel2.setText("Game Price: ");
 
-        addAchievementButton.setText("Add New Achievements");
+        addAchievementButton.setText("Add Achievement");
         addAchievementButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 addAchievementButtonMouseClicked(evt);
