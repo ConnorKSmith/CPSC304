@@ -27,28 +27,21 @@ public class GameLibraryForm extends javax.swing.JFrame {
     /**
      * Creates new form GameLibraryForm
      */
-    public GameLibraryForm(String searchField, boolean isFilter) {
+    public GameLibraryForm(String searchField) {
         try {
-            if (isFilter){
-                initComponents();
-                DatabaseConnection dbc = new DatabaseConnection();
-                dbc.init();
-                stmt = dbc.getMyConnection().createStatement();
-           //     showFilterList(thisFilterQuery);            
-            }else {
-                if (searchField.equals("")){
-                    thisSearchField = "%";
-                } else {
+            if (searchField.equals("")){
+                thisSearchField = "%";
+            } else {
                 thisSearchField = searchField;
-                }
-                initComponents();
-                DatabaseConnection dbc = new DatabaseConnection();
-                dbc.init();
-                stmt = dbc.getMyConnection().createStatement();
-                showGameList(searchField);
-                showFilter();
-                setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
             }
+            initComponents();
+            DatabaseConnection dbc = new DatabaseConnection();
+            dbc.init();
+            stmt = dbc.getMyConnection().createStatement();
+            showGameList(searchField);
+            showFilter();
+            setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+            
         } catch (SQLException ex) {
             Logger.getLogger(GameInfoForm.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -304,17 +297,6 @@ private void showGameList(String searchField) {
         }
     }
 
-    private boolean checkFilter() {
-        if (ratingChoice.getSelectedItem()==null && ratingTextField.getText().equals("") 
-            && priceChoice.getSelectedItem()==null && priceTextField.getText().equals("") 
-            && genreList.getSelectedItem() == null){
-            System.out.println("no filter is selected");
-            return false;
-        } else {
-            System.out.println("filter is selceted");
-            return true;
-        }
-    }
     
     private void showFilter() {
         try {
@@ -355,25 +337,18 @@ private void showGameList(String searchField) {
             
             // 1. genreChoice will always be chosen, the default is action (id consider this a bug, fix after everything else is done)
             thisFilterQuery = thisFilterQuery.concat(" and G.gameID = H.gameID and H.genre='" + genreChoice + "'");
-            System.out.println("AFter adding the genre : " + thisFilterQuery);
-            System.out.println("priceChoice is: " + priceChoice + " priceField is " + priceField);
             // 2. if the user selects prices
             if (!priceChoice.equals("") && !priceField.equals("")){
                 thisFilterQuery = thisFilterQuery.concat(" and G.currentPrice " + priceChoice + priceField);
-                System.out.println("AFter adding the prices : " + thisFilterQuery);
             }
             // 3. if the user selects rating
             if (!ratingChoice.equals("") && !ratingField.equals("")){
                 thisFilterQuery = thisFilterQuery.concat(" and (select avg(rating) from Game G2, Review R2"
                         + " where G2.gameID = R2.gameReviewedID and G2.gName = G.gName) " + ratingChoice + ratingField);
-                System.out.println("AFter adding the ratings : " + thisFilterQuery);
-
             }
-            
-            
+                      
         } else {
-            JOptionPane.showMessageDialog(null, "Rating has to be betweeen 0 and 10, and price must be positive!", "Invalid filter!", JOptionPane.INFORMATION_MESSAGE);
-          
+            JOptionPane.showMessageDialog(null, "Rating has to be betweeen 0 and 10, and price must be positive!", "Invalid filter!", JOptionPane.INFORMATION_MESSAGE);      
         }
     }
     

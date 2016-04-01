@@ -352,7 +352,7 @@ public class DeveloperForm extends javax.swing.JFrame {
          }
          if (games){
             System.out.println("games group library");
-            new GameLibraryForm(textField, false).setVisible(true);
+            new GameLibraryForm(textField).setVisible(true);
          }
     }//GEN-LAST:event_searchButtonMouseClicked
 
