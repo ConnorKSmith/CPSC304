@@ -354,7 +354,7 @@ public class ProfileForm extends javax.swing.JFrame {
         
         if (games){
             System.out.println("games group library");
-            new GameLibraryForm(textField).setVisible(true);
+            new GameLibraryForm(textField, false).setVisible(true);
         }                     
        
     }//GEN-LAST:event_searchButtonMouseClicked

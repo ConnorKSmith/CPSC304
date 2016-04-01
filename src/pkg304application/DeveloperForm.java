@@ -308,9 +308,7 @@ public class DeveloperForm extends javax.swing.JFrame {
               } catch (SQLException ex) {
                 Logger.getLogger(DeveloperForm.class.getName()).log(Level.SEVERE, null, ex);
                 JOptionPane.showMessageDialog(null, "Please limit your description to below 400 characters!", "Not short and sweet!", JOptionPane.INFORMATION_MESSAGE);
-              
-              System.out.println("Successfully stored the description");
-           }
+        }
           this.descriptionTextField.setEditable(false);
           this.editButton.setText("Edit");
           editing = false;
@@ -354,7 +352,7 @@ public class DeveloperForm extends javax.swing.JFrame {
          }
          if (games){
             System.out.println("games group library");
-            new GameLibraryForm(textField).setVisible(true);
+            new GameLibraryForm(textField, false).setVisible(true);
          }
     }//GEN-LAST:event_searchButtonMouseClicked
 

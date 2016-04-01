@@ -11,6 +11,7 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import pkg304application.database.DatabaseConnection;
 
 /**
@@ -21,22 +22,38 @@ public class GameLibraryForm extends javax.swing.JFrame {
     
     public Statement stmt;
     public ResultSet rs;
+    String thisSearchField;
+    String thisFilterQuery;
     /**
      * Creates new form GameLibraryForm
      */
-    public GameLibraryForm(String searchField) {
+    public GameLibraryForm(String searchField, boolean isFilter) {
         try {
-            initComponents();
-            DatabaseConnection dbc = new DatabaseConnection();
-            dbc.init();
-            stmt = dbc.getMyConnection().createStatement();
-            showGameList(searchField);
-            showFilter();
-            setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+            if (isFilter){
+                initComponents();
+                DatabaseConnection dbc = new DatabaseConnection();
+                dbc.init();
+                stmt = dbc.getMyConnection().createStatement();
+           //     showFilterList(thisFilterQuery);            
+            }else {
+                if (searchField.equals("")){
+                    thisSearchField = "%";
+                } else {
+                thisSearchField = searchField;
+                }
+                initComponents();
+                DatabaseConnection dbc = new DatabaseConnection();
+                dbc.init();
+                stmt = dbc.getMyConnection().createStatement();
+                showGameList(searchField);
+                showFilter();
+                setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+            }
         } catch (SQLException ex) {
             Logger.getLogger(GameInfoForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -51,8 +68,6 @@ public class GameLibraryForm extends javax.swing.JFrame {
         gameList = new javax.swing.JList<>();
         addButton = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         ratingChoice = new java.awt.Choice();
         priceChoice = new java.awt.Choice();
@@ -60,6 +75,9 @@ public class GameLibraryForm extends javax.swing.JFrame {
         ratingTextField = new javax.swing.JTextField();
         priceTextField = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        genreList = new java.awt.Choice();
+        filterButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -84,14 +102,6 @@ public class GameLibraryForm extends javax.swing.JFrame {
 
         jLabel1.setText("Search Result for Games:");
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/staticImg/searchIcon.png"))); // NOI18N
-
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
-            }
-        });
-
         jLabel3.setText("narrow by:");
 
         jLabel4.setText("rating");
@@ -104,57 +114,74 @@ public class GameLibraryForm extends javax.swing.JFrame {
 
         jLabel5.setText("price");
 
+        jLabel6.setText("genre");
+
+        filterButton.setText("filter");
+        filterButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                filterButtonMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(addButton)
+                        .addComponent(filterButton)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
+                            .addComponent(addButton)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(19, 19, 19)
-                                .addComponent(ratingChoice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGap(6, 6, 6)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel4)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(ratingChoice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(24, 24, 24)
                                 .addComponent(ratingTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(priceChoice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(priceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addComponent(jLabel1))
-                .addContainerGap(343, Short.MAX_VALUE))
+                                .addComponent(priceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(27, 27, 27)
+                                .addComponent(jLabel6)
+                                .addGap(19, 19, 19)
+                                .addComponent(genreList, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel1))
+                        .addContainerGap(265, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addGap(12, 12, 12)
+                .addGap(32, 32, 32)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4)
+                    .addComponent(ratingChoice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(ratingChoice, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(ratingTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(priceChoice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(priceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(priceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel6))
+                    .addComponent(jLabel5)
+                    .addComponent(genreList, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20)
+                .addComponent(filterButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(26, 26, 26)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -187,8 +214,6 @@ public class GameLibraryForm extends javax.swing.JFrame {
             stmt.executeUpdate(insertStr); 
             this.setVisible(false);
             this.dispose();
-
-          System.out.println("good job jin");
             
         } catch (SQLException ex) {
             Logger.getLogger(GameInfoForm.class.getName()).log(Level.SEVERE, null, ex);
@@ -212,13 +237,26 @@ public class GameLibraryForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_gameListMouseClicked
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
-
     private void priceTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_priceTextFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_priceTextFieldActionPerformed
+
+    private void filterButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_filterButtonMouseClicked
+        try {
+            // TODO add your handling code here:
+            gameLibraryQueryBuilder(ratingChoice.getSelectedItem(), ratingTextField.getText(),
+            priceChoice.getSelectedItem(), priceTextField.getText(), genreList.getSelectedItem());
+            rs = stmt.executeQuery(thisFilterQuery);
+            DefaultListModel gameListModel = new DefaultListModel();
+            while (rs.next()){
+                gameListModel.addElement(rs.getString("gName"));
+            }
+            gameList.setModel(gameListModel);
+          //  refresh();
+        } catch (SQLException ex) {
+            Logger.getLogger(GameLibraryForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_filterButtonMouseClicked
 
     /**
      * @param args the command line arguments
@@ -226,14 +264,15 @@ public class GameLibraryForm extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
+    private javax.swing.JButton filterButton;
     private javax.swing.JList<String> gameList;
+    private java.awt.Choice genreList;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     private java.awt.Choice priceChoice;
     private javax.swing.JTextField priceTextField;
     private java.awt.Choice ratingChoice;
@@ -265,22 +304,105 @@ private void showGameList(String searchField) {
         }
     }
 
+    private boolean checkFilter() {
+        if (ratingChoice.getSelectedItem()==null && ratingTextField.getText().equals("") 
+            && priceChoice.getSelectedItem()==null && priceTextField.getText().equals("") 
+            && genreList.getSelectedItem() == null){
+            System.out.println("no filter is selected");
+            return false;
+        } else {
+            System.out.println("filter is selceted");
+            return true;
+        }
+    }
+    
     private void showFilter() {
-        ratingChoice.add(">");
-        ratingChoice.add(">=");
-        ratingChoice.add("=");
-        ratingChoice.add("<=");
-        ratingChoice.add("<");
-        ratingChoice.add("!=");
-        ratingChoice.add(" ");
-        priceChoice.add(">");
-        priceChoice.add(">=");
-        priceChoice.add("=");
-        priceChoice.add("<=");
-        priceChoice.add("<");
-        priceChoice.add("!=");
-        priceChoice.add(" ");
+        try {
+            ratingChoice.add(">");
+            ratingChoice.add(">=");
+            ratingChoice.add("=");
+            ratingChoice.add("<=");
+            ratingChoice.add("<");
+            ratingChoice.add("!=");
+            ratingChoice.add(" ");
+            priceChoice.add(">");
+            priceChoice.add(">=");
+            priceChoice.add("=");
+            priceChoice.add("<=");
+            priceChoice.add("<");
+            priceChoice.add("!=");
+            priceChoice.add(" ");            
+            String queryStr = "Select * from Genre";
+            ResultSet rs = stmt.executeQuery(queryStr);
+            while (rs.next()){
+              genreList.add(rs.getString("genre"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(NewGameForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void gameLibraryQueryBuilder(String ratingChoice, String ratingField, String priceChoice, String priceField, String genreChoice) {
+        thisFilterQuery = "select distinct G.gName from Game G, Review R, HasGenre H where gName like '" + thisSearchField + "'";
+        if (checkFilterFields()){
+            System.out.println(thisFilterQuery);
+            /*
+            passes the filter field test
+            1.) append the genre query
+            2.) append the price query
+            3.) append the rating query
+            */
+            
+            // 1. genreChoice will always be chosen, the default is action (id consider this a bug, fix after everything else is done)
+            thisFilterQuery = thisFilterQuery.concat(" and G.gameID = H.gameID and H.genre='" + genreChoice + "'");
+            System.out.println("AFter adding the genre : " + thisFilterQuery);
+            System.out.println("priceChoice is: " + priceChoice + " priceField is " + priceField);
+            // 2. if the user selects prices
+            if (!priceChoice.equals("") && !priceField.equals("")){
+                thisFilterQuery = thisFilterQuery.concat(" and G.currentPrice " + priceChoice + priceField);
+                System.out.println("AFter adding the prices : " + thisFilterQuery);
+            }
+            // 3. if the user selects rating
+            if (!ratingChoice.equals("") && !ratingField.equals("")){
+                thisFilterQuery = thisFilterQuery.concat(" and (select avg(rating) from Game G2, Review R2"
+                        + " where G2.gameID = R2.gameReviewedID and G2.gName = G.gName) " + ratingChoice + ratingField);
+                System.out.println("AFter adding the ratings : " + thisFilterQuery);
+
+            }
+            
+            
+        } else {
+            JOptionPane.showMessageDialog(null, "Rating has to be betweeen 0 and 10, and price must be positive!", "Invalid filter!", JOptionPane.INFORMATION_MESSAGE);
+          
+        }
+    }
+    
+    private boolean checkFilterFields() {
+        try{
+        int rating = -1;
+        int price = -1;
+        if (!ratingTextField.getText().equals("")){
+            rating = Integer.parseInt(ratingTextField.getText());
+            if ((rating < 0) && (rating > 10)){
+                return false;
+            }
+        }
+        
+        if (!priceTextField.getText().equals("")){
+            price = Integer.parseInt(priceTextField.getText());
+            if (price < 0){
+                return false;
+            } 
+        }
+        
+        return true;
+        } catch (NumberFormatException nfe){
+            System.out.println("Not a number!");
+            return false;
+        }
         
     }
+    
+
 }
 
