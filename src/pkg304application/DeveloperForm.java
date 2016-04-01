@@ -358,6 +358,27 @@ public class DeveloperForm extends javax.swing.JFrame {
 
     private void friendListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_friendListMouseClicked
         // TODO add your handling code here:
+        if (evt.getClickCount() == 2){
+            String selectedUser = friendList.getSelectedValue();
+            String queryString = "Select A.userID from Account A where A.userName='" + selectedUser + "'";
+                try {
+                    rs = stmt.executeQuery(queryString);
+                    System.out.println(queryString);
+                    if (rs.next()){
+                        String check = "select * from Developer where developerID=" + rs.getInt("userID");
+                        ResultSet rs2 = stmt2.executeQuery(check);
+                        if (rs2.next()){
+                            new SearchUserForm(rs.getInt("userID"), true).setVisible(true);
+                        } else {
+                            new SearchUserForm(rs.getInt("userID"), false).setVisible(true);
+                        }
+                    } else {
+                        System.out.println("no user exists");
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(ProfileForm.class.getName()).log(Level.SEVERE, null, ex);
+                }
+        }            
     }//GEN-LAST:event_friendListMouseClicked
 
     private void createGameButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_createGameButtonMouseClicked
