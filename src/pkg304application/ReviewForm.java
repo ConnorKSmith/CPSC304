@@ -201,7 +201,7 @@ public class ReviewForm extends javax.swing.JFrame {
     private boolean checkRatingField() {
         try{
         int rating = Integer.parseInt(ratingField.getText());
-        if ((rating >= 0) || (rating <= 10) ){
+        if ((rating >= 0) && (rating <= 10) ){
             return true;
         } else {
             return false;

@@ -140,6 +140,9 @@ public class NewGameForm extends javax.swing.JFrame {
             String gameDescription = gameDescriptionField.getText();
             int creatorID = MainForm.userID;
             double currentPrice = Double.parseDouble(priceField.getText());
+            if (currentPrice < 0){
+                JOptionPane.showMessageDialog(null, "Please insert positive values for price!", "Invalid value:", JOptionPane.INFORMATION_MESSAGE);
+            }
             String genre = genreList.getSelectedItem();
             
             if (gameNameField.getText().equals("")){

@@ -300,20 +300,15 @@ public class DeveloperForm extends javax.swing.JFrame {
           this.editButton.setText("Save changes");
           editing = true;
         } else {
-          if (this.descriptionTextField.getText().length() > 100){
-              System.out.println("Description can only be under 100 characters!");
-              this.descriptionTextField.setText(" ");
-            } else {
               String updateStr = "update Account a set a.description = '" + this.descriptionTextField.getText() + 
                       "' where a.username = '" + MainForm.userName.toString() + "'";
               try {
                   System.out.println(updateStr);
                   stmt.executeUpdate(updateStr);
               } catch (SQLException ex) {
-                  Logger.getLogger(DeveloperForm.class.getName()).log(Level.SEVERE, null, ex);
-              }
-              System.out.println("Successfully stored the description");
-           }
+                Logger.getLogger(DeveloperForm.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, "Please limit your description to below 400 characters!", "Not short and sweet!", JOptionPane.INFORMATION_MESSAGE);
+        }
           this.descriptionTextField.setEditable(false);
           this.editButton.setText("Edit");
           editing = false;
