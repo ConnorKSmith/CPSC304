@@ -47,7 +47,6 @@ public class GameLibraryForm extends javax.swing.JFrame {
         }
     }
     
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -190,24 +189,15 @@ public class GameLibraryForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         String insertStr;
         String selected = gameList.getSelectedValue();
-        
         try{
             String selectStr = "select * from Game G where G.gName = '" + selected + "'";
             rs = stmt.executeQuery(selectStr);
-            rs.next();
-            int Gid  = rs.getInt("gameID");
-            int price = rs.getInt("currentPrice");
-            int currID = MainForm.userID;
-            
+            rs.next();          
             insertStr = "insert into OwnsGame(ownerID, gameID, playHours, priceBoughtAt) "
-                + "values(" + currID + " , " + Gid + ", 0 ," +   price  + " )";
-            
-            System.out.println(insertStr);
-            
+                + "values(" + MainForm.userID + " , " + rs.getInt("gameID") + ", 0 ," +  rs.getInt("currentPrice")  + " )";                        
             stmt.executeUpdate(insertStr); 
             this.setVisible(false);
-            this.dispose();
-            
+            this.dispose();            
         } catch (SQLException ex) {
             Logger.getLogger(GameInfoForm.class.getName()).log(Level.SEVERE, null, ex);
             return;
@@ -219,12 +209,13 @@ public class GameLibraryForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             // TODO add your handling code here:
+            if (evt.getClickCount() == 2){
             String selectedGame = gameList.getSelectedValue();
             String queryStr = "Select * from Game where gName='" + selectedGame + "'";
             rs = stmt.executeQuery(queryStr);
             rs.next();
             new GameInfoForm(rs.getString("gName"), rs.getString("gDescription"), rs.getInt("creatorID"), rs.getInt("currentPrice")).setVisible(true);
-            System.out.println("Showing game info of " + rs.getString("gName"));
+            }
         } catch (SQLException ex) {
             Logger.getLogger(DeveloperForm.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -283,9 +274,7 @@ private void showGameList(String searchField) {
                 gameList.setModel(gameListModel);
             } else {
                 String queryStr = "Select DISTINCT G.gName from Game G where G.gName LIKE '%" + searchField + "%'";
-                
-                System.out.println(queryStr);
-                rs = stmt.executeQuery(queryStr);
+                                rs = stmt.executeQuery(queryStr);
                 DefaultListModel gameListModel = new DefaultListModel();
                 while (rs.next()){
                     gameListModel.addElement(rs.getString("gName"));
@@ -327,26 +316,14 @@ private void showGameList(String searchField) {
     private void gameLibraryQueryBuilder(String ratingChoice, String ratingField, String priceChoice, String priceField, String genreChoice) {
         thisFilterQuery = "select distinct G.gName from Game G, Review R, HasGenre H where gName like '" + thisSearchField + "'";
         if (checkFilterFields()){
-            System.out.println(thisFilterQuery);
-            /*
-            passes the filter field test
-            1.) append the genre query
-            2.) append the price query
-            3.) append the rating query
-            */
-            
-            // 1. genreChoice will always be chosen, the default is action (id consider this a bug, fix after everything else is done)
             thisFilterQuery = thisFilterQuery.concat(" and G.gameID = H.gameID and H.genre='" + genreChoice + "'");
-            // 2. if the user selects prices
-            if (!priceChoice.equals("") && !priceField.equals("")){
+            if (!priceChoice.equals(" ") && !priceField.equals("")){
                 thisFilterQuery = thisFilterQuery.concat(" and G.currentPrice " + priceChoice + priceField);
             }
-            // 3. if the user selects rating
-            if (!ratingChoice.equals("") && !ratingField.equals("")){
+            if (!ratingChoice.equals(" ") && !ratingField.equals("")){
                 thisFilterQuery = thisFilterQuery.concat(" and (select avg(rating) from Game G2, Review R2"
                         + " where G2.gameID = R2.gameReviewedID and G2.gName = G.gName) " + ratingChoice + ratingField);
-            }
-                      
+            }                     
         } else {
             JOptionPane.showMessageDialog(null, "Rating has to be betweeen 0 and 10, and price must be positive!", "Invalid filter!", JOptionPane.INFORMATION_MESSAGE);      
         }
@@ -368,11 +345,9 @@ private void showGameList(String searchField) {
             if (price < 0){
                 return false;
             } 
-        }
-        
+        }       
         return true;
         } catch (NumberFormatException nfe){
-            System.out.println("Not a number!");
             return false;
         }
         

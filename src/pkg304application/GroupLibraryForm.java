@@ -5,42 +5,50 @@
  */
 package pkg304application;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import pkg304application.database.DatabaseConnection;
 
 /**
  *
- * @author jinyou
+ * @author jko
  */
 public class GroupLibraryForm extends javax.swing.JFrame {
 
     /**
-     * Creates new form GroupLibraryForm
+     * Creates new form GroupLibraryForm1
      */
     ResultSet rs;
+    ResultSet rs2;
     Statement stmt;
-    String textField;
+    Statement stmt2; 
+    String textField;   
+    String thisFilterQuery;
     
     public GroupLibraryForm(String searchField) {
       try {
             initComponents();
             DatabaseConnection dbc = new DatabaseConnection();
             dbc.init();
-            textField = searchField;
+            if (!searchField.equals("")){
+            textField = "%" + searchField + "%";
+            } else {
+                textField = "%";
+            }
+            showFilter();    
             stmt = dbc.getMyConnection().createStatement();
-            showGroupList(textField);
+            stmt2 = dbc.getMyConnection().createStatement();            
+            showGroupList(searchField);
             setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         } catch (SQLException ex) {
             Logger.getLogger(GameInfoForm.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -50,11 +58,28 @@ public class GroupLibraryForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        filterBtn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         groupList = new javax.swing.JList<>();
         joinButton = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        popChoice = new java.awt.Choice();
+        popField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLabel1.setText("Search result for groups:");
+
+        jLabel2.setText("Narrow by:");
+
+        filterBtn.setText("filter");
+        filterBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                filterBtnMouseClicked(evt);
+            }
+        });
 
         groupList.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -75,127 +100,131 @@ public class GroupLibraryForm extends javax.swing.JFrame {
             }
         });
 
+        jLabel3.setText("population:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(joinButton)
+                    .addComponent(jLabel1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 363, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(filterBtn))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(joinButton)))
-                .addContainerGap(19, Short.MAX_VALUE))
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(popChoice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(popField, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(9, 9, 9)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel2)
+                    .addComponent(filterBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3)
+                    .addComponent(popChoice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(popField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(21, 21, 21)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(joinButton)
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addContainerGap(10, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void joinButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_joinButtonMouseClicked
-        // TODO add your handling code here:
-        String insertStr;
-        String selected = groupList.getSelectedValue();
-        
+        // TODO add your handling code here:       
         try{
-            String selectStr = "select * from FriendGroup G where G.groupName = '" + selected + "'";
+            int reply = JOptionPane.showConfirmDialog(null, "Are you sure?", "Join group?", JOptionPane.YES_NO_OPTION);
+            if (reply==JOptionPane.YES_OPTION){
+            String selectStr = "select * from FriendGroup G where G.groupName = '" + groupList.getSelectedValue() + "'";
             rs = stmt.executeQuery(selectStr);
             rs.next();
-            int Gid  = rs.getInt("gID");
-            int currID = MainForm.userID;
-            
-            insertStr = "insert into WithinGroup(memberUserID, withinGroupID) "
-                + "values(" + currID + " , " + Gid + ")";
-                        
+            String insertStr = "insert into WithinGroup(memberUserID, withinGroupID) " 
+                    + "values(" + MainForm.userID + " , " + rs.getInt("gID") + ")";                        
             stmt.executeUpdate(insertStr); 
             this.setVisible(false);
             this.dispose();
-            
+            }            
         } catch (SQLException ex) {
             Logger.getLogger(GameInfoForm.class.getName()).log(Level.SEVERE, null, ex);
             return;
-        }
+        }        
     }//GEN-LAST:event_joinButtonMouseClicked
 
     private void groupListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_groupListMouseClicked
         // TODO add your handling code here:
         try {
-            // TODO add your handling code here:
-            String selectedGroup = groupList.getSelectedValue();
-            String queryStr = "Select * from FriendGroup where groupName='" + selectedGroup + "'";
-            rs = stmt.executeQuery(queryStr);
-            rs.next();
-            new GroupInfoForm(rs.getString("groupName"), rs.getString("groupDesc"), rs.getInt("creatorUserID"), rs.getString("dateCreated")).setVisible(true);
+            if (evt.getClickCount() == 2){
+                // TODO add your handling code here:
+                String selectedGroup = groupList.getSelectedValue();
+                String queryStr = "Select * from FriendGroup where groupName='" + selectedGroup + "'";
+                rs = stmt.executeQuery(queryStr);
+                rs.next();
+                new GroupInfoForm(rs.getString("groupName"), rs.getString("groupDesc"), rs.getInt("creatorUserID"), rs.getString("dateCreated")).setVisible(true);
+            }
         } catch (SQLException ex) {
             Logger.getLogger(DeveloperForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_groupListMouseClicked
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
+    private void filterBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_filterBtnMouseClicked
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
+            // TODO add your handling code here:
+            groupLibraryQueryBuilder();
+            rs = stmt.executeQuery(thisFilterQuery);
+            DefaultListModel groupListModel = new DefaultListModel();
+            while (rs.next()){
+                groupListModel.addElement(rs.getString("groupName"));
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GroupLibraryForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GroupLibraryForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GroupLibraryForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GroupLibraryForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            groupList.setModel(groupListModel);
+        } catch (SQLException ex) {
+            Logger.getLogger(GroupLibraryForm.class.getName()).log(Level.SEVERE, null, ex);
         }
-        //</editor-fold>
+    }//GEN-LAST:event_filterBtnMouseClicked
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                //new GroupLibraryForm().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton filterBtn;
     private javax.swing.JList<String> groupList;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton joinButton;
+    private java.awt.Choice popChoice;
+    private javax.swing.JTextField popField;
     // End of variables declaration//GEN-END:variables
-private void showGroupList(String searchField) {
-         try {
-            if (searchField.equals("")){
+
+    private void showGroupList(String textField) {
+        try {
+            DefaultListModel groupListModel = new DefaultListModel();
+            if (textField.equals("")){
                 String queryStr = "Select DISTINCT G.groupName from FriendGroup G";
                 rs = stmt.executeQuery(queryStr);
-                DefaultListModel groupListModel = new DefaultListModel();
                 while (rs.next()){
                     groupListModel.addElement(rs.getString("groupName"));
                 }
                 groupList.setModel(groupListModel);
             } else {
-                String queryStr = "Select DISTINCT G.groupName from FriendGroup G where G.groupName LIKE '%" + searchField + "%'";
-                
+                String queryStr = "Select DISTINCT G.groupName from FriendGroup G where G.groupName LIKE '%" + textField + "%'";               
                 rs = stmt.executeQuery(queryStr);
-                DefaultListModel groupListModel = new DefaultListModel();
                 while (rs.next()){
                     groupListModel.addElement(rs.getString("groupName"));
                 }
@@ -204,5 +233,45 @@ private void showGroupList(String searchField) {
         } catch (SQLException ex) {
             Logger.getLogger(DeveloperForm.class.getName()).log(Level.SEVERE, null, ex);
         }
-       }
+    }    
+
+    private void showFilter() {
+            popChoice.add(">");
+            popChoice.add(">=");
+            popChoice.add("=");
+            popChoice.add("<=");
+            popChoice.add("<");
+            popChoice.add("!=");
+            popChoice.add(" ");
+    }
+
+    private void groupLibraryQueryBuilder() {
+        thisFilterQuery = "select distinct G.groupName from FriendGroup G, WithinGroup W where G.gID = W.withinGroupID"
+                + " and G.groupName LIKE '" + textField + "'";
+        if (checkFilterFields()){
+            if (popChoice.getSelectedItem().equals(" ") || popField.getText().equals("")){
+                return;
+            }          
+            thisFilterQuery = thisFilterQuery.concat(" group by groupName having count(memberUserID) " 
+                    + popChoice.getSelectedItem() + popField.getText());    
+        } else {
+            JOptionPane.showMessageDialog(null, "Please enter a positive number!", "Invalid filter!", JOptionPane.INFORMATION_MESSAGE);      
+        }
+    }
+    
+    private boolean checkFilterFields() {
+        try{
+        int pop = -1;
+        if (!popField.getText().equals("")){
+            pop = Integer.parseInt(popField.getText());
+            if (pop < 0){
+                return false;
+            }
+        }
+        return true;
+        } catch (NumberFormatException nfe){
+            return false;
+        }
+        
+    }    
 }

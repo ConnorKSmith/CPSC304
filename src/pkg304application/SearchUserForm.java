@@ -169,7 +169,6 @@ public class SearchUserForm extends javax.swing.JFrame {
         try {
             // TODO add your handling code here:
             if (!addFriend.isEnabled()){
-                System.out.println("button is not enabled");
                 return;
             }
             String insertStr = "Insert into FriendsWith(userID1, userID2) values(" + MainForm.userID + "," + thisUserID + ")";
@@ -186,7 +185,7 @@ public class SearchUserForm extends javax.swing.JFrame {
 
     private void gameListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_gameListMouseClicked
         try {
-            // TODO add your handling code here:
+        if (evt.getClickCount() == 2){
             String selectedGame = gameList.getSelectedValue();
             if (selectedGame == null){
                 return;
@@ -195,7 +194,7 @@ public class SearchUserForm extends javax.swing.JFrame {
             rs = stmt.executeQuery(queryStr);
             rs.next();
             new GameInfoForm(rs.getString("gName"), rs.getString("gDescription"), rs.getInt("creatorID"), rs.getInt("currentPrice")).setVisible(true);
-            System.out.println("Showing game info of " + rs.getString("gName"));
+        }  
         } catch (SQLException ex) {
             Logger.getLogger(ProfileForm.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -204,13 +203,13 @@ public class SearchUserForm extends javax.swing.JFrame {
     private void groupListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_groupListMouseClicked
         // TODO add your handling code here:
         try {
-            // TODO add your handling code here:
+        if (evt.getClickCount() == 2){
             String selectedGroup = groupList.getSelectedValue();
             String queryStr = "Select * from FriendGroup F where F.groupName='" + selectedGroup + "'";
             rs = stmt.executeQuery(queryStr);
             rs.next();
             new GroupInfoForm(rs.getString("groupName"), rs.getString("groupDesc"), rs.getInt("creatorUserID"), rs.getString("dateCreated")).setVisible(true);
-            System.out.println("Showing group info of " + rs.getString("groupName"));
+        }  
         } catch (SQLException ex) {
             Logger.getLogger(ProfileForm.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -218,14 +217,14 @@ public class SearchUserForm extends javax.swing.JFrame {
 
     private void reviewListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reviewListMouseClicked
         try {
-            // TODO add your handling code here:
+        if (evt.getClickCount() == 2){
             String selectedReview = reviewList.getSelectedValue();
             String query = "select G.gameID from Game G, Review R where R.reviewerID="+ thisUserID + " and G.gameID = R.gameReviewedID and G.gName='" + selectedReview + "'";
-            System.out.println(query);
             rs = stmt.executeQuery(query);
             rs.next();
             int gameID = rs.getInt("gameID");
-            new SearchReviewForm(MainForm.userID, gameID).setVisible(true);
+            new SearchReviewForm(thisUserID, gameID).setVisible(true);
+        }
         } catch (SQLException ex) {
             Logger.getLogger(ProfileForm.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -261,14 +260,12 @@ public class SearchUserForm extends javax.swing.JFrame {
             stmt= dbc.getMyConnection().createStatement(); 
             String queryString = "select * from Account a where a.userID=" + thisUserID;
             rs = stmt.executeQuery(queryString);
-            System.out.println(queryString);
             rs.next();
             ProfileName.setText(rs.getString("userName"));        
             descriptionTextField.setText(rs.getString("description"));
             queryString = "Select * from FriendsWith where userID1=" + MainForm.userID + " and userID2=" + thisUserID;
             rs = stmt.executeQuery(queryString);
             if (rs.next()){
-                System.out.println("Already friends");
                 addFriend.setText("Friends");
                 addFriend.setEnabled(false);
             }

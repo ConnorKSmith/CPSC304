@@ -167,10 +167,7 @@ public class UserLibraryForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             // TODO add your handling code here:
-            System.out.println("test");
             userLibraryQueryBuilder();
-                        System.out.println("test2");
-
             rs = stmt.executeQuery(thisFilterQuery);
             DefaultListModel userListModel = new DefaultListModel();
             while (rs.next()){
@@ -221,10 +218,8 @@ public class UserLibraryForm extends javax.swing.JFrame {
 
     private void userLibraryQueryBuilder() {
         thisFilterQuery = "select * from Account A where A.userID !=" + MainForm.userID + " and A.userName LIKE '" + thisSearchField + "'";
-
         if (playerBtn.isSelected()){
             thisFilterQuery = thisFilterQuery.concat(" and not exists (select * from Player P where A.userID=P.playerID)");
-            System.out.println(thisFilterQuery);
         }
         if (devBtn.isSelected()){
             thisFilterQuery = thisFilterQuery.concat(" and not exists (select * from Developer D where A.userID=D.developerID)");
