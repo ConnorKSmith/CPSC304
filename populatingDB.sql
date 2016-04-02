@@ -112,8 +112,8 @@ insert into HasWorkTowards values(4,4,100,true);
 insert into HasWorkTowards values(5,5,50,false);
 insert into InAchievement values(1,1,1);
 insert into InAchievement values(2,2,2);
-insert into InAchievement values(3,3,4);
-insert into InAchievement values(4,4,5);
+insert into InAchievement values(3,3,3);
+insert into InAchievement values(4,4,4);
 insert into InAchievement values(5,5,5);
 
 
