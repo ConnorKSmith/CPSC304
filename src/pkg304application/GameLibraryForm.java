@@ -72,7 +72,12 @@ public class GameLibraryForm extends javax.swing.JFrame {
         filterButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(386, 413));
+        setResizable(false);
+        setSize(new java.awt.Dimension(386, 413));
+        getContentPane().setLayout(null);
 
+        gameList.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         gameList.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -85,102 +90,78 @@ public class GameLibraryForm extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(gameList);
 
+        getContentPane().add(jScrollPane1);
+        jScrollPane1.setBounds(20, 170, 335, 160);
+
+        addButton.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         addButton.setText("Add");
         addButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 addButtonMouseClicked(evt);
             }
         });
+        getContentPane().add(addButton);
+        addButton.setBounds(20, 340, 75, 29);
 
+        jLabel1.setFont(new java.awt.Font("Univers LT 45 Light", 0, 14)); // NOI18N
         jLabel1.setText("Search Result for Games:");
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(20, 140, 162, 18);
 
-        jLabel3.setText("narrow by:");
+        jLabel3.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
+        jLabel3.setText("Narrow By:");
+        getContentPane().add(jLabel3);
+        jLabel3.setBounds(26, 32, 70, 16);
 
-        jLabel4.setText("rating");
+        ratingChoice.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
+        getContentPane().add(ratingChoice);
+        ratingChoice.setBounds(80, 60, 70, 20);
 
+        priceChoice.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
+        getContentPane().add(priceChoice);
+        priceChoice.setBounds(240, 60, 70, 20);
+
+        jLabel4.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
+        jLabel4.setText("rating:");
+        getContentPane().add(jLabel4);
+        jLabel4.setBounds(30, 60, 40, 16);
+
+        ratingTextField.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
+        getContentPane().add(ratingTextField);
+        ratingTextField.setBounds(150, 60, 40, 20);
+
+        priceTextField.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         priceTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 priceTextFieldActionPerformed(evt);
             }
         });
+        getContentPane().add(priceTextField);
+        priceTextField.setBounds(310, 60, 40, 20);
 
-        jLabel5.setText("price");
+        jLabel5.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
+        jLabel5.setText("price:");
+        getContentPane().add(jLabel5);
+        jLabel5.setBounds(197, 60, 30, 16);
 
-        jLabel6.setText("genre");
+        jLabel6.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
+        jLabel6.setText("genre:");
+        getContentPane().add(jLabel6);
+        jLabel6.setBounds(30, 90, 40, 16);
 
-        filterButton.setText("filter");
+        genreList.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
+        getContentPane().add(genreList);
+        genreList.setBounds(80, 90, 150, 20);
+
+        filterButton.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
+        filterButton.setText("Filter");
         filterButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 filterButtonMouseClicked(evt);
             }
         });
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(filterButton)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(addButton)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel4)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(ratingChoice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(24, 24, 24)
-                                .addComponent(ratingTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(priceChoice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(priceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(27, 27, 27)
-                                .addComponent(jLabel6)
-                                .addGap(19, 19, 19)
-                                .addComponent(genreList, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel1))
-                        .addContainerGap(265, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addComponent(ratingChoice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(ratingTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(priceChoice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(priceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel6))
-                    .addComponent(jLabel5)
-                    .addComponent(genreList, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20)
-                .addComponent(filterButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(26, 26, 26)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(addButton)
-                .addGap(15, 15, 15))
-        );
+        getContentPane().add(filterButton);
+        filterButton.setBounds(265, 90, 100, 29);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

@@ -69,18 +69,32 @@ public class GroupLibraryForm extends javax.swing.JFrame {
         popField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(217, 325));
+        setResizable(false);
+        setSize(new java.awt.Dimension(217, 325));
+        getContentPane().setLayout(null);
 
+        jLabel1.setFont(new java.awt.Font("Univers LT 45 Light", 0, 14)); // NOI18N
         jLabel1.setText("Search result for groups:");
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(20, 110, 180, 18);
 
+        jLabel2.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         jLabel2.setText("Narrow by:");
+        getContentPane().add(jLabel2);
+        jLabel2.setBounds(20, 20, 59, 16);
 
-        filterBtn.setText("filter");
+        filterBtn.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
+        filterBtn.setText("Filter");
         filterBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 filterBtnMouseClicked(evt);
             }
         });
+        getContentPane().add(filterBtn);
+        filterBtn.setBounds(10, 70, 75, 29);
 
+        groupList.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         groupList.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -93,57 +107,31 @@ public class GroupLibraryForm extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(groupList);
 
+        getContentPane().add(jScrollPane1);
+        jScrollPane1.setBounds(20, 130, 170, 120);
+
+        joinButton.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         joinButton.setText("Join");
         joinButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 joinButtonMouseClicked(evt);
             }
         });
+        getContentPane().add(joinButton);
+        joinButton.setBounds(20, 270, 75, 29);
 
+        jLabel3.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         jLabel3.setText("population:");
+        getContentPane().add(jLabel3);
+        jLabel3.setBounds(20, 50, 61, 16);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(joinButton)
-                    .addComponent(jLabel1)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(18, 18, 18)
-                        .addComponent(filterBtn))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(popChoice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(popField, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(33, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(9, 9, 9)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel2)
-                    .addComponent(filterBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(popChoice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(popField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(21, 21, 21)
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(joinButton)
-                .addContainerGap(10, Short.MAX_VALUE))
-        );
+        popChoice.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
+        getContentPane().add(popChoice);
+        popChoice.setBounds(100, 50, 40, 20);
+
+        popField.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
+        getContentPane().add(popField);
+        popField.setBounds(150, 50, 40, 26);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

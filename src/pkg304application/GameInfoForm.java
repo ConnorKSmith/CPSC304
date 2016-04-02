@@ -73,26 +73,38 @@ public class GameInfoForm extends javax.swing.JFrame {
         populationLabel = new javax.swing.JLabel();
         playerPopulation = new javax.swing.JLabel();
         reviewButton = new javax.swing.JButton();
+        ratingLabel = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
+        setSize(new java.awt.Dimension(393, 529));
 
-        gameName.setFont(new java.awt.Font("PT Serif Caption", 1, 18)); // NOI18N
+        gameName.setFont(new java.awt.Font("Univers LT 45 Light", 1, 18)); // NOI18N
         gameName.setText("jLabel1");
 
+        jLabel1.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         jLabel1.setText("Developer:");
 
+        developerName.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         developerName.setText("jLabel2");
 
+        jLabel2.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         jLabel2.setText("Price:");
 
+        priceLabel.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         priceLabel.setText("jLabel3");
 
+        infoTab.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
+
         descriptionArea.setColumns(20);
+        descriptionArea.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         descriptionArea.setRows(5);
         descriptionTab.setViewportView(descriptionArea);
 
         infoTab.addTab("Description", descriptionTab);
 
+        reviewList.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         reviewList.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -107,6 +119,7 @@ public class GameInfoForm extends javax.swing.JFrame {
 
         infoTab.addTab("Reviews", reviewsTab);
 
+        achievementList.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         achievementList.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -121,10 +134,13 @@ public class GameInfoForm extends javax.swing.JFrame {
 
         infoTab.addTab("Achievements", achievementTab);
 
+        populationLabel.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         populationLabel.setText("Players:");
 
+        playerPopulation.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         playerPopulation.setText("jLabel4");
 
+        reviewButton.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         reviewButton.setText("Write a Review");
         reviewButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -132,47 +148,56 @@ public class GameInfoForm extends javax.swing.JFrame {
             }
         });
 
+        ratingLabel.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
+        ratingLabel.setText("jLabel3");
+
+        jLabel4.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
+        jLabel4.setText("Rating:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(populationLabel)
+                                    .addComponent(jLabel4))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addComponent(infoTab, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(103, 103, 103)
+                        .addComponent(gameName)))
+                .addContainerGap(35, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(priceLabel)
                     .addComponent(reviewButton)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(265, 265, 265)
-                            .addComponent(gameName))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(90, 90, 90)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel2)
-                                        .addComponent(populationLabel))
-                                    .addGap(309, 309, 309)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(priceLabel)
-                                        .addComponent(playerPopulation)))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel1)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(developerName))))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(73, 73, 73)
-                            .addComponent(infoTab, javax.swing.GroupLayout.PREFERRED_SIZE, 437, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(122, Short.MAX_VALUE))
+                    .addComponent(ratingLabel)
+                    .addComponent(playerPopulation)
+                    .addComponent(developerName))
+                .addGap(51, 51, 51))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(16, 16, 16)
+                .addGap(35, 35, 35)
                 .addComponent(gameName, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37)
+                .addGap(18, 18, 18)
                 .addComponent(infoTab, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
                     .addComponent(developerName))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -182,9 +207,13 @@ public class GameInfoForm extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(populationLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(playerPopulation))
-                .addGap(62, 62, 62)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ratingLabel)
+                    .addComponent(jLabel4))
+                .addGap(29, 29, 29)
                 .addComponent(reviewButton)
-                .addContainerGap())
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         pack();
@@ -246,9 +275,11 @@ public class GameInfoForm extends javax.swing.JFrame {
     private javax.swing.JTabbedPane infoTab;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel playerPopulation;
     private javax.swing.JLabel populationLabel;
     private javax.swing.JLabel priceLabel;
+    private javax.swing.JLabel ratingLabel;
     private javax.swing.JButton reviewButton;
     private javax.swing.JList<String> reviewList;
     private javax.swing.JScrollPane reviewsTab;
@@ -264,10 +295,13 @@ public class GameInfoForm extends javax.swing.JFrame {
             rs.next();
             developerName.setText(rs.getString("userName"));
             queryStr = "select count(ownerID) from OwnsGame O, Game G where G.gameID = O.gameId and G.gName='" + g + "'";
-            System.out.println(queryStr);
             rs = stmt.executeQuery(queryStr);
             rs.next();
             playerPopulation.setText(rs.getString("count(ownerID)"));
+            queryStr = "select distinct avg(rating) from Review R, Game G where R.gameReviewedID =" + thisGameID;
+            rs = stmt.executeQuery(queryStr);
+            rs.next();
+            ratingLabel.setText(rs.getString("avg(rating)"));
         } catch (SQLException ex) {
             Logger.getLogger(GameInfoForm.class.getName()).log(Level.SEVERE, null, ex);
         }

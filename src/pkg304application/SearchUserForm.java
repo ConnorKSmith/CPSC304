@@ -19,15 +19,23 @@ import javax.swing.ListModel;
  */
 public class SearchUserForm extends javax.swing.JFrame {
     
-    Statement stmt = null;
-    ResultSet rs = null;
+    Statement stmt;
+    ResultSet rs;
+    Statement stmt2;
+    ResultSet rs2;
     static int thisUserID;
     Boolean isDev;
     /**
      * Creates new form ProfileForm
      */
     public SearchUserForm(int searchUserID, boolean dev) {
+        try {
             initComponents();
+            DatabaseConnection dbc = new DatabaseConnection();
+            dbc.init();
+            this.setResizable(false);
+            stmt= dbc.getMyConnection().createStatement(); 
+            stmt2 = dbc.getMyConnection().createStatement();
             setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
             if (searchUserID == 0){
                 searchUserID = DeveloperForm.searchUserID;
@@ -39,6 +47,9 @@ public class SearchUserForm extends javax.swing.JFrame {
             showGameList();
             showGroupList();
             showReviewList();
+        } catch (SQLException ex) {
+            Logger.getLogger(SearchUserForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -66,23 +77,27 @@ public class SearchUserForm extends javax.swing.JFrame {
         reviewList = new javax.swing.JList<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(444, 452));
+        setSize(new java.awt.Dimension(444, 452));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         descriptionTextField.setColumns(20);
+        descriptionTextField.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         descriptionTextField.setRows(5);
         jScrollPane1.setViewportView(descriptionTextField);
         descriptionTextField.setEditable(false);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 160, 550, 200));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, 260, 140));
 
-        ProfileName.setFont(new java.awt.Font("PT Serif Caption", 1, 24)); // NOI18N
+        ProfileName.setFont(new java.awt.Font("Univers LT 45 Light", 1, 18)); // NOI18N
         ProfileName.setText("Profile Name:");
-        getContentPane().add(ProfileName, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 120, -1, -1));
+        getContentPane().add(ProfileName, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, -1));
 
-        Friends.setFont(new java.awt.Font("PT Serif Caption", 1, 24)); // NOI18N
+        Friends.setFont(new java.awt.Font("Univers LT 45 Light", 1, 18)); // NOI18N
         Friends.setText("Friends:");
-        getContentPane().add(Friends, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 120, -1, -1));
+        getContentPane().add(Friends, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 30, -1, -1));
 
+        friendList.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         friendList.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -95,20 +110,21 @@ public class SearchUserForm extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(friendList);
 
-        getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 160, 120, 200));
+        getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 70, 90, 140));
 
+        addFriend.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         addFriend.setText("Add Friend");
         addFriend.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 addFriendMouseClicked(evt);
             }
         });
-        getContentPane().add(addFriend, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 120, -1, -1));
+        getContentPane().add(addFriend, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 30, 110, 30));
 
         Tabs.setFont(new java.awt.Font("Univers LT 45 Light", 1, 12)); // NOI18N
 
         gameList.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        gameList.setFont(new java.awt.Font("Univers LT 45 Light", 1, 14)); // NOI18N
+        gameList.setFont(new java.awt.Font("Univers LT 45 Light", 1, 12)); // NOI18N
         gameList.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -124,7 +140,7 @@ public class SearchUserForm extends javax.swing.JFrame {
         Tabs.addTab("Games", gamesTab);
 
         groupList.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        groupList.setFont(new java.awt.Font("Univers LT 45 Light", 1, 14)); // NOI18N
+        groupList.setFont(new java.awt.Font("Univers LT 45 Light", 1, 12)); // NOI18N
         groupList.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -140,7 +156,7 @@ public class SearchUserForm extends javax.swing.JFrame {
         Tabs.addTab("Groups", groupsTab);
 
         reviewList.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        reviewList.setFont(new java.awt.Font("Univers LT 45 Light", 1, 14)); // NOI18N
+        reviewList.setFont(new java.awt.Font("Univers LT 45 Light", 1, 12)); // NOI18N
         reviewList.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -155,19 +171,40 @@ public class SearchUserForm extends javax.swing.JFrame {
 
         Tabs.addTab("Reviews", reviewsTab);
 
-        getContentPane().add(Tabs, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 390, 740, -1));
+        getContentPane().add(Tabs, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, 400, 160));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void friendListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_friendListMouseClicked
         // TODO add your handling code here:
+        if (evt.getClickCount() == 2){
+            String selectedUser = friendList.getSelectedValue();
+            String queryString = "Select A.userID from Account A where A.userName='" + selectedUser + "'";
+                try {
+                    rs = stmt.executeQuery(queryString);
+                    System.out.println(queryString);
+                    if (rs.next()){
+                        String check = "select * from Developer where developerID=" + rs.getInt("userID");
+                        ResultSet rs2 = stmt2.executeQuery(check);
+                        if (rs2.next()){
+                            new SearchUserForm(rs.getInt("userID"), true).setVisible(true);
+                        } else {
+                            new SearchUserForm(rs.getInt("userID"), false).setVisible(true);
+                        }
+                    } else {
+                        System.out.println("no user exists");
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(ProfileForm.class.getName()).log(Level.SEVERE, null, ex);
+                }
+        }
     }//GEN-LAST:event_friendListMouseClicked
 
     private void addFriendMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addFriendMouseClicked
         // TODO add your handling code here:
         try {
-            // TODO add your handling code here:
+            if (evt.getClickCount() == 2){
             if (!addFriend.isEnabled()){
                 return;
             }
@@ -175,11 +212,11 @@ public class SearchUserForm extends javax.swing.JFrame {
             stmt.executeUpdate(insertStr);
             insertStr = "Insert into FriendsWith(userID1, userID2) values(" + thisUserID + "," + MainForm.userID + ")";
             stmt.executeUpdate(insertStr);
-            System.out.println("added to friendlist");
             addFriend.setText("Friends");
             addFriend.setEnabled(false);
+            }
         } catch (SQLException ex) {
-            Logger.getLogger(UserResultForm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SearchUserForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_addFriendMouseClicked
 
@@ -254,10 +291,6 @@ public class SearchUserForm extends javax.swing.JFrame {
 
     private void showProfileInfo() {
         try {
-            DatabaseConnection dbc = new DatabaseConnection();
-            dbc.init();
-            this.setResizable(false); 
-            stmt= dbc.getMyConnection().createStatement(); 
             String queryString = "select * from Account a where a.userID=" + thisUserID;
             rs = stmt.executeQuery(queryString);
             rs.next();
