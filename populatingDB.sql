@@ -210,7 +210,9 @@ insert into HasGenre values(5,"Sports");
 insert into OwnsGame values(1,1,0,50.99);
 insert into OwnsGame values(2,2,0,60.99);
 insert into OwnsGame values(2,4,0,80.99);
+insert into OwnsGame values(3,3,0,75.99);
 insert into OwnsGame values(3,4,0,80.99);
+insert into OwnsGame values(4,4,0,40.20);
 insert into OwnsGame values(4,5,0,90.99);
 insert into OwnsGame values(5,5,0,90.99);
 
