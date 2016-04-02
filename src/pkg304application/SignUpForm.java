@@ -62,6 +62,7 @@ public class SignUpForm extends javax.swing.JFrame {
         buttonGroup1.add(developerButton);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(500, 550));
         setResizable(false);
         setSize(new java.awt.Dimension(278, 511));
         getContentPane().setLayout(null);
@@ -91,6 +92,11 @@ public class SignUpForm extends javax.swing.JFrame {
 
         passwordField.setFont(new java.awt.Font("Lucida Grande", 0, 16)); // NOI18N
         passwordField.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
+        passwordField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                passwordFieldActionPerformed(evt);
+            }
+        });
         getContentPane().add(passwordField);
         passwordField.setBounds(50, 230, 170, 30);
 
@@ -219,6 +225,10 @@ public class SignUpForm extends javax.swing.JFrame {
     private void createAccountButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_createAccountButtonMouseExited
         this.createAccountButton.setForeground(Color.white);
     }//GEN-LAST:event_createAccountButtonMouseExited
+
+    private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_passwordFieldActionPerformed
 
     private void addPlayer(int id){
         String insertStr = "insert into Player(playerID) values('" + id + "')";

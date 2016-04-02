@@ -65,8 +65,11 @@ public class AdminForm extends javax.swing.JFrame {
         groupList = new javax.swing.JList<>();
         jScrollPane4 = new javax.swing.JScrollPane();
         reviewList = new javax.swing.JList<>();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(670, 420));
+        getContentPane().setLayout(null);
 
         deleteButton.setText("Delete");
         deleteButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -79,6 +82,8 @@ public class AdminForm extends javax.swing.JFrame {
                 deleteButtonActionPerformed(evt);
             }
         });
+        getContentPane().add(deleteButton);
+        deleteButton.setBounds(19, 318, 287, 50);
 
         logoutButton.setText("Logout");
         logoutButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -91,6 +96,8 @@ public class AdminForm extends javax.swing.JFrame {
                 logoutButtonActionPerformed(evt);
             }
         });
+        getContentPane().add(logoutButton);
+        logoutButton.setBounds(353, 329, 88, 29);
 
         refreshButton.setText("Refresh");
         refreshButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -98,6 +105,8 @@ public class AdminForm extends javax.swing.JFrame {
                 refreshButtonMouseClicked(evt);
             }
         });
+        getContentPane().add(refreshButton);
+        refreshButton.setBounds(459, 329, 91, 29);
 
         userList.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -155,37 +164,12 @@ public class AdminForm extends javax.swing.JFrame {
 
         Tabs.addTab("Reviews", jScrollPane4);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Tabs, javax.swing.GroupLayout.PREFERRED_SIZE, 553, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(47, 47, 47)
-                        .addComponent(logoutButton)
-                        .addGap(18, 18, 18)
-                        .addComponent(refreshButton)))
-                .addContainerGap(107, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(334, 334, 334)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(logoutButton)
-                            .addComponent(refreshButton)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addComponent(Tabs, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(18, Short.MAX_VALUE))
-        );
+        getContentPane().add(Tabs);
+        Tabs.setBounds(19, 22, 553, 296);
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/staticImg/bgtest.jpg"))); // NOI18N
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(-6, -5, 690, 440);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -376,6 +360,7 @@ public class AdminForm extends javax.swing.JFrame {
     private javax.swing.JButton deleteButton;
     private javax.swing.JList<String> gameList;
     private javax.swing.JList<String> groupList;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
