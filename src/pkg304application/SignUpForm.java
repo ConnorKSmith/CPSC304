@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package pkg304application;
+import java.awt.Color;
 import pkg304application.database.*;
 import java.sql.*;
 import java.util.logging.Level;
@@ -51,7 +52,6 @@ public class SignUpForm extends javax.swing.JFrame {
         passwordLabel2 = new javax.swing.JLabel();
         passwordField2 = new javax.swing.JPasswordField();
         playerButton = new javax.swing.JRadioButton();
-        accountTypeLabel = new javax.swing.JLabel();
         developerButton = new javax.swing.JRadioButton();
         mismatch = new javax.swing.JLabel();
         alreadyExists = new javax.swing.JLabel();
@@ -62,96 +62,107 @@ public class SignUpForm extends javax.swing.JFrame {
         buttonGroup1.add(developerButton);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(500, 530));
         setResizable(false);
+        setSize(new java.awt.Dimension(278, 511));
         getContentPane().setLayout(null);
 
-        signUpTitle.setFont(new java.awt.Font("Nanum Brush Script", 0, 36)); // NOI18N
+        signUpTitle.setFont(new java.awt.Font("Nanum Brush Script", 0, 44)); // NOI18N
+        signUpTitle.setForeground(new java.awt.Color(255, 255, 255));
         signUpTitle.setText("Sign up here!");
         getContentPane().add(signUpTitle);
-        signUpTitle.setBounds(154, 39, 155, 43);
+        signUpTitle.setBounds(40, 30, 210, 50);
 
         userNameLabel.setFont(new java.awt.Font("Nanum Pen Script", 0, 24)); // NOI18N
+        userNameLabel.setForeground(new java.awt.Color(255, 255, 255));
         userNameLabel.setText("Your username:");
         getContentPane().add(userNameLabel);
-        userNameLabel.setBounds(51, 123, 130, 29);
+        userNameLabel.setBounds(50, 90, 130, 29);
 
         passwordLabel.setFont(new java.awt.Font("Nanum Pen Script", 0, 24)); // NOI18N
+        passwordLabel.setForeground(new java.awt.Color(255, 255, 255));
         passwordLabel.setText("Your password:");
         getContentPane().add(passwordLabel);
-        passwordLabel.setBounds(51, 198, 129, 29);
+        passwordLabel.setBounds(50, 200, 129, 29);
 
         userNameTextField.setFont(new java.awt.Font("Nanum Brush Script", 0, 22)); // NOI18N
         userNameTextField.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
         getContentPane().add(userNameTextField);
-        userNameTextField.setBounds(245, 128, 170, 31);
+        userNameTextField.setBounds(50, 130, 170, 30);
 
         passwordField.setFont(new java.awt.Font("Lucida Grande", 0, 16)); // NOI18N
         passwordField.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
         getContentPane().add(passwordField);
-        passwordField.setBounds(245, 203, 170, 24);
+        passwordField.setBounds(50, 230, 170, 30);
 
         createAccountButton.setFont(new java.awt.Font("Nanum Pen Script", 0, 24)); // NOI18N
-        createAccountButton.setText("Create Account");
-        createAccountButton.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
+        createAccountButton.setForeground(new java.awt.Color(255, 255, 255));
+        createAccountButton.setText("[ Create Account ]");
+        createAccountButton.setBorder(null);
+        createAccountButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                createAccountButtonMouseExited(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                createAccountButtonMouseEntered(evt);
+            }
+        });
         createAccountButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 createAccountButtonActionPerformed(evt);
             }
         });
         getContentPane().add(createAccountButton);
-        createAccountButton.setBounds(153, 429, 162, 33);
+        createAccountButton.setBounds(50, 440, 170, 29);
 
         passwordLabel2.setFont(new java.awt.Font("Nanum Pen Script", 0, 24)); // NOI18N
+        passwordLabel2.setForeground(new java.awt.Color(255, 255, 255));
         passwordLabel2.setText("Re-enter:");
         getContentPane().add(passwordLabel2);
-        passwordLabel2.setBounds(51, 244, 80, 29);
+        passwordLabel2.setBounds(50, 270, 80, 29);
 
         passwordField2.setFont(new java.awt.Font("Lucida Grande", 0, 16)); // NOI18N
         passwordField2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
         getContentPane().add(passwordField2);
-        passwordField2.setBounds(245, 245, 170, 24);
+        passwordField2.setBounds(50, 300, 170, 30);
 
         playerButton.setFont(new java.awt.Font("Nanum Pen Script", 0, 18)); // NOI18N
+        playerButton.setForeground(new java.awt.Color(255, 255, 255));
         playerButton.setText("Player");
         getContentPane().add(playerButton);
-        playerButton.setBounds(247, 330, 68, 27);
-
-        accountTypeLabel.setFont(new java.awt.Font("Nanum Pen Script", 0, 24)); // NOI18N
-        accountTypeLabel.setText("Account Type:");
-        getContentPane().add(accountTypeLabel);
-        accountTypeLabel.setBounds(51, 327, 122, 29);
+        playerButton.setBounds(50, 370, 68, 27);
 
         developerButton.setFont(new java.awt.Font("Nanum Pen Script", 0, 18)); // NOI18N
+        developerButton.setForeground(new java.awt.Color(255, 255, 255));
         developerButton.setText("Developer");
         getContentPane().add(developerButton);
-        developerButton.setBounds(321, 330, 88, 27);
+        developerButton.setBounds(120, 370, 88, 27);
 
         mismatch.setFont(new java.awt.Font("Nanum Pen Script", 0, 18)); // NOI18N
         mismatch.setForeground(new java.awt.Color(255, 0, 0));
         mismatch.setText("The passwords do not match!");
         getContentPane().add(mismatch);
-        mismatch.setBounds(51, 291, 180, 22);
+        mismatch.setBounds(50, 340, 180, 22);
 
         alreadyExists.setFont(new java.awt.Font("Nanum Pen Script", 0, 18)); // NOI18N
         alreadyExists.setForeground(new java.awt.Color(255, 0, 0));
         alreadyExists.setText("Username already exists!");
         getContentPane().add(alreadyExists);
-        alreadyExists.setBounds(51, 158, 149, 22);
+        alreadyExists.setBounds(60, 170, 149, 22);
 
         insufficientInfo.setFont(new java.awt.Font("Nanum Pen Script", 0, 18)); // NOI18N
         insufficientInfo.setForeground(new java.awt.Color(255, 0, 0));
         insufficientInfo.setText("Missing information!");
         getContentPane().add(insufficientInfo);
-        insufficientInfo.setBounds(51, 363, 130, 22);
+        insufficientInfo.setBounds(70, 400, 130, 22);
 
-        backgroundImg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/staticImg/signup.jpeg"))); // NOI18N
+        backgroundImg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/staticImg/bgtest.jpg"))); // NOI18N
         getContentPane().add(backgroundImg);
         backgroundImg.setBounds(0, -10, 510, 550);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+                   
+    
     private void createAccountButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createAccountButtonActionPerformed
         // TODO add your handling code here:
         String u = userNameTextField.getText();
@@ -201,6 +212,14 @@ public class SignUpForm extends javax.swing.JFrame {
   
     }//GEN-LAST:event_createAccountButtonActionPerformed
 
+    private void createAccountButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_createAccountButtonMouseEntered
+        this.createAccountButton.setForeground(Color.yellow);
+    }//GEN-LAST:event_createAccountButtonMouseEntered
+
+    private void createAccountButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_createAccountButtonMouseExited
+        this.createAccountButton.setForeground(Color.white);
+    }//GEN-LAST:event_createAccountButtonMouseExited
+
     private void addPlayer(int id){
         String insertStr = "insert into Player(playerID) values('" + id + "')";
         try {
@@ -220,7 +239,6 @@ public class SignUpForm extends javax.swing.JFrame {
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel accountTypeLabel;
     private javax.swing.JLabel alreadyExists;
     private javax.swing.JLabel backgroundImg;
     private javax.swing.ButtonGroup buttonGroup1;

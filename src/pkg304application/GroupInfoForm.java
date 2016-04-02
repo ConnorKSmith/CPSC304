@@ -25,28 +25,28 @@ public class GroupInfoForm extends javax.swing.JFrame {
      */
     ResultSet rs;
     Statement stmt;
+    Statement stmt2;
     int thisGroupID;
-    public GroupInfoForm() {
-        try {
-            DatabaseConnection dbc = new DatabaseConnection();
-            dbc.init();
-            initComponents();
-            stmt = dbc.getMyConnection().createStatement();
-            setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        } catch (SQLException ex) {
-            Logger.getLogger(GroupInfoForm.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
     
     public GroupInfoForm(String groupName, String groupDesc, int creatorUserID, String dateCreated){
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        
-        
+               
         try {
             DatabaseConnection dbc = new DatabaseConnection();
             dbc.init();
             initComponents();
             stmt = dbc.getMyConnection().createStatement();
+            stmt2 = dbc.getMyConnection().createStatement();
+            String query = "select gID from FriendGroup where groupName = '" + groupName + "'";
+            rs = stmt.executeQuery(query);
+            rs.next();
+            query = "select * from FriendGroup F where F.creatorUserID="+ MainForm.userID +" and F.gID="+ rs.getInt("gID");
+            System.out.println(query);
+            rs = stmt.executeQuery(query);
+            if (!rs.next()){
+                editGroupButton.setEnabled(false);
+                deleteGroupButton.setEnabled(false);
+            }
             showGroupInfo(groupName, groupDesc, creatorUserID, dateCreated);
             showUserList();
             setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -79,32 +79,49 @@ public class GroupInfoForm extends javax.swing.JFrame {
         editGroupButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
+        setSize(new java.awt.Dimension(354, 451));
 
+        groupName.setFont(new java.awt.Font("Univers LT 45 Light", 0, 18)); // NOI18N
         groupName.setText("jLabel1");
 
+        infoTab.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
+
         descriptionArea.setColumns(20);
+        descriptionArea.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         descriptionArea.setRows(5);
         descriptionTab.setViewportView(descriptionArea);
 
         infoTab.addTab("Description", descriptionTab);
 
+        userList.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         userList.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
+        userList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                userListMouseClicked(evt);
+            }
+        });
         userListTab.setViewportView(userList);
 
         infoTab.addTab("User List", userListTab);
 
-        jLabel1.setText("Creator");
+        jLabel1.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
+        jLabel1.setText("Creator:");
 
+        creatorName.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         creatorName.setText("jLabel2");
 
-        jLabel3.setText("Date Created");
+        jLabel3.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
+        jLabel3.setText("Date created:");
 
+        dateCreated.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         dateCreated.setText("jLabel4");
 
+        deleteGroupButton.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         deleteGroupButton.setText("Delete Group");
         deleteGroupButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -112,6 +129,7 @@ public class GroupInfoForm extends javax.swing.JFrame {
             }
         });
 
+        editGroupButton.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         editGroupButton.setText("Edit Group");
         editGroupButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -124,30 +142,33 @@ public class GroupInfoForm extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(104, 104, 104)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(creatorName)
-                    .addComponent(dateCreated))
-                .addGap(118, 118, 118))
-            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addComponent(infoTab, javax.swing.GroupLayout.PREFERRED_SIZE, 612, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(211, 211, 211)
-                        .addComponent(groupName, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(44, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(editGroupButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(deleteGroupButton)
-                .addGap(29, 29, 29))
+                        .addGap(113, 113, 113)
+                        .addComponent(groupName, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addGap(34, 34, 34)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(jLabel3)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(dateCreated))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(jLabel1)
+                                            .addGap(187, 187, 187)
+                                            .addComponent(creatorName)))
+                                    .addGap(0, 0, Short.MAX_VALUE))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(editGroupButton)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(deleteGroupButton))))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addGap(23, 23, 23)
+                            .addComponent(infoTab, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -155,20 +176,20 @@ public class GroupInfoForm extends javax.swing.JFrame {
                 .addGap(22, 22, 22)
                 .addComponent(groupName, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(infoTab, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37)
+                .addComponent(infoTab, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(creatorName))
-                .addGap(41, 41, 41)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(dateCreated))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(deleteGroupButton)
-                    .addComponent(editGroupButton))
-                .addContainerGap(16, Short.MAX_VALUE))
+                    .addComponent(editGroupButton)
+                    .addComponent(deleteGroupButton))
+                .addContainerGap(51, Short.MAX_VALUE))
         );
 
         pack();
@@ -176,19 +197,14 @@ public class GroupInfoForm extends javax.swing.JFrame {
 
     private void deleteGroupButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteGroupButtonMouseClicked
         // TODO add your handling code here:
-        String insertStr;
+        String deleteStr;
         String selected = groupName.getText();
         try{
             String selectStr = "select * from FriendGroup F where F.groupName = '" + selected + "'";
             rs = stmt.executeQuery(selectStr);
             rs.next();
-            int Gid  = rs.getInt("gID");
-            int currID = MainForm.userID;
-            insertStr = "delete from FriendGroup where creatorUserID = "+currID+" and gID = "+Gid+"";                              
-            stmt.executeUpdate(insertStr);
-           // insertStr = "delete from WithinGroup where withinGroupID = "+Gid+"";                              
-           // stmt.executeUpdate(insertStr);
- 
+            deleteStr = "delete from FriendGroup where creatorUserID = "+ MainForm.userID +" and gID = "+rs.getInt("gID")+"";                              
+            stmt.executeUpdate(deleteStr);
         } catch (SQLException ex) {
             Logger.getLogger(GameInfoForm.class.getName()).log(Level.SEVERE, null, ex);
             return;
@@ -201,40 +217,30 @@ public class GroupInfoForm extends javax.swing.JFrame {
         new EditGroupForm(gName).setVisible(true);
     }//GEN-LAST:event_editGroupButtonMouseClicked
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
+    private void userListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userListMouseClicked
+        // TODO add your handling code here:
+        if (evt.getClickCount() == 2){
+            String selectedUser = userList.getSelectedValue();
+            String queryString = "Select A.userID from Account A where A.userName='" + selectedUser + "'";
+                try {
+                    rs = stmt.executeQuery(queryString);
+                    if (rs.next()){
+                        String check = "select * from Developer where developerID=" + rs.getInt("userID");
+                        ResultSet rs2 = stmt2.executeQuery(check);
+                        if (rs2.next()){
+                            new SearchUserForm(rs.getInt("userID"), true).setVisible(true);
+                        } else {
+                            new SearchUserForm(rs.getInt("userID"), false).setVisible(true);
+                        }
+                    } else {
+                        System.out.println("no user exists");
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(GroupInfoForm.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GroupInfoForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GroupInfoForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GroupInfoForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GroupInfoForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
+    }//GEN-LAST:event_userListMouseClicked
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new GroupInfoForm().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel creatorName;
@@ -263,21 +269,14 @@ private void showGroupInfo(String g, String d, int cre, String date) {
             rs = stmt.executeQuery(queryStr);
             rs.next();
             creatorName.setText(rs.getString("userName"));
-            //queryStr = "select count(ownerID) from OwnsGame O, Game G where G.gameID = O.gameId and G.gName='" + g + "'";
-            //rs = stmt.executeQuery(queryStr);
-            //rs.next();
-            //playerPopulation.setText(rs.getString("count(ownerID)"));
         } catch (SQLException ex) {
             Logger.getLogger(GameInfoForm.class.getName()).log(Level.SEVERE, null, ex);
         }
 }
 private void showUserList() {
         try {
-            System.out.println("test");
             String queryString = "Select A.userName from Account A, WithinGroup W where W.withinGroupID=" 
                                     + thisGroupID + " and  W.memberUserID = A.userID";
-                      System.out.println(queryString);
-
             rs = stmt.executeQuery(queryString);
             DefaultListModel userListModel = new DefaultListModel();
             while(rs.next()){
