@@ -96,9 +96,9 @@ insert into OwnsGame values(5,5,0,90.99);
 
 insert into Review values(1,"Good Game",5,"2016/2/2",1,1);
 insert into Review values(2,"bad Game",1,"2016/3/2",2,2);
-insert into Review values(1,"Perfect Game",10,"2016/4/2",2,4);
-insert into Review values(1,"Good",8,"2016/5/2",3,4);
-insert into Review values(1,"Ok Game",8,"2016/6/2",4,5);
+insert into Review values(3,"Perfect Game",10,"2016/4/2",2,4);
+insert into Review values(4,"Good",8,"2016/5/2",3,4);
+insert into Review values(5,"Ok Game",8,"2016/6/2",4,5);
 
 insert into Achievement values(1,"Kill everyone","kill",100,1);
 insert into Achievement values(2,"Find everyone","Find",10,2);
