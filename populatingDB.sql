@@ -85,7 +85,7 @@ insert into HasGenre values(1,"Action");
 insert into HasGenre values(2,"Adventure");
 insert into HasGenre values(3,"Puzzle");
 insert into HasGenre values(4,"Racing");
-insert into HasGenre values(5,"Sprots");
+insert into HasGenre values(5,"Sports");
 
 insert into OwnsGame values(1,1,0,50.99);
 insert into OwnsGame values(2,2,0,60.99);
