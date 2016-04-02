@@ -78,25 +78,24 @@ public class DeveloperForm extends javax.swing.JFrame {
         userRadioButton = new javax.swing.JRadioButton();
         groupRadioButton = new javax.swing.JRadioButton();
         gameRadioButton = new javax.swing.JRadioButton();
-        jButton1 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
         backgroundImg = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setSize(new java.awt.Dimension(32, 32));
+        setPreferredSize(new java.awt.Dimension(470, 553));
+        setSize(new java.awt.Dimension(470, 553));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        editButton.setFont(new java.awt.Font("Univers LT 45 Light", 0, 14)); // NOI18N
+        editButton.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         editButton.setForeground(new java.awt.Color(255, 255, 255));
         editButton.setText("Edit");
         editButton.setAutoscrolls(true);
-        editButton.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 2, true));
+        editButton.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true));
         editButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 editButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(editButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 390, 100, 30));
+        getContentPane().add(editButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 310, 60, 20));
 
         descriptionTextField.setColumns(20);
         descriptionTextField.setFont(new java.awt.Font("Univers LT 45 Light", 1, 14)); // NOI18N
@@ -104,7 +103,7 @@ public class DeveloperForm extends javax.swing.JFrame {
         jScrollPane1.setViewportView(descriptionTextField);
         descriptionTextField.setEditable(false);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 180, 550, 200));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 280, 170));
 
         logoutButton.setFont(new java.awt.Font("Univers LT 45 Light", 0, 24)); // NOI18N
         logoutButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/staticImg/logoutIcon.png"))); // NOI18N
@@ -115,17 +114,19 @@ public class DeveloperForm extends javax.swing.JFrame {
                 logoutButtonMouseClicked(evt);
             }
         });
-        getContentPane().add(logoutButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 40, 60, 50));
+        getContentPane().add(logoutButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 10, 40, 40));
 
-        ProfileName.setFont(new java.awt.Font("Univers LT 45 Light", 0, 24)); // NOI18N
+        ProfileName.setFont(new java.awt.Font("Univers LT 45 Light", 0, 18)); // NOI18N
+        ProfileName.setForeground(new java.awt.Color(255, 255, 255));
         ProfileName.setText("Profile Name:");
-        getContentPane().add(ProfileName, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 50, -1, -1));
+        getContentPane().add(ProfileName, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, -1, -1));
 
-        Friends.setFont(new java.awt.Font("Univers LT 45 Light", 0, 24)); // NOI18N
+        Friends.setFont(new java.awt.Font("Univers LT 45 Light", 0, 18)); // NOI18N
+        Friends.setForeground(new java.awt.Color(255, 255, 255));
         Friends.setText("Friends:");
-        getContentPane().add(Friends, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 140, -1, -1));
+        getContentPane().add(Friends, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 100, -1, -1));
 
-        friendList.setFont(new java.awt.Font("Univers LT 45 Light", 0, 14)); // NOI18N
+        friendList.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         friendList.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -138,12 +139,12 @@ public class DeveloperForm extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(friendList);
 
-        getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 180, 120, 200));
+        getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 130, 110, 170));
 
         GroupAndGames.setFont(new java.awt.Font("Univers LT 45 Light", 1, 12)); // NOI18N
 
         gameList.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        gameList.setFont(new java.awt.Font("Univers LT 45 Light", 1, 14)); // NOI18N
+        gameList.setFont(new java.awt.Font("Univers LT 45 Light", 1, 12)); // NOI18N
         gameList.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -159,7 +160,7 @@ public class DeveloperForm extends javax.swing.JFrame {
         GroupAndGames.addTab("Developed Games", jScrollPane4);
 
         groupList.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        groupList.setFont(new java.awt.Font("Univers LT 45 Light", 1, 14)); // NOI18N
+        groupList.setFont(new java.awt.Font("Univers LT 45 Light", 1, 12)); // NOI18N
         groupList.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -174,15 +175,16 @@ public class DeveloperForm extends javax.swing.JFrame {
 
         GroupAndGames.addTab("Groups", jScrollPane2);
 
-        getContentPane().add(GroupAndGames, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 430, 370, 220));
+        getContentPane().add(GroupAndGames, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 350, 320, 150));
 
         searchField.setFont(new java.awt.Font("Univers LT 45 Light", 0, 24)); // NOI18N
+        searchField.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
         searchField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 searchFieldActionPerformed(evt);
             }
         });
-        getContentPane().add(searchField, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 40, 400, 50));
+        getContentPane().add(searchField, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 260, 20));
 
         searchButton.setFont(new java.awt.Font("Univers LT 45 Light", 0, 24)); // NOI18N
         searchButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/staticImg/searchIcon.png"))); // NOI18N
@@ -192,18 +194,18 @@ public class DeveloperForm extends javax.swing.JFrame {
                 searchButtonMouseClicked(evt);
             }
         });
-        getContentPane().add(searchButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 40, 60, 50));
+        getContentPane().add(searchButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 10, 40, 40));
 
-        createGameButton.setFont(new java.awt.Font("Univers LT 45 Light", 0, 14)); // NOI18N
+        createGameButton.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         createGameButton.setForeground(new java.awt.Color(255, 255, 255));
         createGameButton.setText("Create Game");
-        createGameButton.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 2, true));
+        createGameButton.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true));
         createGameButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 createGameButtonMouseClicked(evt);
             }
         });
-        getContentPane().add(createGameButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 460, 150, 50));
+        getContentPane().add(createGameButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 400, 90, 30));
 
         refreshButton.setFont(new java.awt.Font("Univers LT 45 Light", 0, 24)); // NOI18N
         refreshButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/staticImg/refreshIcon.png"))); // NOI18N
@@ -213,12 +215,12 @@ public class DeveloperForm extends javax.swing.JFrame {
                 refreshButtonMouseClicked(evt);
             }
         });
-        getContentPane().add(refreshButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 40, 60, 50));
+        getContentPane().add(refreshButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 10, 40, 40));
 
-        deleteFriend.setFont(new java.awt.Font("Univers LT 45 Light", 0, 14)); // NOI18N
+        deleteFriend.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         deleteFriend.setForeground(new java.awt.Color(255, 255, 255));
         deleteFriend.setText("Delete");
-        deleteFriend.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 2, true));
+        deleteFriend.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true));
         deleteFriend.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 deleteFriendMouseClicked(evt);
@@ -229,66 +231,58 @@ public class DeveloperForm extends javax.swing.JFrame {
                 deleteFriendActionPerformed(evt);
             }
         });
-        getContentPane().add(deleteFriend, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 390, 120, 30));
+        getContentPane().add(deleteFriend, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 310, 60, 20));
 
-        editGameButton.setFont(new java.awt.Font("Univers LT 45 Light", 0, 14)); // NOI18N
+        editGameButton.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         editGameButton.setForeground(new java.awt.Color(255, 255, 255));
         editGameButton.setText("Edit Game");
-        editGameButton.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 2, true));
+        editGameButton.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true));
         editGameButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 editGameButtonMouseClicked(evt);
             }
         });
-        getContentPane().add(editGameButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 520, 150, 50));
+        getContentPane().add(editGameButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 440, 90, 30));
 
-        deleteGameButton.setFont(new java.awt.Font("Univers LT 45 Light", 0, 14)); // NOI18N
+        deleteGameButton.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         deleteGameButton.setForeground(new java.awt.Color(255, 255, 255));
         deleteGameButton.setText("Delete Game");
-        deleteGameButton.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 2, true));
+        deleteGameButton.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true));
         deleteGameButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 deleteGameButtonMouseClicked(evt);
             }
         });
-        getContentPane().add(deleteGameButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 580, 150, 50));
+        getContentPane().add(deleteGameButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 480, 90, 30));
 
-        createGroupButton.setFont(new java.awt.Font("Univers LT 45 Light", 0, 14)); // NOI18N
+        createGroupButton.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         createGroupButton.setForeground(new java.awt.Color(255, 255, 255));
         createGroupButton.setText("Create Group");
-        createGroupButton.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 2, true));
+        createGroupButton.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true));
         createGroupButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 createGroupButtonMouseClicked(evt);
             }
         });
-        getContentPane().add(createGroupButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 460, 150, 50));
+        getContentPane().add(createGroupButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 360, 90, 30));
 
-        userRadioButton.setFont(new java.awt.Font("Univers LT 45 Light", 0, 14)); // NOI18N
+        userRadioButton.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         userRadioButton.setText("users");
-        getContentPane().add(userRadioButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 100, -1, -1));
+        getContentPane().add(userRadioButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, -1, -1));
 
-        groupRadioButton.setFont(new java.awt.Font("Univers LT 45 Light", 0, 14)); // NOI18N
+        groupRadioButton.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         groupRadioButton.setText("groups");
-        getContentPane().add(groupRadioButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 100, -1, -1));
+        getContentPane().add(groupRadioButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 40, -1, -1));
 
-        gameRadioButton.setFont(new java.awt.Font("Univers LT 45 Light", 0, 14)); // NOI18N
+        gameRadioButton.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         gameRadioButton.setText("games");
-        getContentPane().add(gameRadioButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 100, -1, -1));
+        getContentPane().add(gameRadioButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 40, -1, -1));
 
-        jButton1.setFont(new java.awt.Font("Univers LT 45 Light", 0, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Check Achievements");
-        jButton1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 2, true));
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 520, 150, 50));
-
-        jLabel1.setFont(new java.awt.Font("Univers LT 45 Light", 0, 24)); // NOI18N
-        jLabel1.setText("About Me:");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 140, -1, -1));
-
-        backgroundImg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/staticImg/profile.jpeg"))); // NOI18N
+        backgroundImg.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
+        backgroundImg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/staticImg/bgtest.jpg"))); // NOI18N
+        backgroundImg.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true));
         backgroundImg.setPreferredSize(new java.awt.Dimension(920, 750));
-        getContentPane().add(backgroundImg, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        getContentPane().add(backgroundImg, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 70, 510, 640));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -303,7 +297,6 @@ public class DeveloperForm extends javax.swing.JFrame {
               String updateStr = "update Account a set a.description = '" + this.descriptionTextField.getText() + 
                       "' where a.username = '" + MainForm.userName.toString() + "'";
               try {
-                  System.out.println(updateStr);
                   stmt.executeUpdate(updateStr);
               } catch (SQLException ex) {
                 Logger.getLogger(DeveloperForm.class.getName()).log(Level.SEVERE, null, ex);
@@ -315,47 +308,6 @@ public class DeveloperForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_editButtonActionPerformed
 
-    private void logoutButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutButtonMouseClicked
-        // TODO add your handling code here:
-        int reply = JOptionPane.showConfirmDialog(null, "Log out?", "Leaving?", JOptionPane.YES_NO_OPTION);
-            if (reply == JOptionPane.YES_OPTION){        
-            new MainForm().setVisible(true);
-            MainForm.userName="";
-            this.setVisible(false);
-            this.dispose(); 
-        }
-    }//GEN-LAST:event_logoutButtonMouseClicked
-
-    private void searchFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_searchFieldActionPerformed
-
-    private void searchButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchButtonMouseClicked
-        // TODO add your handling code here:
-        Boolean users = userRadioButton.isSelected();
-        Boolean groups = groupRadioButton.isSelected();
-        Boolean games = gameRadioButton.isSelected();
-        String textField = searchField.getText();
-         
-        if (! ( users || groups || games )){
-            JOptionPane.showMessageDialog(null, "Please select a search criteria! Note: leaving search field blank will return all results!", "Nothing is selected!", JOptionPane.INFORMATION_MESSAGE);
-            return;
-        }
-
-        if (users){
-            new UserLibraryForm(textField).setVisible(true);      
-        }
-             
-        if (groups){
-            System.out.println("opening groups library");
-            new GroupLibraryForm(textField).setVisible(true);
-         }
-         if (games){
-            System.out.println("games group library");
-            new GameLibraryForm(textField).setVisible(true);
-         }
-    }//GEN-LAST:event_searchButtonMouseClicked
-
     private void friendListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_friendListMouseClicked
         // TODO add your handling code here:
         if (evt.getClickCount() == 2){
@@ -363,7 +315,6 @@ public class DeveloperForm extends javax.swing.JFrame {
             String queryString = "Select A.userID from Account A where A.userName='" + selectedUser + "'";
                 try {
                     rs = stmt.executeQuery(queryString);
-                    System.out.println(queryString);
                     if (rs.next()){
                         String check = "select * from Developer where developerID=" + rs.getInt("userID");
                         ResultSet rs2 = stmt2.executeQuery(check);
@@ -388,32 +339,30 @@ public class DeveloperForm extends javax.swing.JFrame {
 
     private void gameListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_gameListMouseClicked
         try {
-            // TODO add your handling code here:
-            String selectedGame = gameList.getSelectedValue();
-            if (selectedGame == null){
-                return;
+            if (evt.getClickCount()== 2){
+                String selectedGame = gameList.getSelectedValue();
+                if (selectedGame == null){
+                    return;
+                }
+                String queryStr = "Select * from Game where gName='" + selectedGame + "'";
+                rs = stmt.executeQuery(queryStr);
+                rs.next();
+                new GameInfoForm(rs.getString("gName"), rs.getString("gDescription"), rs.getInt("creatorID"), rs.getInt("currentPrice")).setVisible(true);
             }
-            String queryStr = "Select * from Game where gName='" + selectedGame + "'";
-            rs = stmt.executeQuery(queryStr);
-            rs.next();
-            new GameInfoForm(rs.getString("gName"), rs.getString("gDescription"), rs.getInt("creatorID"), rs.getInt("currentPrice")).setVisible(true);
-            System.out.println("Showing game info of " + rs.getString("gName"));
         } catch (SQLException ex) {
             Logger.getLogger(DeveloperForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_gameListMouseClicked
-
-    private void refreshButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_refreshButtonMouseClicked
-        // TODO add your handling code here:
-        this.setVisible(false);
-        new DeveloperForm().setVisible(true);
-    }//GEN-LAST:event_refreshButtonMouseClicked
 
     private void deleteFriendMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteFriendMouseClicked
         // TODO add your handling code here:
         String insertStr;
         String selected = friendList.getSelectedValue();
         try{
+            if (selected == null){
+                JOptionPane.showMessageDialog(null, "Please select a friend you'd like to delete!", "No selection!", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
             int reply = JOptionPane.showConfirmDialog(null, "Are you sure?", "Deleting selected friend:", JOptionPane.YES_NO_OPTION);
             if (reply == JOptionPane.YES_OPTION){
             String selectStr = "select * from Account A where A.userName = '" + selected + "'";
@@ -442,7 +391,7 @@ public class DeveloperForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         String selected = gameList.getSelectedValue();
         if (selected == null){
-            System.out.println("Please select a game you'd like to edit");
+            JOptionPane.showMessageDialog(null, "Please select a game you'd like to edit!", "No selection!", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
         new EditGameForm(selected).setVisible(true);
@@ -454,6 +403,10 @@ public class DeveloperForm extends javax.swing.JFrame {
         String selected = gameList.getSelectedValue();
         
         try{
+            if (selected == null){
+                JOptionPane.showMessageDialog(null, "Please select a game you'd like to delete!", "No selection!", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
             int reply = JOptionPane.showConfirmDialog(null, "Are you sure?", "Deleting Selected Game:", JOptionPane.YES_NO_OPTION);
             if (reply == JOptionPane.YES_OPTION){ 
                 String selectStr = "select * from Game G where G.gName = '" + selected + "'";
@@ -474,12 +427,13 @@ public class DeveloperForm extends javax.swing.JFrame {
     private void groupListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_groupListMouseClicked
         // TODO add your handling code here:
         try {
-            // TODO add your handling code here:
-            String selectedGroup = groupList.getSelectedValue();
-            String queryStr = "Select * from FriendGroup F where F.groupName='" + selectedGroup + "'";
-            rs = stmt.executeQuery(queryStr);
-            rs.next();
-            new GroupInfoForm(rs.getString("groupName"), rs.getString("groupDesc"), rs.getInt("creatorUserID"), rs.getString("dateCreated")).setVisible(true);
+            if (evt.getClickCount()==2){
+                String selectedGroup = groupList.getSelectedValue();
+                String queryStr = "Select * from FriendGroup F where F.groupName='" + selectedGroup + "'";
+                rs = stmt.executeQuery(queryStr);
+                rs.next();
+                new GroupInfoForm(rs.getString("groupName"), rs.getString("groupDesc"), rs.getInt("creatorUserID"), rs.getString("dateCreated")).setVisible(true);
+            }
         } catch (SQLException ex) {
             Logger.getLogger(DeveloperForm.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -488,6 +442,54 @@ public class DeveloperForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         new CreateGroupForm().setVisible(true);
     }//GEN-LAST:event_createGroupButtonMouseClicked
+
+    private void logoutButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutButtonMouseClicked
+        // TODO add your handling code here:
+        int reply = JOptionPane.showConfirmDialog(null, "Log out?", "Leaving?", JOptionPane.YES_NO_OPTION);
+        if (reply == JOptionPane.YES_OPTION){
+            new MainForm().setVisible(true);
+            MainForm.userName="";
+            this.setVisible(false);
+            this.dispose();
+        }
+    }//GEN-LAST:event_logoutButtonMouseClicked
+
+    private void refreshButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_refreshButtonMouseClicked
+        // TODO add your handling code here:
+        this.setVisible(false);
+        new DeveloperForm().setVisible(true);
+    }//GEN-LAST:event_refreshButtonMouseClicked
+
+    private void searchButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchButtonMouseClicked
+        // TODO add your handling code here:
+        Boolean users = userRadioButton.isSelected();
+        Boolean groups = groupRadioButton.isSelected();
+        Boolean games = gameRadioButton.isSelected();
+        String textField = searchField.getText();
+
+        if (! ( users || groups || games )){
+            JOptionPane.showMessageDialog(null, "Please select a search criteria! Note: leaving search field blank will return all results!", "Nothing is selected!", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        if (users){
+            new UserLibraryForm(textField).setVisible(true);
+        }
+
+        if (groups){
+            System.out.println("opening groups library");
+            new GroupLibraryForm(textField).setVisible(true);
+        }
+        if (games){
+            System.out.println("games group library");
+            new GameLibraryForm(textField).setVisible(true);
+        }
+    }//GEN-LAST:event_searchButtonMouseClicked
+
+    private void searchFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchFieldActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Friends;
     private javax.swing.JTabbedPane GroupAndGames;
@@ -505,8 +507,6 @@ public class DeveloperForm extends javax.swing.JFrame {
     private javax.swing.JRadioButton gameRadioButton;
     private javax.swing.JList<String> groupList;
     private javax.swing.JRadioButton groupRadioButton;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;

@@ -169,7 +169,7 @@ public class AdminForm extends javax.swing.JFrame {
                         .addComponent(logoutButton)
                         .addGap(18, 18, 18)
                         .addComponent(refreshButton)))
-                .addContainerGap(107, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

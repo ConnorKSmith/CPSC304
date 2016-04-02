@@ -63,24 +63,34 @@ public class EditGameForm extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         deleteAchievementButton = new javax.swing.JButton();
         editAchievementButton = new javax.swing.JButton();
+        refreshButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
+        setSize(new java.awt.Dimension(389, 555));
 
+        jLabel1.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         jLabel1.setText("Game Description:");
 
         gameDescriptionArea.setColumns(20);
+        gameDescriptionArea.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         gameDescriptionArea.setRows(5);
         jScrollPane1.setViewportView(gameDescriptionArea);
 
+        jLabel2.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         jLabel2.setText("Game Price: ");
 
-        addAchievementButton.setText("Add Achievement");
+        priceField.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
+
+        addAchievementButton.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
+        addAchievementButton.setText("Add");
         addAchievementButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 addAchievementButtonMouseClicked(evt);
             }
         });
 
+        achievementList.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         achievementList.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -93,6 +103,7 @@ public class EditGameForm extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(achievementList);
 
+        saveChangesButton.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         saveChangesButton.setText("Save Changes");
         saveChangesButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -100,9 +111,11 @@ public class EditGameForm extends javax.swing.JFrame {
             }
         });
 
+        jLabel3.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         jLabel3.setText("Game Achievements:");
 
-        deleteAchievementButton.setLabel("Delete Achievement");
+        deleteAchievementButton.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
+        deleteAchievementButton.setText("Delete ");
         deleteAchievementButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 deleteAchievementButtonMouseClicked(evt);
@@ -114,7 +127,8 @@ public class EditGameForm extends javax.swing.JFrame {
             }
         });
 
-        editAchievementButton.setText("Edit Achievement");
+        editAchievementButton.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
+        editAchievementButton.setText("Edit ");
         editAchievementButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 editAchievementButtonMouseClicked(evt);
@@ -126,35 +140,47 @@ public class EditGameForm extends javax.swing.JFrame {
             }
         });
 
+        refreshButton.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
+        refreshButton.setText("Refresh");
+        refreshButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                refreshButtonMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGap(27, 27, 27)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel1)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(priceField, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(8, 8, 8)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addComponent(jLabel2)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(priceField, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jLabel3)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel3)))
+                        .addGroup(layout.createSequentialGroup()
                             .addComponent(addAchievementButton)
-                            .addComponent(saveChangesButton))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(deleteAchievementButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(editAchievementButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(123, Short.MAX_VALUE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(editAchievementButton)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(deleteAchievementButton)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(refreshButton))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(98, 98, 98)
+                            .addComponent(saveChangesButton))))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -167,18 +193,19 @@ public class EditGameForm extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(priceField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel3)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addAchievementButton)
-                    .addComponent(editAchievementButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(saveChangesButton)
-                    .addComponent(deleteAchievementButton)))
+                    .addComponent(editAchievementButton)
+                    .addComponent(deleteAchievementButton)
+                    .addComponent(refreshButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(saveChangesButton)
+                .addContainerGap(38, Short.MAX_VALUE))
         );
 
         pack();
@@ -206,15 +233,14 @@ public class EditGameForm extends javax.swing.JFrame {
     private void achievementListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_achievementListMouseClicked
         // TODO add your handling code here:
         try {
-            // TODO add your handling code here:
-            String selectedAchievement = achievementList.getSelectedValue();
-            String query = "select A.aID, G.gameID from Game G, Achievement A where A.aName='"
-                                    + selectedAchievement + "' and G.gameID = " + thisGameID;
-            rs = stmt.executeQuery(query);
-            
-            
-            if (rs.next()){
-            new SearchAchievementForm(rs.getInt("aID"), rs.getInt("gameID")).setVisible(true);
+            if (evt.getClickCount()== 2){
+                String selectedAchievement = achievementList.getSelectedValue();
+                String query = "select A.aID, G.gameID from Game G, Achievement A where A.aName='"
+                                        + selectedAchievement + "' and G.gameID = " + thisGameID;
+                rs = stmt.executeQuery(query);
+                if (rs.next()){
+                    new SearchAchievementForm(rs.getInt("aID"), rs.getInt("gameID")).setVisible(true);
+                }
             }
         } catch (SQLException ex) {
             Logger.getLogger(ProfileForm.class.getName()).log(Level.SEVERE, null, ex);
@@ -267,6 +293,10 @@ public class EditGameForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_editAchievementButtonMouseClicked
 
+    private void refreshButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_refreshButtonMouseClicked
+        refresh();
+    }//GEN-LAST:event_refreshButtonMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList<String> achievementList;
@@ -280,6 +310,7 @@ public class EditGameForm extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField priceField;
+    private javax.swing.JButton refreshButton;
     private javax.swing.JButton saveChangesButton;
     // End of variables declaration//GEN-END:variables
 

@@ -82,7 +82,8 @@ public class ProfileForm extends javax.swing.JFrame {
         backgroundImg = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setSize(new java.awt.Dimension(481, 538));
+        setPreferredSize(new java.awt.Dimension(470, 553));
+        setSize(new java.awt.Dimension(481, 553));
         getContentPane().setLayout(null);
 
         editButton.setFont(new java.awt.Font("Univers LT 45 Light", 1, 12)); // NOI18N
@@ -205,17 +206,17 @@ public class ProfileForm extends javax.swing.JFrame {
         Tabs.addTab("Games", gamesTab);
 
         getContentPane().add(Tabs);
-        Tabs.setBounds(10, 360, 330, 120);
+        Tabs.setBounds(10, 360, 330, 140);
 
         searchField.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
-        searchField.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
+        searchField.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
         searchField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 searchFieldActionPerformed(evt);
             }
         });
         getContentPane().add(searchField);
-        searchField.setBounds(10, 10, 260, 20);
+        searchField.setBounds(10, 20, 260, 18);
 
         searchButton.setFont(new java.awt.Font("PT Serif Caption", 0, 14)); // NOI18N
         searchButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/staticImg/searchIcon.png"))); // NOI18N
@@ -272,7 +273,7 @@ public class ProfileForm extends javax.swing.JFrame {
             }
         });
         getContentPane().add(deleteButton);
-        deleteButton.setBounds(360, 440, 90, 30);
+        deleteButton.setBounds(360, 460, 90, 30);
 
         usersRadioButton.setFont(new java.awt.Font("Univers LT 45 Light", 1, 12)); // NOI18N
         usersRadioButton.setText("users");
