@@ -69,7 +69,6 @@ public class GroupLibraryForm extends javax.swing.JFrame {
         popField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(217, 325));
         setResizable(false);
         setSize(new java.awt.Dimension(217, 325));
         getContentPane().setLayout(null);
@@ -108,7 +107,7 @@ public class GroupLibraryForm extends javax.swing.JFrame {
         jScrollPane1.setViewportView(groupList);
 
         getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(20, 130, 170, 120);
+        jScrollPane1.setBounds(20, 130, 210, 120);
 
         joinButton.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         joinButton.setText("Join");
@@ -127,11 +126,11 @@ public class GroupLibraryForm extends javax.swing.JFrame {
 
         popChoice.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         getContentPane().add(popChoice);
-        popChoice.setBounds(100, 50, 40, 20);
+        popChoice.setBounds(100, 50, 70, 20);
 
         popField.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         getContentPane().add(popField);
-        popField.setBounds(150, 50, 40, 26);
+        popField.setBounds(190, 50, 40, 26);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import static pkg304application.GameInfoForm.thisGameID;
 import pkg304application.database.DatabaseConnection;
 
@@ -58,17 +59,18 @@ public class AchievementForm extends javax.swing.JFrame {
         achievementDescription = new javax.swing.JTextPane();
         Description = new java.awt.Label();
         confirmButton = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        achievementName = new javax.swing.JTextArea();
         label1 = new java.awt.Label();
         gameName = new java.awt.Label();
-        totalNeeded = new java.awt.TextArea();
         totalDescription = new java.awt.Label();
+        achievementName = new javax.swing.JTextField();
+        totalNeeded = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        achievementDescription.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         jScrollPane1.setViewportView(achievementDescription);
 
+        Description.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         Description.setText("Achievement description:");
         Description.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -76,6 +78,7 @@ public class AchievementForm extends javax.swing.JFrame {
             }
         });
 
+        confirmButton.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         confirmButton.setText("Confirm");
         confirmButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -88,60 +91,61 @@ public class AchievementForm extends javax.swing.JFrame {
             }
         });
 
-        achievementName.setColumns(20);
-        achievementName.setRows(5);
-        jScrollPane2.setViewportView(achievementName);
-
+        label1.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         label1.setText("Achievement name:");
 
+        gameName.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         gameName.setText(gName);
 
+        totalDescription.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         totalDescription.setText("Total Needed:");
+
+        achievementName.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
+
+        totalNeeded.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(44, 44, 44)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGap(28, 28, 28)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(totalDescription, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(31, 31, 31)
-                        .addComponent(totalNeeded, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(16, 16, 16)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(totalNeeded, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(confirmButton))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(gameName, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(Description, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jScrollPane1)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)))
-                .addGap(0, 40, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(achievementName, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(51, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(20, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(30, 30, 30)
                 .addComponent(gameName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
+                .addComponent(achievementName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(Description, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(totalNeeded, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(totalDescription, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(confirmButton))
-                .addContainerGap(64, Short.MAX_VALUE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(confirmButton)
+                        .addComponent(totalNeeded, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(totalDescription, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(57, Short.MAX_VALUE))
         );
-
-        totalDescription.getAccessibleContext().setAccessibleName("Total Needed:");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -154,12 +158,10 @@ public class AchievementForm extends javax.swing.JFrame {
         // TODO add your handling code here:
             
         try {
-            
-            if (achievementName.getText().equals(null)){
-                System.out.println("You must enter game name");
+            if (!validInput()){
+                JOptionPane.showMessageDialog(null, "Please check achievement name is not empty and total needed is a positive number!", "Invalid information!", JOptionPane.INFORMATION_MESSAGE);
                 return;
-            }
-            
+            }                       
             String insert = "Insert into Achievement(aDesc, aName, totalNeeded, gameID) values('"
                     + achievementDescription.getText() + "' , '" + achievementName.getText() +  "' , '" + 
                     Integer.parseInt(totalNeeded.getText()) + "' , " + GameInfoForm.thisGameID + ")";
@@ -176,52 +178,29 @@ public class AchievementForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_confirmButtonActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
+    private boolean validInput() {
+        try{
+            int num = Integer.parseInt(totalNeeded.getText());
+            if (achievementName.getText().equals("")){
+                return false;
+            }    
+            if (num < 0){
+                return false;
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AchievementForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AchievementForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AchievementForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AchievementForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (NumberFormatException nfe){
+            return false;
         }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new AchievementForm().setVisible(true);
-            }
-        });
+        return true;
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.awt.Label Description;
     private javax.swing.JTextPane achievementDescription;
-    private javax.swing.JTextArea achievementName;
+    private javax.swing.JTextField achievementName;
     private javax.swing.JButton confirmButton;
     private java.awt.Label gameName;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private java.awt.Label label1;
     private java.awt.Label totalDescription;
-    private java.awt.TextArea totalNeeded;
+    private javax.swing.JTextField totalNeeded;
     // End of variables declaration//GEN-END:variables
 }
