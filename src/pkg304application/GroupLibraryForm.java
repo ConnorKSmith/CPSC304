@@ -69,8 +69,9 @@ public class GroupLibraryForm extends javax.swing.JFrame {
         popField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(257, 349));
         setResizable(false);
-        setSize(new java.awt.Dimension(217, 325));
+        setSize(new java.awt.Dimension(257, 349));
         getContentPane().setLayout(null);
 
         jLabel1.setFont(new java.awt.Font("Univers LT 45 Light", 0, 14)); // NOI18N

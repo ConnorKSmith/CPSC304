@@ -77,13 +77,19 @@ public class GroupInfoForm extends javax.swing.JFrame {
         dateCreated = new javax.swing.JLabel();
         deleteGroupButton = new javax.swing.JButton();
         editGroupButton = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        membersLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(353, 465));
         setResizable(false);
-        setSize(new java.awt.Dimension(354, 451));
+        setSize(new java.awt.Dimension(353, 465));
+        getContentPane().setLayout(null);
 
         groupName.setFont(new java.awt.Font("Univers LT 45 Light", 0, 18)); // NOI18N
         groupName.setText("jLabel1");
+        getContentPane().add(groupName);
+        groupName.setBounds(113, 22, 235, 51);
 
         infoTab.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
 
@@ -109,17 +115,28 @@ public class GroupInfoForm extends javax.swing.JFrame {
 
         infoTab.addTab("User List", userListTab);
 
+        getContentPane().add(infoTab);
+        infoTab.setBounds(23, 91, 303, 194);
+
         jLabel1.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         jLabel1.setText("Creator:");
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(40, 300, 43, 16);
 
         creatorName.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         creatorName.setText("jLabel2");
+        getContentPane().add(creatorName);
+        creatorName.setBounds(260, 300, 40, 16);
 
         jLabel3.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         jLabel3.setText("Date created:");
+        getContentPane().add(jLabel3);
+        jLabel3.setBounds(40, 360, 73, 16);
 
         dateCreated.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
-        dateCreated.setText("jLabel4");
+        dateCreated.setText("2016-12-12");
+        getContentPane().add(dateCreated);
+        dateCreated.setBounds(240, 360, 70, 16);
 
         deleteGroupButton.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         deleteGroupButton.setText("Delete Group");
@@ -128,6 +145,8 @@ public class GroupInfoForm extends javax.swing.JFrame {
                 deleteGroupButtonMouseClicked(evt);
             }
         });
+        getContentPane().add(deleteGroupButton);
+        deleteGroupButton.setBounds(190, 390, 118, 29);
 
         editGroupButton.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         editGroupButton.setText("Edit Group");
@@ -136,61 +155,18 @@ public class GroupInfoForm extends javax.swing.JFrame {
                 editGroupButtonMouseClicked(evt);
             }
         });
+        getContentPane().add(editGroupButton);
+        editGroupButton.setBounds(30, 390, 102, 29);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(113, 113, 113)
-                        .addComponent(groupName, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addGap(34, 34, 34)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(jLabel3)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(dateCreated))
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(jLabel1)
-                                            .addGap(187, 187, 187)
-                                            .addComponent(creatorName)))
-                                    .addGap(0, 0, Short.MAX_VALUE))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(editGroupButton)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(deleteGroupButton))))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addGap(23, 23, 23)
-                            .addComponent(infoTab, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addComponent(groupName, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(infoTab, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(creatorName))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(dateCreated))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(editGroupButton)
-                    .addComponent(deleteGroupButton))
-                .addContainerGap(51, Short.MAX_VALUE))
-        );
+        jLabel2.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
+        jLabel2.setText("Members:");
+        getContentPane().add(jLabel2);
+        jLabel2.setBounds(40, 330, 56, 16);
+
+        membersLabel.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
+        membersLabel.setText("jLabel4");
+        getContentPane().add(membersLabel);
+        membersLabel.setBounds(260, 330, 40, 16);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -252,7 +228,9 @@ public class GroupInfoForm extends javax.swing.JFrame {
     private javax.swing.JLabel groupName;
     private javax.swing.JTabbedPane infoTab;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel membersLabel;
     private javax.swing.JList<String> userList;
     private javax.swing.JScrollPane userListTab;
     // End of variables declaration//GEN-END:variables
@@ -269,6 +247,10 @@ private void showGroupInfo(String g, String d, int cre, String date) {
             rs = stmt.executeQuery(queryStr);
             rs.next();
             creatorName.setText(rs.getString("userName"));
+            queryStr = "select count(memberUserID) from FriendGroup F, WithinGroup W where F.gID = W.withinGroupID and F.gID=" + thisGroupID;
+            rs = stmt.executeQuery(queryStr);
+            rs.next();
+            membersLabel.setText(Integer.toString(rs.getInt("count(memberUserID)")));
         } catch (SQLException ex) {
             Logger.getLogger(GameInfoForm.class.getName()).log(Level.SEVERE, null, ex);
         }

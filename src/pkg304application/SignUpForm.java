@@ -62,6 +62,7 @@ public class SignUpForm extends javax.swing.JFrame {
         buttonGroup1.add(developerButton);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(278, 511));
         setResizable(false);
         setSize(new java.awt.Dimension(278, 511));
         getContentPane().setLayout(null);
@@ -185,9 +186,7 @@ public class SignUpForm extends javax.swing.JFrame {
 
         insertStr = "insert into Account(userName, password) "
                 + "values('" + u + "' , '" + p + "')";
-        
-        System.out.println(insertStr);
-        
+                
         try{
             stmt= dbc.getMyConnection().createStatement(); 
             stmt.executeUpdate(insertStr);
