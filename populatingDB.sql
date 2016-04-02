@@ -62,11 +62,11 @@ insert into FriendsWith values(3,8);
 insert into FriendsWith values(4,9);
 insert into FriendsWith values(1,10);
 
-insert into FriendGroup values(1,"group1","first group",1,"2016/1/1");
-insert into FriendGroup values(2,"group2","second group",6,"2016/2/3");
-insert into FriendGroup values(3,"group3","third group",2,"2016/3/3");
-insert into FriendGroup values(4,"group4","fourth group",7,"2016/4/4");
-insert into FriendGroup values(5,"group5","fifth group",10,"2016/5/5");
+insert into FriendGroup values(1,"apple","group apple",1,"2016/1/1");
+insert into FriendGroup values(2,"banana","banana yes",6,"2016/2/3");
+insert into FriendGroup values(3,"love database","yeah 304",2,"2016/3/3");
+insert into FriendGroup values(4,"waffles","group waffles",7,"2016/4/4");
+insert into FriendGroup values(5,"vancouver","people from vancouver",10,"2016/5/5");
 insert into WithinGroup values(1,1);
 insert into WithinGroup values(6,2);
 insert into WithinGroup values(2,3);
@@ -76,16 +76,16 @@ insert into WithinGroup values(3,1);
 insert into WithinGroup values(4,1);
 insert into WithinGroup values(5,3);
 
-insert into Game values(1,"game1","first game",6,50.99);
-insert into Game values(2,"game2","second game",7,60.99);
-insert into Game values(3,"game3","third game",8,70.99);
-insert into Game values(4,"game4","fourth game",9,80.99);
-insert into Game values(5,"game5","fifth game",6,90.99);
+insert into Game values(1,"Street Fighters","This is an action game",6,50.99);
+insert into Game values(2,"Adventure in Monkey Island","adventure with your monkey",7,60.99);
+insert into Game values(3,"Sudoku","try our sudoku game",8,70.99);
+insert into Game values(4,"forza","racing game",9,80.99);
+insert into Game values(5,"NBA Live","lastest version of NBA Live",6,90.99);
 insert into HasGenre values(1,"Action");
 insert into HasGenre values(2,"Adventure");
 insert into HasGenre values(3,"Puzzle");
 insert into HasGenre values(4,"Racing");
-insert into HasGenre values(5,"Sprots");
+insert into HasGenre values(5,"Sports");
 
 insert into OwnsGame values(1,1,0,50.99);
 insert into OwnsGame values(2,2,0,60.99);
@@ -96,9 +96,9 @@ insert into OwnsGame values(5,5,0,90.99);
 
 insert into Review values(1,"Good Game",5,"2016/2/2",1,1);
 insert into Review values(2,"bad Game",1,"2016/3/2",2,2);
-insert into Review values(1,"Perfect Game",10,"2016/4/2",2,4);
-insert into Review values(1,"Good",8,"2016/5/2",3,4);
-insert into Review values(1,"Ok Game",8,"2016/6/2",4,5);
+insert into Review values(3,"Perfect Game",10,"2016/4/2",2,4);
+insert into Review values(4,"Good",8,"2016/5/2",3,4);
+insert into Review values(5,"Ok Game",8,"2016/6/2",4,5);
 
 insert into Achievement values(1,"Kill everyone","kill",100,1);
 insert into Achievement values(2,"Find everyone","Find",10,2);
@@ -112,8 +112,8 @@ insert into HasWorkTowards values(4,4,100,true);
 insert into HasWorkTowards values(5,5,50,false);
 insert into InAchievement values(1,1,1);
 insert into InAchievement values(2,2,2);
-insert into InAchievement values(3,3,4);
-insert into InAchievement values(4,4,5);
+insert into InAchievement values(3,3,3);
+insert into InAchievement values(4,4,4);
 insert into InAchievement values(5,5,5);
 
 

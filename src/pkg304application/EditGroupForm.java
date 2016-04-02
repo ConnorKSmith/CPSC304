@@ -49,24 +49,24 @@ public class EditGroupForm extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         groupDescriptionArea = new javax.swing.JTextArea();
         jLabel2 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        groupNameArea = new javax.swing.JTextArea();
         saveButton = new javax.swing.JButton();
+        groupNameArea = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setSize(new java.awt.Dimension(399, 343));
 
-        jLabel1.setText("Group Description");
+        jLabel1.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
+        jLabel1.setText("Group Description:");
 
         groupDescriptionArea.setColumns(20);
+        groupDescriptionArea.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         groupDescriptionArea.setRows(5);
         jScrollPane1.setViewportView(groupDescriptionArea);
 
-        jLabel2.setText("Group Name");
+        jLabel2.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
+        jLabel2.setText("Group Name:");
 
-        groupNameArea.setColumns(20);
-        groupNameArea.setRows(5);
-        jScrollPane2.setViewportView(groupNameArea);
-
+        saveButton.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         saveButton.setText("Save Changes");
         saveButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -74,35 +74,38 @@ public class EditGroupForm extends javax.swing.JFrame {
             }
         });
 
+        groupNameArea.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(25, 25, 25)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(saveButton)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 341, Short.MAX_VALUE)
-                        .addComponent(jLabel1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
-                        .addComponent(jScrollPane2)))
-                .addContainerGap(112, Short.MAX_VALUE))
+                        .addGap(36, 36, 36)
+                        .addComponent(groupNameArea))
+                    .addComponent(saveButton)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addGap(33, 33, 33)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(groupNameArea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addGap(18, 18, 18)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(saveButton)
-                .addGap(7, 7, 7))
+                .addContainerGap(51, Short.MAX_VALUE))
         );
 
         pack();
@@ -160,11 +163,10 @@ public class EditGroupForm extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea groupDescriptionArea;
-    private javax.swing.JTextArea groupNameArea;
+    private javax.swing.JTextField groupNameArea;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton saveButton;
     // End of variables declaration//GEN-END:variables
 private void showGroupInfo(String groupName) {

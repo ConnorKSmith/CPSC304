@@ -3,7 +3,8 @@ create table Account (
 	userName varchar(30) not null unique,
 	password varchar(30) not null,
 	description varchar(400),
-	primary key(userID)
+	primary key(userID),
+    check (description<=400)
 )
 
 create table FriendsWith (

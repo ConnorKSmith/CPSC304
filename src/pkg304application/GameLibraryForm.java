@@ -11,6 +11,7 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import pkg304application.database.DatabaseConnection;
 
 /**
@@ -21,22 +22,31 @@ public class GameLibraryForm extends javax.swing.JFrame {
     
     public Statement stmt;
     public ResultSet rs;
+    String thisSearchField;
+    String thisFilterQuery;
     /**
      * Creates new form GameLibraryForm
      */
     public GameLibraryForm(String searchField) {
         try {
+            if (searchField.equals("")){
+                thisSearchField = "%";
+            } else {
+                thisSearchField = searchField;
+            }
             initComponents();
             DatabaseConnection dbc = new DatabaseConnection();
             dbc.init();
             stmt = dbc.getMyConnection().createStatement();
             showGameList(searchField);
+            showFilter();
             setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+            
         } catch (SQLException ex) {
             Logger.getLogger(GameInfoForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -50,9 +60,24 @@ public class GameLibraryForm extends javax.swing.JFrame {
         gameList = new javax.swing.JList<>();
         addButton = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        ratingChoice = new java.awt.Choice();
+        priceChoice = new java.awt.Choice();
+        jLabel4 = new javax.swing.JLabel();
+        ratingTextField = new javax.swing.JTextField();
+        priceTextField = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        genreList = new java.awt.Choice();
+        filterButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(386, 413));
+        setResizable(false);
+        setSize(new java.awt.Dimension(386, 413));
+        getContentPane().setLayout(null);
 
+        gameList.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         gameList.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -65,38 +90,78 @@ public class GameLibraryForm extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(gameList);
 
+        getContentPane().add(jScrollPane1);
+        jScrollPane1.setBounds(20, 170, 335, 160);
+
+        addButton.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         addButton.setText("Add");
         addButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 addButtonMouseClicked(evt);
             }
         });
+        getContentPane().add(addButton);
+        addButton.setBounds(20, 340, 75, 29);
 
+        jLabel1.setFont(new java.awt.Font("Univers LT 45 Light", 0, 14)); // NOI18N
         jLabel1.setText("Search Result for Games:");
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(20, 140, 162, 18);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(addButton)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 355, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(25, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(22, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(addButton)
-                .addGap(23, 23, 23))
-        );
+        jLabel3.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
+        jLabel3.setText("Narrow By:");
+        getContentPane().add(jLabel3);
+        jLabel3.setBounds(26, 32, 70, 16);
+
+        ratingChoice.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
+        getContentPane().add(ratingChoice);
+        ratingChoice.setBounds(80, 60, 70, 20);
+
+        priceChoice.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
+        getContentPane().add(priceChoice);
+        priceChoice.setBounds(240, 60, 70, 20);
+
+        jLabel4.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
+        jLabel4.setText("rating:");
+        getContentPane().add(jLabel4);
+        jLabel4.setBounds(30, 60, 40, 16);
+
+        ratingTextField.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
+        getContentPane().add(ratingTextField);
+        ratingTextField.setBounds(150, 60, 40, 20);
+
+        priceTextField.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
+        priceTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                priceTextFieldActionPerformed(evt);
+            }
+        });
+        getContentPane().add(priceTextField);
+        priceTextField.setBounds(310, 60, 40, 20);
+
+        jLabel5.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
+        jLabel5.setText("price:");
+        getContentPane().add(jLabel5);
+        jLabel5.setBounds(197, 60, 30, 16);
+
+        jLabel6.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
+        jLabel6.setText("genre:");
+        getContentPane().add(jLabel6);
+        jLabel6.setBounds(30, 90, 40, 16);
+
+        genreList.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
+        getContentPane().add(genreList);
+        genreList.setBounds(80, 90, 150, 20);
+
+        filterButton.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
+        filterButton.setText("Filter");
+        filterButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                filterButtonMouseClicked(evt);
+            }
+        });
+        getContentPane().add(filterButton);
+        filterButton.setBounds(265, 90, 100, 29);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -105,26 +170,15 @@ public class GameLibraryForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         String insertStr;
         String selected = gameList.getSelectedValue();
-        
         try{
             String selectStr = "select * from Game G where G.gName = '" + selected + "'";
             rs = stmt.executeQuery(selectStr);
-            rs.next();
-            int Gid  = rs.getInt("gameID");
-            int price = rs.getInt("currentPrice");
-            int currID = MainForm.userID;
-            
+            rs.next();          
             insertStr = "insert into OwnsGame(ownerID, gameID, playHours, priceBoughtAt) "
-                + "values(" + currID + " , " + Gid + ", 0 ," +   price  + " )";
-            
-            System.out.println(insertStr);
-            
+                + "values(" + MainForm.userID + " , " + rs.getInt("gameID") + ", 0 ," +  rs.getInt("currentPrice")  + " )";                        
             stmt.executeUpdate(insertStr); 
             this.setVisible(false);
-            this.dispose();
-
-          System.out.println("good job jin");
-            
+            this.dispose();            
         } catch (SQLException ex) {
             Logger.getLogger(GameInfoForm.class.getName()).log(Level.SEVERE, null, ex);
             return;
@@ -136,16 +190,38 @@ public class GameLibraryForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             // TODO add your handling code here:
+            if (evt.getClickCount() == 2){
             String selectedGame = gameList.getSelectedValue();
             String queryStr = "Select * from Game where gName='" + selectedGame + "'";
             rs = stmt.executeQuery(queryStr);
             rs.next();
             new GameInfoForm(rs.getString("gName"), rs.getString("gDescription"), rs.getInt("creatorID"), rs.getInt("currentPrice")).setVisible(true);
-            System.out.println("Showing game info of " + rs.getString("gName"));
+            }
         } catch (SQLException ex) {
             Logger.getLogger(DeveloperForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_gameListMouseClicked
+
+    private void priceTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_priceTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_priceTextFieldActionPerformed
+
+    private void filterButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_filterButtonMouseClicked
+        try {
+            // TODO add your handling code here:
+            gameLibraryQueryBuilder(ratingChoice.getSelectedItem(), ratingTextField.getText(),
+            priceChoice.getSelectedItem(), priceTextField.getText(), genreList.getSelectedItem());
+            rs = stmt.executeQuery(thisFilterQuery);
+            DefaultListModel gameListModel = new DefaultListModel();
+            while (rs.next()){
+                gameListModel.addElement(rs.getString("gName"));
+            }
+            gameList.setModel(gameListModel);
+          //  refresh();
+        } catch (SQLException ex) {
+            Logger.getLogger(GameLibraryForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_filterButtonMouseClicked
 
     /**
      * @param args the command line arguments
@@ -153,9 +229,19 @@ public class GameLibraryForm extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
+    private javax.swing.JButton filterButton;
     private javax.swing.JList<String> gameList;
+    private java.awt.Choice genreList;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
+    private java.awt.Choice priceChoice;
+    private javax.swing.JTextField priceTextField;
+    private java.awt.Choice ratingChoice;
+    private javax.swing.JTextField ratingTextField;
     // End of variables declaration//GEN-END:variables
 private void showGameList(String searchField) {
          try {
@@ -169,9 +255,7 @@ private void showGameList(String searchField) {
                 gameList.setModel(gameListModel);
             } else {
                 String queryStr = "Select DISTINCT G.gName from Game G where G.gName LIKE '%" + searchField + "%'";
-                
-                System.out.println(queryStr);
-                rs = stmt.executeQuery(queryStr);
+                                rs = stmt.executeQuery(queryStr);
                 DefaultListModel gameListModel = new DefaultListModel();
                 while (rs.next()){
                     gameListModel.addElement(rs.getString("gName"));
@@ -182,5 +266,74 @@ private void showGameList(String searchField) {
             Logger.getLogger(DeveloperForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    
+    private void showFilter() {
+        try {
+            ratingChoice.add(">");
+            ratingChoice.add(">=");
+            ratingChoice.add("=");
+            ratingChoice.add("<=");
+            ratingChoice.add("<");
+            ratingChoice.add("!=");
+            ratingChoice.add(" ");
+            priceChoice.add(">");
+            priceChoice.add(">=");
+            priceChoice.add("=");
+            priceChoice.add("<=");
+            priceChoice.add("<");
+            priceChoice.add("!=");
+            priceChoice.add(" ");            
+            String queryStr = "Select * from Genre";
+            ResultSet rs = stmt.executeQuery(queryStr);
+            while (rs.next()){
+              genreList.add(rs.getString("genre"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(NewGameForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void gameLibraryQueryBuilder(String ratingChoice, String ratingField, String priceChoice, String priceField, String genreChoice) {
+        thisFilterQuery = "select distinct G.gName from Game G, Review R, HasGenre H where gName like '" + thisSearchField + "'";
+        if (checkFilterFields()){
+            thisFilterQuery = thisFilterQuery.concat(" and G.gameID = H.gameID and H.genre='" + genreChoice + "'");
+            if (!priceChoice.equals(" ") && !priceField.equals("")){
+                thisFilterQuery = thisFilterQuery.concat(" and G.currentPrice " + priceChoice + priceField);
+            }
+            if (!ratingChoice.equals(" ") && !ratingField.equals("")){
+                thisFilterQuery = thisFilterQuery.concat(" and (select avg(rating) from Game G2, Review R2"
+                        + " where G2.gameID = R2.gameReviewedID and G2.gName = G.gName) " + ratingChoice + ratingField);
+            }                     
+        } else {
+            JOptionPane.showMessageDialog(null, "Rating has to be betweeen 0 and 10, and price must be positive!", "Invalid filter!", JOptionPane.INFORMATION_MESSAGE);      
+        }
+    }
+    
+    private boolean checkFilterFields() {
+        try{
+        int rating = -1;
+        int price = -1;
+        if (!ratingTextField.getText().equals("")){
+            rating = Integer.parseInt(ratingTextField.getText());
+            if ((rating < 0) && (rating > 10)){
+                return false;
+            }
+        }
+        
+        if (!priceTextField.getText().equals("")){
+            price = Integer.parseInt(priceTextField.getText());
+            if (price < 0){
+                return false;
+            } 
+        }       
+        return true;
+        } catch (NumberFormatException nfe){
+            return false;
+        }
+        
+    }
+    
+
 }
 

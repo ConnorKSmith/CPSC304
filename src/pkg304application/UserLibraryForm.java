@@ -22,9 +22,16 @@ public class UserLibraryForm extends javax.swing.JFrame {
     Statement stmt2;
     ResultSet rs;
     ResultSet rs2;
+    String thisSearchField;
+    String thisFilterQuery;
     
     public UserLibraryForm(String searchField) {
         try {
+            if (searchField.equals("")){
+                thisSearchField = "%";
+            } else {
+            thisSearchField = "%" + searchField + "%";
+            }
             DatabaseConnection dbc = new DatabaseConnection();
             dbc.init();
             stmt = dbc.getMyConnection().createStatement();
@@ -50,11 +57,20 @@ public class UserLibraryForm extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         userList = new javax.swing.JList<>();
+        filterBtn = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        playerBtn = new javax.swing.JRadioButton();
+        devBtn = new javax.swing.JRadioButton();
+        adminBtn = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
+        setSize(new java.awt.Dimension(380, 293));
 
+        jLabel1.setFont(new java.awt.Font("Univers LT 45 Light", 0, 14)); // NOI18N
         jLabel1.setText("Search Result for Users:");
 
+        userList.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         userList.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -67,25 +83,64 @@ public class UserLibraryForm extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(userList);
 
+        filterBtn.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
+        filterBtn.setText("filter");
+        filterBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                filterBtnMouseClicked(evt);
+            }
+        });
+
+        jLabel2.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
+        jLabel2.setText("exclude:");
+
+        playerBtn.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
+        playerBtn.setText("player");
+
+        devBtn.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
+        devBtn.setText("developer");
+
+        adminBtn.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
+        adminBtn.setText("admin");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(42, 42, 42)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addContainerGap(59, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(filterBtn))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(18, 18, 18)
+                        .addComponent(playerBtn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(devBtn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(adminBtn)))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
+                .addGap(26, 26, 26)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(filterBtn))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(playerBtn)
+                    .addComponent(devBtn)
+                    .addComponent(adminBtn))
+                .addGap(13, 13, 13)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(95, Short.MAX_VALUE))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
 
         pack();
@@ -93,7 +148,7 @@ public class UserLibraryForm extends javax.swing.JFrame {
 
     private void userListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userListMouseClicked
         // TODO add your handling code here:
-        if (evt.getClickCount() > 2){
+        if (evt.getClickCount() == 2){
             String selectedUser = userList.getSelectedValue();
             String queryString = "Select A.userID from Account A where A.userName='" + selectedUser + "'";
                 try {
@@ -116,9 +171,31 @@ public class UserLibraryForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_userListMouseClicked
 
+    private void filterBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_filterBtnMouseClicked
+        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            userLibraryQueryBuilder();
+            rs = stmt.executeQuery(thisFilterQuery);
+            DefaultListModel userListModel = new DefaultListModel();
+            while (rs.next()){
+                userListModel.addElement(rs.getString("userName"));
+            }
+            userList.setModel(userListModel);
+          //  refresh();
+        } catch (SQLException ex) {
+            Logger.getLogger(GameLibraryForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_filterBtnMouseClicked
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JRadioButton adminBtn;
+    private javax.swing.JRadioButton devBtn;
+    private javax.swing.JButton filterBtn;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JRadioButton playerBtn;
     private javax.swing.JList<String> userList;
     // End of variables declaration//GEN-END:variables
 
@@ -145,5 +222,19 @@ public class UserLibraryForm extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(DeveloperForm.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    private void userLibraryQueryBuilder() {
+        thisFilterQuery = "select * from Account A where A.userID !=" + MainForm.userID + " and A.userName LIKE '" + thisSearchField + "'";
+        if (playerBtn.isSelected()){
+            thisFilterQuery = thisFilterQuery.concat(" and not exists (select * from Player P where A.userID=P.playerID)");
+        }
+        if (devBtn.isSelected()){
+            thisFilterQuery = thisFilterQuery.concat(" and not exists (select * from Developer D where A.userID=D.developerID)");
+            }
+        if (adminBtn.isSelected()){
+            thisFilterQuery = thisFilterQuery.concat("and not exists (select * from Admin Ad where A.userID=Ad.adminID)");
+        }      
+        
     }
 }

@@ -169,7 +169,7 @@ public class AdminForm extends javax.swing.JFrame {
                         .addComponent(logoutButton)
                         .addGap(18, 18, 18)
                         .addComponent(refreshButton)))
-                .addContainerGap(107, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -430,7 +430,7 @@ public class AdminForm extends javax.swing.JFrame {
 
     private void showReviewList() {
         try {
-            String query = "select R.reviewID, A.userName, G.gName from Account A, Review R, Game G where A.userID=R.reviewerID and G.gameID=gameReviewedID";
+            String query ="select R.reviewID, A.userName, G.gName from Review R inner join Account A on A.userID=R.reviewerID inner join Game G on G.gameID=gameReviewedID";
             rs = stmt.executeQuery(query);
             DefaultListModel reviewListModel = new DefaultListModel();
             while (rs.next()){

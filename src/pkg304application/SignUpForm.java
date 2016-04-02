@@ -4,11 +4,14 @@
  * and open the template in the editor.
  */
 package pkg304application;
+import java.awt.Color;
 import pkg304application.database.*;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author jko
@@ -49,143 +52,117 @@ public class SignUpForm extends javax.swing.JFrame {
         passwordLabel2 = new javax.swing.JLabel();
         passwordField2 = new javax.swing.JPasswordField();
         playerButton = new javax.swing.JRadioButton();
-        jLabel1 = new javax.swing.JLabel();
         developerButton = new javax.swing.JRadioButton();
         mismatch = new javax.swing.JLabel();
         alreadyExists = new javax.swing.JLabel();
         insufficientInfo = new javax.swing.JLabel();
+        backgroundImg = new javax.swing.JLabel();
 
         buttonGroup1.add(playerButton);
         buttonGroup1.add(developerButton);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
+        setSize(new java.awt.Dimension(278, 511));
+        getContentPane().setLayout(null);
 
-        signUpTitle.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
+        signUpTitle.setFont(new java.awt.Font("Nanum Brush Script", 0, 44)); // NOI18N
+        signUpTitle.setForeground(new java.awt.Color(255, 255, 255));
         signUpTitle.setText("Sign up here!");
+        getContentPane().add(signUpTitle);
+        signUpTitle.setBounds(40, 30, 210, 50);
 
-        userNameLabel.setFont(new java.awt.Font("Lucida Grande", 0, 16)); // NOI18N
+        userNameLabel.setFont(new java.awt.Font("Nanum Pen Script", 0, 24)); // NOI18N
+        userNameLabel.setForeground(new java.awt.Color(255, 255, 255));
         userNameLabel.setText("Your username:");
+        getContentPane().add(userNameLabel);
+        userNameLabel.setBounds(50, 90, 130, 29);
 
-        passwordLabel.setFont(new java.awt.Font("Lucida Grande", 0, 16)); // NOI18N
+        passwordLabel.setFont(new java.awt.Font("Nanum Pen Script", 0, 24)); // NOI18N
+        passwordLabel.setForeground(new java.awt.Color(255, 255, 255));
         passwordLabel.setText("Your password:");
+        getContentPane().add(passwordLabel);
+        passwordLabel.setBounds(50, 200, 129, 29);
 
-        userNameTextField.setFont(new java.awt.Font("Lucida Grande", 0, 16)); // NOI18N
+        userNameTextField.setFont(new java.awt.Font("Nanum Brush Script", 0, 22)); // NOI18N
+        userNameTextField.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
+        getContentPane().add(userNameTextField);
+        userNameTextField.setBounds(50, 130, 170, 30);
 
         passwordField.setFont(new java.awt.Font("Lucida Grande", 0, 16)); // NOI18N
+        passwordField.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
+        getContentPane().add(passwordField);
+        passwordField.setBounds(50, 230, 170, 30);
 
-        createAccountButton.setFont(new java.awt.Font("Lucida Grande", 0, 15)); // NOI18N
-        createAccountButton.setText("Create Account");
+        createAccountButton.setFont(new java.awt.Font("Nanum Pen Script", 0, 24)); // NOI18N
+        createAccountButton.setForeground(new java.awt.Color(255, 255, 255));
+        createAccountButton.setText("[ Create Account ]");
+        createAccountButton.setBorder(null);
+        createAccountButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                createAccountButtonMouseExited(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                createAccountButtonMouseEntered(evt);
+            }
+        });
         createAccountButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 createAccountButtonActionPerformed(evt);
             }
         });
+        getContentPane().add(createAccountButton);
+        createAccountButton.setBounds(50, 440, 170, 29);
 
-        passwordLabel2.setFont(new java.awt.Font("Lucida Grande", 0, 16)); // NOI18N
+        passwordLabel2.setFont(new java.awt.Font("Nanum Pen Script", 0, 24)); // NOI18N
+        passwordLabel2.setForeground(new java.awt.Color(255, 255, 255));
         passwordLabel2.setText("Re-enter:");
+        getContentPane().add(passwordLabel2);
+        passwordLabel2.setBounds(50, 270, 80, 29);
 
         passwordField2.setFont(new java.awt.Font("Lucida Grande", 0, 16)); // NOI18N
+        passwordField2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
+        getContentPane().add(passwordField2);
+        passwordField2.setBounds(50, 300, 170, 30);
 
+        playerButton.setFont(new java.awt.Font("Nanum Pen Script", 0, 18)); // NOI18N
+        playerButton.setForeground(new java.awt.Color(255, 255, 255));
         playerButton.setText("Player");
+        getContentPane().add(playerButton);
+        playerButton.setBounds(50, 370, 68, 27);
 
-        jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 16)); // NOI18N
-        jLabel1.setText("Account Type:");
-
+        developerButton.setFont(new java.awt.Font("Nanum Pen Script", 0, 18)); // NOI18N
+        developerButton.setForeground(new java.awt.Color(255, 255, 255));
         developerButton.setText("Developer");
+        getContentPane().add(developerButton);
+        developerButton.setBounds(120, 370, 88, 27);
 
-        mismatch.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        mismatch.setFont(new java.awt.Font("Nanum Pen Script", 0, 18)); // NOI18N
         mismatch.setForeground(new java.awt.Color(255, 0, 0));
         mismatch.setText("The passwords do not match!");
+        getContentPane().add(mismatch);
+        mismatch.setBounds(50, 340, 180, 22);
 
-        alreadyExists.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        alreadyExists.setFont(new java.awt.Font("Nanum Pen Script", 0, 18)); // NOI18N
         alreadyExists.setForeground(new java.awt.Color(255, 0, 0));
         alreadyExists.setText("Username already exists!");
+        getContentPane().add(alreadyExists);
+        alreadyExists.setBounds(60, 170, 149, 22);
 
-        insufficientInfo.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        insufficientInfo.setFont(new java.awt.Font("Nanum Pen Script", 0, 18)); // NOI18N
         insufficientInfo.setForeground(new java.awt.Color(255, 0, 0));
         insufficientInfo.setText("Missing information!");
+        getContentPane().add(insufficientInfo);
+        insufficientInfo.setBounds(70, 400, 130, 22);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(createAccountButton))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGap(51, 51, 51)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(passwordLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(playerButton)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(developerButton))))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(userNameLabel, javax.swing.GroupLayout.Alignment.LEADING))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(userNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(alreadyExists)
-                                    .addComponent(insufficientInfo)
-                                    .addComponent(passwordLabel2))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
-                                .addComponent(passwordField2, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(mismatch)
-                                .addGap(0, 0, Short.MAX_VALUE)))))
-                .addGap(60, 60, 60))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(149, 149, 149)
-                .addComponent(signUpTitle)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(39, 39, 39)
-                .addComponent(signUpTitle)
-                .addGap(41, 41, 41)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(userNameLabel)
-                    .addComponent(userNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(alreadyExists)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(passwordLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(passwordLabel))
-                        .addGap(18, 18, 18)
-                        .addComponent(passwordField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(4, 4, 4)))
-                .addGap(18, 18, 18)
-                .addComponent(mismatch)
-                .addGap(14, 14, 14)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(playerButton)
-                    .addComponent(developerButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(insufficientInfo)
-                .addGap(29, 29, 29)
-                .addComponent(createAccountButton)
-                .addContainerGap(40, Short.MAX_VALUE))
-        );
+        backgroundImg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/staticImg/bgtest.jpg"))); // NOI18N
+        getContentPane().add(backgroundImg);
+        backgroundImg.setBounds(0, -10, 510, 550);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+                   
+    
     private void createAccountButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createAccountButtonActionPerformed
         // TODO add your handling code here:
         String u = userNameTextField.getText();
@@ -229,47 +206,20 @@ public class SignUpForm extends javax.swing.JFrame {
             alreadyExists.setVisible(true);
             return;
         }
-            System.out.println("1 row inserted");
+            JOptionPane.showMessageDialog(null, "You account has been created!", "Success!", JOptionPane.INFORMATION_MESSAGE);
             this.setVisible(false);
             this.dispose();
   
     }//GEN-LAST:event_createAccountButtonActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main() {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(SignUpForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(SignUpForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(SignUpForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(SignUpForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void createAccountButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_createAccountButtonMouseEntered
+        this.createAccountButton.setForeground(Color.yellow);
+    }//GEN-LAST:event_createAccountButtonMouseEntered
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new SignUpForm().setVisible(true);
-            }
-        });
-    }
-    
+    private void createAccountButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_createAccountButtonMouseExited
+        this.createAccountButton.setForeground(Color.white);
+    }//GEN-LAST:event_createAccountButtonMouseExited
+
     private void addPlayer(int id){
         String insertStr = "insert into Player(playerID) values('" + id + "')";
         try {
@@ -277,7 +227,6 @@ public class SignUpForm extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(SignUpForm.class.getName()).log(Level.SEVERE, null, ex);
         }
-        System.out.println("new player has been added!");
     }
     
     private void addDeveloper(int id){
@@ -287,17 +236,15 @@ public class SignUpForm extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(SignUpForm.class.getName()).log(Level.SEVERE, null, ex);
         }
-        System.out.println("new developer has been added!");
     }
     
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel alreadyExists;
+    private javax.swing.JLabel backgroundImg;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton createAccountButton;
     private javax.swing.JRadioButton developerButton;
     private javax.swing.JLabel insufficientInfo;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel mismatch;
     private javax.swing.JPasswordField passwordField;
     private javax.swing.JPasswordField passwordField2;

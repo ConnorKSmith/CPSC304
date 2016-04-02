@@ -54,35 +54,42 @@ public class SearchReviewForm extends javax.swing.JFrame {
         rating.setEditable(false);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
+        setSize(new java.awt.Dimension(351, 246));
 
+        reviewerLabel.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         reviewerLabel.setText("jLabel1");
 
         reviewArea.setColumns(20);
+        reviewArea.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         reviewArea.setRows(5);
         jScrollPane1.setViewportView(reviewArea);
 
+        ratingLabel.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         ratingLabel.setText("Rated (out of 10) :");
+
+        rating.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(39, 39, 39)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGap(21, 21, 21)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(ratingLabel)
-                        .addGap(111, 111, 111)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(rating, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(reviewerLabel)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(62, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(54, 54, 54)
+                .addGap(25, 25, 25)
                 .addComponent(reviewerLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -90,7 +97,7 @@ public class SearchReviewForm extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ratingLabel)
                     .addComponent(rating, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(66, Short.MAX_VALUE))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
 
         pack();
@@ -111,6 +118,7 @@ public class SearchReviewForm extends javax.swing.JFrame {
             String query = "select * from Review R, Game G, Account A where R.reviewerID="
                     + reviewerID +" and R.gameReviewedID=" + gameID +" and A.userID=" + reviewerID; 
             rs = stmt.executeQuery(query);
+            System.out.println(query);
             rs.next();
             rating.setText(Integer.toString(rs.getInt("rating")));
             reviewArea.setText(rs.getString("reviewDesc"));

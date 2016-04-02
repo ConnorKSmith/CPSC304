@@ -5,19 +5,19 @@
  */
 package pkg304application;
 
+import java.awt.Color;
 import pkg304application.database.*;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author jko
  */
 public class MainForm extends javax.swing.JFrame {
 
-    /**
-     * Creates new form MainForm
-     */
     public static String userName = "";
     public static int userID = 0;
     DatabaseConnection dbc = new DatabaseConnection();
@@ -27,7 +27,7 @@ public class MainForm extends javax.swing.JFrame {
     public MainForm() {
         initComponents();
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -45,122 +45,96 @@ public class MainForm extends javax.swing.JFrame {
         signUpButton = new javax.swing.JButton();
         loginButton = new javax.swing.JButton();
         noAccountLabel = new javax.swing.JLabel();
+        backgroundImg = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(358, 369));
+        setResizable(false);
+        setSize(new java.awt.Dimension(358, 369));
+        getContentPane().setLayout(null);
 
-        logInTitle.setText("Log In");
+        logInTitle.setFont(new java.awt.Font("Nanum Brush Script", 0, 36)); // NOI18N
+        logInTitle.setForeground(new java.awt.Color(255, 255, 255));
+        logInTitle.setText("Log In:");
+        getContentPane().add(logInTitle);
+        logInTitle.setBounds(200, 50, 110, 20);
 
+        userNameLabel.setFont(new java.awt.Font("Nanum Brush Script", 0, 20)); // NOI18N
+        userNameLabel.setForeground(new java.awt.Color(255, 255, 255));
         userNameLabel.setText("Username:");
+        getContentPane().add(userNameLabel);
+        userNameLabel.setBounds(80, 80, 100, 16);
 
+        passwordLabel.setFont(new java.awt.Font("Nanum Brush Script", 0, 20)); // NOI18N
+        passwordLabel.setForeground(new java.awt.Color(255, 255, 255));
         passwordLabel.setText("Password:");
+        getContentPane().add(passwordLabel);
+        passwordLabel.setBounds(80, 150, 90, 24);
 
-        userNameTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                userNameTextFieldActionPerformed(evt);
-            }
-        });
+        userNameTextField.setFont(new java.awt.Font("Nanum Brush Script", 0, 20)); // NOI18N
+        userNameTextField.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 2, true));
+        getContentPane().add(userNameTextField);
+        userNameTextField.setBounds(80, 110, 200, 28);
 
-        passwordTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                passwordTextFieldActionPerformed(evt);
-            }
-        });
+        passwordTextField.setFont(new java.awt.Font("Nanum Brush Script", 0, 10)); // NOI18N
+        passwordTextField.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 2, true));
+        getContentPane().add(passwordTextField);
+        passwordTextField.setBounds(80, 180, 200, 30);
 
-        signUpButton.setText("Sign up!");
+        signUpButton.setFont(new java.awt.Font("Nanum Brush Script", 0, 20)); // NOI18N
+        signUpButton.setForeground(new java.awt.Color(255, 255, 255));
+        signUpButton.setText("[  Sign up!  ]");
+        signUpButton.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 2, true));
+        signUpButton.setBorderPainted(false);
         signUpButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 signUpButtonMouseClicked(evt);
             }
-        });
-        signUpButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                signUpButtonActionPerformed(evt);
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                signUpButtonMouseExited(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                signUpButtonMouseEntered(evt);
             }
         });
+        getContentPane().add(signUpButton);
+        signUpButton.setBounds(180, 270, 100, 28);
 
-        loginButton.setText("Enter!");
+        loginButton.setFont(new java.awt.Font("Nanum Brush Script", 0, 20)); // NOI18N
+        loginButton.setForeground(new java.awt.Color(255, 255, 255));
+        loginButton.setText("[         Enter!           ]");
+        loginButton.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 2, true));
+        loginButton.setBorderPainted(false);
         loginButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 loginButtonMouseClicked(evt);
             }
-        });
-        loginButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                loginButtonActionPerformed(evt);
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                loginButtonMouseExited(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                loginButtonMouseEntered(evt);
             }
         });
+        getContentPane().add(loginButton);
+        loginButton.setBounds(80, 230, 200, 30);
 
+        noAccountLabel.setFont(new java.awt.Font("Nanum Brush Script", 0, 20)); // NOI18N
+        noAccountLabel.setForeground(new java.awt.Color(255, 255, 255));
         noAccountLabel.setText("No Account?");
+        getContentPane().add(noAccountLabel);
+        noAccountLabel.setBounds(80, 270, 81, 24);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(loginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(171, 171, 171)
-                            .addComponent(logInTitle))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(56, 56, 56)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(signUpButton)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(noAccountLabel)
-                                            .addComponent(passwordLabel))
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(userNameLabel)
-                                            .addGap(13, 13, 13)))
-                                    .addGap(29, 29, 29)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(userNameTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE)
-                                        .addComponent(passwordTextField)))))))
-                .addContainerGap(97, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(63, 63, 63)
-                .addComponent(logInTitle)
-                .addGap(31, 31, 31)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(userNameLabel)
-                    .addComponent(userNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(16, 16, 16)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(passwordLabel)
-                    .addComponent(passwordTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(loginButton)
-                .addGap(15, 15, 15)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(signUpButton)
-                    .addComponent(noAccountLabel))
-                .addContainerGap(75, Short.MAX_VALUE))
-        );
+        backgroundImg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/staticImg/bgtest.jpg"))); // NOI18N
+        backgroundImg.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 0));
+        getContentPane().add(backgroundImg);
+        backgroundImg.setBounds(0, 0, 370, 380);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void userNameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userNameTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_userNameTextFieldActionPerformed
-
-    private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_loginButtonActionPerformed
-
-    private void signUpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signUpButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_signUpButtonActionPerformed
-
     private void signUpButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signUpButtonMouseClicked
-        // TODO add your handling code here:
-        SignUpForm.main();
+        new SignUpForm().setVisible(true);
     }//GEN-LAST:event_signUpButtonMouseClicked
 
     private void loginButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginButtonMouseClicked
@@ -175,7 +149,6 @@ public class MainForm extends javax.swing.JFrame {
                 stmt = dbc.getMyConnection().createStatement(); 
                 rs = stmt.executeQuery(queryStr);
                 if (rs.next()){
-                    System.out.println("TEST");
                     isPlayer = true;
                 }
                 String adminStr = "Select AdminID from Admin where AdminID ="+userID+"";
@@ -185,7 +158,7 @@ public class MainForm extends javax.swing.JFrame {
                     isAdmin = true;
                 }
                 if (isPlayer) {
-                    ProfileForm.main();
+                    new ProfileForm().setVisible(true);
                     this.setVisible(false);
                     this.dispose();
                 }
@@ -195,8 +168,7 @@ public class MainForm extends javax.swing.JFrame {
                   this.dispose();
                 }
                 else {
-                    System.out.println("opening develoepr view");
-                    DeveloperForm.main();
+                    new DeveloperForm().setVisible(true);
                     this.setVisible(false);
                     this.dispose();
                 }
@@ -206,37 +178,26 @@ public class MainForm extends javax.swing.JFrame {
         } 
     }//GEN-LAST:event_loginButtonMouseClicked
 
-    private void passwordTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_passwordTextFieldActionPerformed
+    private void loginButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginButtonMouseEntered
+        this.loginButton.setForeground(Color.yellow);
+    }//GEN-LAST:event_loginButtonMouseEntered
 
+    private void loginButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginButtonMouseExited
+        this.loginButton.setForeground(Color.white);
+    }//GEN-LAST:event_loginButtonMouseExited
+
+    private void signUpButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signUpButtonMouseEntered
+        this.signUpButton.setForeground(Color.yellow);
+    }//GEN-LAST:event_signUpButtonMouseEntered
+
+    private void signUpButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signUpButtonMouseExited
+        this.signUpButton.setForeground(Color.white);
+    }//GEN-LAST:event_signUpButtonMouseExited
+                    
     /**
      * @param args the command line arguments
      */
     public static void main() {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -247,6 +208,7 @@ public class MainForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel backgroundImg;
     private javax.swing.JLabel logInTitle;
     private javax.swing.JButton loginButton;
     private javax.swing.JLabel noAccountLabel;
@@ -259,17 +221,12 @@ public class MainForm extends javax.swing.JFrame {
 
     private boolean validateAccount() {
         String u = userNameTextField.getText();
-        String p = passwordTextField.getText();
-        
-        System.out.println("u is " + u + "and p is " + p);
-        
-        
+        String p = passwordTextField.getText();                       
         try {
             Statement stmt = dbc.getMyConnection().createStatement();         
             String queryStr = "Select * from Account a where a.userName='" + u + "' and a.password='"
                     + p +"'";
-            rs = stmt.executeQuery(queryStr);
-            
+            rs = stmt.executeQuery(queryStr);            
             if(rs.next()){
                 queryStr = "Select A.userID from Account A where A.userName='" + u + "'";
                 rs = stmt.executeQuery(queryStr);
@@ -278,15 +235,12 @@ public class MainForm extends javax.swing.JFrame {
                 userName = u;
                 return true;
             } else {
-                System.out.println("Incorrect username or password!");
+                JOptionPane.showMessageDialog(null, "Please check your username or password!", "Invalid Information", JOptionPane.INFORMATION_MESSAGE);
                 return false;
             }
-            
         } catch (SQLException ex) {
              Logger.getLogger(ProfileForm.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        
+        }    
         return false;
     }
 }
