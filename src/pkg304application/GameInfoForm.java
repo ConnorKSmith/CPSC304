@@ -222,23 +222,22 @@ public class GameInfoForm extends javax.swing.JFrame {
     private void reviewButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reviewButtonMouseClicked
         // TODO add your handling code here:
         if (!reviewButton.isEnabled()){
-            System.out.println("you must own the game to make a review!");
             return;
         }
-        System.out.println("User writing the review: " + MainForm.userName);
         new ReviewForm(MainForm.userName, thisGame).setVisible(true);
     }//GEN-LAST:event_reviewButtonMouseClicked
 
     private void reviewListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reviewListMouseClicked
         // TODO add your handling code here:
         try {
-            // TODO add your handling code here:
+            if (evt.getClickCount() ==2 ){
             String selectedReview = reviewList.getSelectedValue();
             String query = "select R.reviewerID, G.gameID from Game G, Review R, Account A where R.reviewerID=A.userID and A.userName='"
                                     + selectedReview + "' and G.gameID = " + thisGameID;
             rs = stmt.executeQuery(query);
             rs.next();
             new SearchReviewForm(rs.getInt("reviewerID"), rs.getInt("gameID")).setVisible(true);
+            }
         } catch (SQLException ex) {
             Logger.getLogger(ProfileForm.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -247,13 +246,14 @@ public class GameInfoForm extends javax.swing.JFrame {
     private void achievementListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_achievementListMouseClicked
         // TODO add your handling code here:
         try {
-            // TODO add your handling code here:
-            String selectedAchievement = achievementList.getSelectedValue();
-            String query = "select A.aID, G.gameID from Achievement A, Game G where A.aName='"
-                                    + selectedAchievement + "' and G.gameID = " + thisGameID;
-            rs = stmt.executeQuery(query);
-            if (rs.next()){
-            new SearchAchievementForm(rs.getInt("aID"), rs.getInt("gameID")).setVisible(true);
+            if (evt.getClickCount() ==2 ){
+                String selectedAchievement = achievementList.getSelectedValue();
+                String query = "select A.aID, G.gameID from Achievement A, Game G where A.aName='"
+                                        + selectedAchievement + "' and G.gameID = " + thisGameID;
+                rs = stmt.executeQuery(query);
+                if (rs.next()){
+                new SearchAchievementForm(rs.getInt("aID"), rs.getInt("gameID")).setVisible(true);
+                }
             }
         } catch (SQLException ex) {
             Logger.getLogger(ProfileForm.class.getName()).log(Level.SEVERE, null, ex);
@@ -325,7 +325,6 @@ public class GameInfoForm extends javax.swing.JFrame {
     private void showReviewList() {
         try {
             String queryStr = "select A.userName from Review R, Account A where R.gameReviewedID=" + thisGameID + " and R.reviewerID=A.userID";
-
             rs = stmt.executeQuery(queryStr);
             DefaultListModel reviewListModel = new DefaultListModel();
             while (rs.next()){
@@ -340,7 +339,6 @@ public class GameInfoForm extends javax.swing.JFrame {
     private void showAchievementList() {
         try {
             String queryStr = "select A.aName from Achievement A where gameID=" + thisGameID;
-
             rs = stmt.executeQuery(queryStr);
             DefaultListModel achievementListModel = new DefaultListModel();
             while (rs.next()){

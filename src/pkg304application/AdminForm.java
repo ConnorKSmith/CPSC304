@@ -83,7 +83,7 @@ public class AdminForm extends javax.swing.JFrame {
             }
         });
         getContentPane().add(deleteButton);
-        deleteButton.setBounds(19, 318, 287, 50);
+        deleteButton.setBounds(30, 320, 287, 50);
 
         logoutButton.setText("Logout");
         logoutButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -97,7 +97,7 @@ public class AdminForm extends javax.swing.JFrame {
             }
         });
         getContentPane().add(logoutButton);
-        logoutButton.setBounds(353, 329, 88, 29);
+        logoutButton.setBounds(490, 330, 88, 29);
 
         refreshButton.setText("Refresh");
         refreshButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -106,7 +106,7 @@ public class AdminForm extends javax.swing.JFrame {
             }
         });
         getContentPane().add(refreshButton);
-        refreshButton.setBounds(459, 329, 91, 29);
+        refreshButton.setBounds(370, 330, 91, 29);
 
         userList.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
