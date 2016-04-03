@@ -208,8 +208,10 @@ insert into HasGenre values(4,"Racing");
 insert into HasGenre values(5,"Sports");
 
 insert into OwnsGame values(1,1,0,50.99);
+insert into OwnsGame values(1,5,100,82.99);
 insert into OwnsGame values(2,2,0,60.99);
 insert into OwnsGame values(2,4,0,80.99);
+insert into OwnsGame values(2,5,0,79.99);	
 insert into OwnsGame values(3,3,0,75.99);
 insert into OwnsGame values(3,4,0,80.99);
 insert into OwnsGame values(4,4,0,40.20);
@@ -226,15 +228,19 @@ insert into Achievement values(1,"Kill everyone","kill",100,1);
 insert into Achievement values(2,"Find everyone","Find",10,2);
 insert into Achievement values(3,"Solve Everyting","Solve",100,3);
 insert into Achievement values(4,"Overtake everyone","Overtake",100,4);
-insert into Achievement values(5,"Win championship","win",100,5);
+insert into Achievement values(5,"Win championship","Win",100,5);
+insert into Achievement values(6,"Dunk 10 times","Dunk",10,5);
 insert into HasWorkTowards values(1,1,50,false);
 insert into HasWorkTowards values(2,2,10,true);
 insert into HasWorkTowards values(3,3,60,false);
 insert into HasWorkTowards values(4,4,100,true);
 insert into HasWorkTowards values(5,5,50,false);
+insert into HasWorkTowards values(2,6,8,false);	
+insert into HasWorkTowards values(5,6,10,true);	
+
 insert into InAchievement values(1,1,1);
 insert into InAchievement values(2,2,2);
 insert into InAchievement values(3,3,3);
 insert into InAchievement values(4,4,4);
 insert into InAchievement values(5,5,5);
-
+insert into InAchievement values(2,6,5);	
