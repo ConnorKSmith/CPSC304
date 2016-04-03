@@ -45,7 +45,9 @@ public class GroupInfoForm extends javax.swing.JFrame {
             rs = stmt.executeQuery(query);
             if (!rs.next()){
                 editGroupButton.setEnabled(false);
+                editGroupButton.setVisible(false);
                 deleteGroupButton.setEnabled(false);
+                deleteGroupButton.setVisible(false);
             }
             showGroupInfo(groupName, groupDesc, creatorUserID, dateCreated);
             showUserList();
@@ -242,6 +244,7 @@ private void showGroupInfo(String g, String d, int cre, String date) {
             thisGroupID = rs.getInt("gID");
             groupName.setText(g);
             descriptionArea.setText(d);
+            descriptionArea.setEditable(false);
             dateCreated.setText(date);
             queryStr = "Select userName from Account where userID=" + cre;
             rs = stmt.executeQuery(queryStr);
