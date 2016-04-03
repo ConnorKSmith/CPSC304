@@ -199,7 +199,7 @@ insert into WithinGroup values(5,3);
 insert into Game values(1,"Street Fighters","This is an action game",6,50.99);
 insert into Game values(2,"Adventure in Monkey Island","adventure with your monkey",7,60.99);
 insert into Game values(3,"Sudoku","try our sudoku game",8,70.99);
-insert into Game values(4,"forza","racing game",9,80.99);
+insert into Game values(4,"forza","racing game",9,100);
 insert into Game values(5,"NBA Live","lastest version of NBA Live",6,90.99);
 insert into HasGenre values(1,"Action");
 insert into HasGenre values(2,"Adventure");
