@@ -64,12 +64,12 @@ public class ProfileForm extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         friendList = new javax.swing.JList<>();
         Tabs = new javax.swing.JTabbedPane();
+        gamesTab = new javax.swing.JScrollPane();
+        gameList = new javax.swing.JList<>();
         groupsTab = new javax.swing.JScrollPane();
         groupList = new javax.swing.JList<>();
         reviewsTab = new javax.swing.JScrollPane();
         reviewList = new javax.swing.JList<>();
-        gamesTab = new javax.swing.JScrollPane();
-        gameList = new javax.swing.JList<>();
         searchField = new javax.swing.JTextField();
         searchButton = new javax.swing.JButton();
         refreshButton = new javax.swing.JButton();
@@ -82,7 +82,6 @@ public class ProfileForm extends javax.swing.JFrame {
         backgroundImg = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(470, 553));
         setSize(new java.awt.Dimension(481, 553));
         getContentPane().setLayout(null);
 
@@ -157,6 +156,22 @@ public class ProfileForm extends javax.swing.JFrame {
 
         Tabs.setFont(new java.awt.Font("Univers LT 45 Light", 1, 12)); // NOI18N
 
+        gameList.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        gameList.setFont(new java.awt.Font("Univers LT 45 Light", 1, 12)); // NOI18N
+        gameList.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        gameList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                gameListMouseClicked(evt);
+            }
+        });
+        gamesTab.setViewportView(gameList);
+
+        Tabs.addTab("Games", gamesTab);
+
         groupList.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         groupList.setFont(new java.awt.Font("Univers LT 45 Light", 1, 12)); // NOI18N
         groupList.setModel(new javax.swing.AbstractListModel<String>() {
@@ -188,22 +203,6 @@ public class ProfileForm extends javax.swing.JFrame {
         reviewsTab.setViewportView(reviewList);
 
         Tabs.addTab("Reviews", reviewsTab);
-
-        gameList.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        gameList.setFont(new java.awt.Font("Univers LT 45 Light", 1, 12)); // NOI18N
-        gameList.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        gameList.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                gameListMouseClicked(evt);
-            }
-        });
-        gamesTab.setViewportView(gameList);
-
-        Tabs.addTab("Games", gamesTab);
 
         getContentPane().add(Tabs);
         Tabs.setBounds(10, 360, 330, 140);
@@ -388,10 +387,13 @@ public class ProfileForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (evt.getClickCount() == 2){
             String selectedUser = friendList.getSelectedValue();
+            if (selectedUser == null){
+                JOptionPane.showMessageDialog(null, "Please select a user!", "Nothing is selected!", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
             String queryString = "Select A.userID from Account A where A.userName='" + selectedUser + "'";
                 try {
                     rs = stmt.executeQuery(queryString);
-                    System.out.println(queryString);
                     if (rs.next()){
                         String check = "select * from Developer where developerID=" + rs.getInt("userID");
                         ResultSet rs2 = stmt2.executeQuery(check);
@@ -414,6 +416,7 @@ public class ProfileForm extends javax.swing.JFrame {
         if (evt.getClickCount() == 2){
             String selectedGame = gameList.getSelectedValue();
             if (selectedGame == null){
+                JOptionPane.showMessageDialog(null, "Please select a game!", "Nothing is selected!", JOptionPane.INFORMATION_MESSAGE);
                 return;
             }
             String queryStr = "Select * from Game where gName='" + selectedGame + "'";
@@ -436,6 +439,10 @@ public class ProfileForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         String deleteStr;
         String selected = friendList.getSelectedValue();
+        if (selected == null){
+            JOptionPane.showMessageDialog(null, "Please select a friend!", "Nothing is selected!", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }        
         try{
             int reply = JOptionPane.showConfirmDialog(null, "Are you sure?", "Deleting selected friend:", JOptionPane.YES_NO_OPTION);
             if (reply == JOptionPane.YES_OPTION){
@@ -466,6 +473,10 @@ public class ProfileForm extends javax.swing.JFrame {
                 int reply = JOptionPane.showConfirmDialog(null, "Are you sure?", "Deleting selected game:", JOptionPane.YES_NO_OPTION);
                 if (reply == JOptionPane.YES_OPTION){
                 selected = gameList.getSelectedValue();
+                if (selected == null){
+                    JOptionPane.showMessageDialog(null, "Please select a game!", "Nothing is selected!", JOptionPane.INFORMATION_MESSAGE);
+                    return;
+                }                
                 String selectStr = "select * from Game G where G.gName = '" + selected + "'";
                 rs = stmt.executeQuery(selectStr);
                 rs.next();
@@ -480,6 +491,10 @@ public class ProfileForm extends javax.swing.JFrame {
                 int reply = JOptionPane.showConfirmDialog(null, "Are you sure?", "Deleting selected group:", JOptionPane.YES_NO_OPTION);
                 if (reply == JOptionPane.YES_OPTION){                
                 selected = groupList.getSelectedValue();
+                if (selected == null){
+                    JOptionPane.showMessageDialog(null, "Please select a group!", "Nothing is selected!", JOptionPane.INFORMATION_MESSAGE);
+                    return;
+                }                
                 String selectedStr = "select * from FriendGroup where groupName= '" + selected + "'";
                 rs = stmt.executeQuery(selectedStr);
                 rs.next();
@@ -500,12 +515,15 @@ public class ProfileForm extends javax.swing.JFrame {
                 int reply = JOptionPane.showConfirmDialog(null, "Are you sure?", "Deleting selected review:", JOptionPane.YES_NO_OPTION);
                 if (reply == JOptionPane.YES_OPTION){                
                 selected = reviewList.getSelectedValue();
+                if (selected == null){
+                    JOptionPane.showMessageDialog(null, "Please select a review!", "Nothing is selected!", JOptionPane.INFORMATION_MESSAGE);
+                    return;
+                }
                 String selectStr = "select reviewID from Review R, Game G where R.gameReviewedID = G.gameID and G.gName = '" + selected + "'";
                 rs = stmt.executeQuery(selectStr);
                 rs.next();
                 int reviewID  = rs.getInt("reviewID");
                 String deleteStr = "delete from Review where reviewID = "+ reviewID +" and reviewerID = " + MainForm.userID;  
-                System.out.println("Deleted Review");
                 stmt.executeUpdate(deleteStr);
                 refresh();
                 }
@@ -701,6 +719,7 @@ public class ProfileForm extends javax.swing.JFrame {
 
     private void refresh() {
         this.setVisible(false);
+        this.dispose();
         new ProfileForm().setVisible(true);
     }
     
