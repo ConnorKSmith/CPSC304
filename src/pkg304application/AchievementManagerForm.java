@@ -305,8 +305,8 @@ public class AchievementManagerForm extends javax.swing.JFrame {
                 // Load the correct Achievements for the game that the user can update
                 String queryStrStart1 = "Select aName, totalNeeded, progress ";
                 String queryStrStart2 = "Select aName ";
-                String queryStr = "from Achievement A, HasWorkTowards H, InAchievement I, Game G where gName='" + GameList.getSelectedValue() + "' ";
-                queryStr += "and G.gameID = I.gameID and I.aID = A.aID ";
+                String queryStr = "from Achievement A, HasWorkTowards H, Game G where gName='" + GameList.getSelectedValue() + "' ";
+                queryStr += "and G.gameID = A.gameID ";
                 queryStr += "and H.aID = A.aID and H.playerID = " + loggedInUser;
                 rs = stmt.executeQuery(queryStrStart1 + queryStr);
                 DefaultListModel updateAchievementListModel = new DefaultListModel();
@@ -317,7 +317,7 @@ public class AchievementManagerForm extends javax.swing.JFrame {
                 UpdateAchievementList.setModel(updateAchievementListModel);
                 // TODO: Addable achievements
                 // Load achievements that can be added for the game
-                String queryStr2 = "Select aName from Achievement A, InAchievement I, Game G where G.gameID = I.gameID and I.aID = A.aID and G.gName='" + GameList.getSelectedValue() + "' and aName not in (";
+                String queryStr2 = "Select aName from Achievement A, Game G where G.gameID = A.gameID and G.gName='" + GameList.getSelectedValue() + "' and aName not in (";
                 queryStr2 += queryStrStart2 + queryStr;
                 queryStr2 += ")";
                 rs = stmt.executeQuery(queryStr2);
