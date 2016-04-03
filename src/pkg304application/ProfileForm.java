@@ -79,6 +79,7 @@ public class ProfileForm extends javax.swing.JFrame {
         groupRadioButton = new javax.swing.JRadioButton();
         gameRadioButton = new javax.swing.JRadioButton();
         createGroupButton = new javax.swing.JButton();
+        AchievementManagerButton = new javax.swing.JButton();
         backgroundImg = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -277,17 +278,17 @@ public class ProfileForm extends javax.swing.JFrame {
         usersRadioButton.setFont(new java.awt.Font("Univers LT 45 Light", 1, 12)); // NOI18N
         usersRadioButton.setText("users");
         getContentPane().add(usersRadioButton);
-        usersRadioButton.setBounds(10, 40, 62, 23);
+        usersRadioButton.setBounds(10, 40, 59, 25);
 
         groupRadioButton.setFont(new java.awt.Font("Univers LT 45 Light", 1, 12)); // NOI18N
         groupRadioButton.setText("groups");
         getContentPane().add(groupRadioButton);
-        groupRadioButton.setBounds(70, 40, 70, 23);
+        groupRadioButton.setBounds(70, 40, 65, 25);
 
         gameRadioButton.setFont(new java.awt.Font("Univers LT 45 Light", 1, 12)); // NOI18N
         gameRadioButton.setText("games");
         getContentPane().add(gameRadioButton);
-        gameRadioButton.setBounds(140, 40, 69, 23);
+        gameRadioButton.setBounds(140, 40, 65, 25);
 
         createGroupButton.setFont(new java.awt.Font("Univers LT 45 Light", 1, 12)); // NOI18N
         createGroupButton.setForeground(new java.awt.Color(255, 255, 255));
@@ -306,6 +307,15 @@ public class ProfileForm extends javax.swing.JFrame {
         });
         getContentPane().add(createGroupButton);
         createGroupButton.setBounds(360, 390, 90, 30);
+
+        AchievementManagerButton.setText("Achievement Manager");
+        AchievementManagerButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AchievementManagerButtonActionPerformed(evt);
+            }
+        });
+        getContentPane().add(AchievementManagerButton);
+        AchievementManagerButton.setBounds(250, 350, 200, 23);
 
         backgroundImg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/staticImg/bgtest.jpg"))); // NOI18N
         backgroundImg.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true));
@@ -614,8 +624,13 @@ public class ProfileForm extends javax.swing.JFrame {
         this.deleteButton.setForeground(Color.white);
     }//GEN-LAST:event_deleteButtonMouseExited
 
+    private void AchievementManagerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AchievementManagerButtonActionPerformed
+        new AchievementManagerForm(MainForm.userID).setVisible(true);
+    }//GEN-LAST:event_AchievementManagerButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton AchievementManagerButton;
     private javax.swing.JLabel Friends;
     private javax.swing.JLabel ProfileName;
     private javax.swing.JTabbedPane Tabs;
