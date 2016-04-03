@@ -81,8 +81,8 @@ public class DeveloperForm extends javax.swing.JFrame {
         backgroundImg = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(470, 553));
-        setSize(new java.awt.Dimension(470, 553));
+        setPreferredSize(new java.awt.Dimension(470, 549));
+        setSize(new java.awt.Dimension(470, 549));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         editButton.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
@@ -177,7 +177,7 @@ public class DeveloperForm extends javax.swing.JFrame {
 
         getContentPane().add(GroupAndGames, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 350, 320, 150));
 
-        searchField.setFont(new java.awt.Font("Univers LT 45 Light", 0, 24)); // NOI18N
+        searchField.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         searchField.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
         searchField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

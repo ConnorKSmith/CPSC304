@@ -177,10 +177,16 @@ insert into Developer values(10);
 insert into Admin values(11);
 
 insert into FriendsWith values(1,6);
+insert into FriendsWith values(6,1);
 insert into FriendsWith values(2,7);
+insert into FriendsWith values(7,2);
 insert into FriendsWith values(3,8);
+insert into FriendsWith values(8,3);
 insert into FriendsWith values(4,9);
+insert into FriendsWith values(9,4);
 insert into FriendsWith values(1,10);
+insert into FriendsWith values(10,1);
+
 
 insert into FriendGroup values(1,"apple","group apple",1,"2016/1/1");
 insert into FriendGroup values(2,"banana","banana yes",6,"2016/2/3");
