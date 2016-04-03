@@ -45,8 +45,8 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="AddAchievementSelectGamePanel" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="AchievementTabbedPanel" min="-2" pref="239" max="-2" attributes="0"/>
-              <EmptySpace pref="46" max="32767" attributes="0"/>
+              <Component id="AchievementTabbedPanel" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="24" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -55,12 +55,17 @@
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Tahoma" size="18" style="0"/>
+          <Font name="Univers LT 45 Light" size="18" style="0"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Achievement Manager"/>
       </Properties>
     </Component>
     <Container class="javax.swing.JTabbedPane" name="AchievementTabbedPanel">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Univers LT 45 Light" size="12" style="0"/>
+        </Property>
+      </Properties>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
       <SubComponents>
@@ -99,7 +104,7 @@
                       <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jScrollPane2" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="AddButton" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -118,6 +123,11 @@
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
                 <Component class="javax.swing.JList" name="AddAchievementList">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Univers LT 45 Light" size="12" style="0"/>
+                    </Property>
+                  </Properties>
                   <Events>
                     <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="AddAchievementListMouseClicked"/>
                   </Events>
@@ -129,16 +139,25 @@
             </Container>
             <Component class="javax.swing.JLabel" name="jLabel3">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Univers LT 45 Light" size="12" style="0"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Select an Achievement to Add. If you have already added all achievements, none will be displayed"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel5">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Univers LT 45 Light" size="12" style="0"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Achievements will be added with zero progress"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="AddButton">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Univers LT 45 Light" size="12" style="0"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Add"/>
               </Properties>
               <Events>
@@ -204,6 +223,11 @@
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
                 <Component class="javax.swing.JList" name="UpdateAchievementList">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Univers LT 45 Light" size="12" style="0"/>
+                    </Property>
+                  </Properties>
                   <Events>
                     <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="UpdateAchievementListMouseClicked"/>
                   </Events>
@@ -215,18 +239,32 @@
             </Container>
             <Component class="javax.swing.JLabel" name="jLabel4">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Univers LT 45 Light" size="12" style="0"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Select an Achievement to Update. If you have no achievements, none will be displayed"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel6">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Univers LT 45 Light" size="12" style="0"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Update Progress to:"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="updateTextField">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Univers LT 45 Light" size="12" style="0"/>
+                </Property>
+              </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="updateButton">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Univers LT 45 Light" size="12" style="0"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Update"/>
               </Properties>
               <Events>
@@ -274,6 +312,9 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Univers LT 45 Light" size="12" style="0"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Select a Game that you Own"/>
           </Properties>
         </Component>
@@ -286,6 +327,9 @@
           <SubComponents>
             <Component class="javax.swing.JList" name="GameList">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Univers LT 45 Light" size="12" style="0"/>
+                </Property>
                 <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
                   <StringArray count="5">
                     <StringItem index="0" value="Item 1"/>

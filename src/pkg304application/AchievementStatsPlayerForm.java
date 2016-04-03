@@ -115,16 +115,42 @@ public class AchievementStatsPlayerForm extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(483, 361));
+        setResizable(false);
+        setSize(new java.awt.Dimension(483, 361));
+        getContentPane().setLayout(null);
+        getContentPane().add(title);
+        title.setBounds(256, 29, 161, 14);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Univers LT 45 Light", 0, 18)); // NOI18N
         jLabel1.setText("Achievement Stats:");
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(6, 0, 157, 23);
 
+        jLabel2.setFont(new java.awt.Font("Univers LT 45 Light", 0, 14)); // NOI18N
         jLabel2.setText("Achievement Name:");
+        getContentPane().add(jLabel2);
+        jLabel2.setBounds(6, 29, 128, 18);
 
+        jLabel3.setFont(new java.awt.Font("Univers LT 45 Light", 0, 14)); // NOI18N
         jLabel3.setText("Number of Players with Achievement:");
+        getContentPane().add(jLabel3);
+        jLabel3.setBounds(6, 53, 241, 18);
+        getContentPane().add(numPlayersLabel);
+        numPlayersLabel.setBounds(481, 223, 139, 0);
 
+        jLabel4.setFont(new java.awt.Font("Univers LT 45 Light", 0, 14)); // NOI18N
         jLabel4.setText("Percent of Game Owners with Achievement:");
+        getContentPane().add(jLabel4);
+        jLabel4.setBounds(6, 79, 286, 18);
+        getContentPane().add(percentPlayersLabel);
+        percentPlayersLabel.setBounds(298, 79, 157, 14);
+        getContentPane().add(numOwnersLabel);
+        numOwnersLabel.setBounds(461, 79, 58, 0);
+        getContentPane().add(numOwnersWithAchievementLabel);
+        numOwnersWithAchievementLabel.setBounds(256, 53, 161, 18);
 
+        userList.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         userList.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -137,69 +163,13 @@ public class AchievementStatsPlayerForm extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(userList);
 
-        jLabel5.setText("Users with this Achievement:");
+        getContentPane().add(jScrollPane1);
+        jScrollPane1.setBounds(6, 143, 469, 165);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(122, 122, 122)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(numOwnersWithAchievementLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
-                                    .addComponent(title, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 469, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
-                        .addComponent(numPlayersLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel3))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(percentPlayersLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(numOwnersLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel5))
-                        .addGap(0, 0, Short.MAX_VALUE))))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(title, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(numOwnersWithAchievementLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(numOwnersLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4)
-                    .addComponent(percentPlayersLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jLabel5)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(numPlayersLabel)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-        );
+        jLabel5.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
+        jLabel5.setText("Users with this Achievement:");
+        getContentPane().add(jLabel5);
+        jLabel5.setBounds(6, 115, 161, 16);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
