@@ -23,8 +23,8 @@ public class AchievementStatsPlayerForm extends javax.swing.JFrame {
     ResultSet rs;
     Statement stmt;
     String gName;
-    int numOwnersWithAchievement;
-    int numOwners;
+    double numOwnersWithAchievement;
+    double numOwners;
     double percentOwners;
     
     /**
@@ -66,14 +66,19 @@ public class AchievementStatsPlayerForm extends javax.swing.JFrame {
             rs = stmt.executeQuery(query);
             if(rs.next()){
                 numOwners = Integer.parseInt(rs.getString("numOwners"));
+                System.out.println("Num Owners: " + numOwners);
+                System.out.println("Num Owners with Achievement: " + numOwnersWithAchievement);
                 if(numOwners == 0){
+                    System.out.println("Zero owners");
                     percentOwners = 0;
                 }
                 else{
                     percentOwners = numOwnersWithAchievement/numOwners * 100;
+                    System.out.println("Percent of owners:");
+                    System.out.println(percentOwners);
                 }
                 
-                percentPlayersLabel.setText(String.valueOf(percentOwners) + "%");
+                percentPlayersLabel.setText(String.valueOf(Math.round(percentOwners)) + "%");
             }
             query = "select A.userName from HasWorkTowards H, Account A where H.aID=" + aID + " and H.isComplete=true and H.playerID = A.userID";
             rs = stmt.executeQuery(query);
