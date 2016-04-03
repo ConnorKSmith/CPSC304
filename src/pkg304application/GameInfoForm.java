@@ -289,6 +289,7 @@ public class GameInfoForm extends javax.swing.JFrame {
         try {
             gameName.setText(g);
             descriptionArea.setText(d);
+            descriptionArea.setEditable(false);
             priceLabel.setText(Integer.toString(p));
             String queryStr = "Select userName from Account where userID=" + dev;
             rs = stmt.executeQuery(queryStr);
