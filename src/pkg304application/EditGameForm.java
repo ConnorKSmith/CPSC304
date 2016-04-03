@@ -25,14 +25,20 @@ public class EditGameForm extends javax.swing.JFrame {
     ResultSet rs;
     Statement stmt;
     String gName;
+    static int thisGameID;
     
     public EditGameForm(String gameName) {
         try {
             initComponents();
-            gName = gameName;
+            gName = gameName;      
+            System.out.println(gameName);
             DatabaseConnection dbc = new DatabaseConnection();
             dbc.init();
             stmt = dbc.getMyConnection().createStatement();
+            String query = "Select gameID from Game where gName='"+ gameName + "'";
+            rs = stmt.executeQuery(query);
+            rs.next();
+            thisGameID = rs.getInt("gameID");
             showGameInfo(gameName);
             showAchievementList();
             setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
