@@ -11,6 +11,7 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import static javax.swing.JOptionPane.showMessageDialog;
 import pkg304application.database.DatabaseConnection;
 
 /**
@@ -69,13 +70,17 @@ public class AchievementManagerForm extends javax.swing.JFrame {
         AddAchievementList.setEnabled(true);
         UpdateAchievementList.setEnabled(true);
         AddButton.setEnabled(true);
+        updateTextField.setEnabled(true);
+        updateButton.setEnabled(true);
     }
     private void disableAchievementViewer(){
         AchievementTabbedPanel.setEnabled(false);
         AddAchievementList.setEnabled(false);
         UpdateAchievementList.setEnabled(false);
-        AddButton.setEnabled(false);        
-    }
+        AddButton.setEnabled(false);
+        updateTextField.setEnabled(false);
+        updateButton.setEnabled(false);
+    }   
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -98,6 +103,9 @@ public class AchievementManagerForm extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         UpdateAchievementList = new javax.swing.JList<>();
         jLabel4 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        updateTextField = new javax.swing.JTextField();
+        updateButton = new javax.swing.JButton();
         AddAchievementSelectGamePanel = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -153,14 +161,28 @@ public class AchievementManagerForm extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(AddButton))
-                .addContainerGap(41, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         AchievementTabbedPanel.addTab("Add a New Achievement", jPanel1);
 
+        UpdateAchievementList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                UpdateAchievementListMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(UpdateAchievementList);
 
         jLabel4.setText("Select an Achievement to Update. If you have no achievements, none will be displayed");
+
+        jLabel6.setText("Update Progress to:");
+
+        updateButton.setText("Update");
+        updateButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -170,7 +192,14 @@ public class AchievementManagerForm extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane3)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 472, Short.MAX_VALUE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(updateTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(updateButton)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -180,7 +209,12 @@ public class AchievementManagerForm extends javax.swing.JFrame {
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(71, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(updateTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(updateButton))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         AchievementTabbedPanel.addTab("Update Achievement Progress", jPanel2);
@@ -244,8 +278,8 @@ public class AchievementManagerForm extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(AddAchievementSelectGamePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(AchievementTabbedPanel)
-                .addContainerGap())
+                .addComponent(AchievementTabbedPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(46, Short.MAX_VALUE))
         );
 
         pack();
@@ -255,19 +289,22 @@ public class AchievementManagerForm extends javax.swing.JFrame {
         try {
             if (evt.getClickCount() == 1){
                 // Load the correct Achievements for the game that the user can update
-                String queryStr = "Select aName from Achievement A, HasWorkTowards H, InAchievement I, Game G where gName='" + GameList.getSelectedValue() + "' ";
+                String queryStrStart1 = "Select aName, totalNeeded, progress ";
+                String queryStrStart2 = "Select aName ";
+                String queryStr = "from Achievement A, HasWorkTowards H, InAchievement I, Game G where gName='" + GameList.getSelectedValue() + "' ";
                 queryStr += "and G.gameID = I.gameID and I.aID = A.aID ";
                 queryStr += "and H.aID = A.aID and H.playerID = " + loggedInUser;
-                rs = stmt.executeQuery(queryStr);
+                rs = stmt.executeQuery(queryStrStart1 + queryStr);
                 DefaultListModel updateAchievementListModel = new DefaultListModel();
                 while(rs.next()){
-                    updateAchievementListModel.addElement(rs.getString("aName"));
+                    updateAchievementListModel.addElement(rs.getString("aName") + ": Progress " + rs.getString("progress") + "/" + rs.getString("totalNeeded"));
+                    
                 }
                 UpdateAchievementList.setModel(updateAchievementListModel);
                 // TODO: Addable achievements
                 // Load achievements that can be added for the game
                 String queryStr2 = "Select aName from Achievement A, InAchievement I, Game G where G.gameID = I.gameID and I.aID = A.aID and G.gName='" + GameList.getSelectedValue() + "' and aName not in (";
-                queryStr2 += queryStr;
+                queryStr2 += queryStrStart2 + queryStr;
                 queryStr2 += ")";
                 rs = stmt.executeQuery(queryStr2);
                 DefaultListModel addAchievementListModel = new DefaultListModel();
@@ -277,7 +314,9 @@ public class AchievementManagerForm extends javax.swing.JFrame {
                 AddAchievementList.setModel(addAchievementListModel);
                 enableAchievementViewer();
                 // Selections will be removed so disable final operation buttons
-                AddButton.setEnabled(false); 
+                AddButton.setEnabled(false);
+                updateTextField.setEnabled(false);
+                updateButton.setEnabled(false);
             }
         } catch (SQLException ex) {
             Logger.getLogger(DeveloperForm.class.getName()).log(Level.SEVERE, null, ex);
@@ -314,6 +353,55 @@ public class AchievementManagerForm extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_AddButtonActionPerformed
+
+    private void UpdateAchievementListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UpdateAchievementListMouseClicked
+        
+        if (evt.getClickCount() == 1){
+            updateTextField.setEnabled(true);
+            updateButton.setEnabled(true); 
+        }      
+    }//GEN-LAST:event_UpdateAchievementListMouseClicked
+
+    private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
+        // Update the selected achievement with the correct amount of progress
+        try {
+            // first find the achievementID and totalNeeded of the selected achievement
+            String aName = UpdateAchievementList.getSelectedValue().split(":")[0];            
+            String queryStr = "Select aID, totalNeeded from Achievement A where A.aName = '" + aName + "' ";
+            rs = stmt.executeQuery(queryStr);
+            rs.next();
+            int aID = Integer.parseInt(rs.getString("aID"));
+            int totalNeeded = Integer.parseInt(rs.getString("totalNeeded"));
+            
+            int progress;
+            
+            // Get the chosen progress
+            try{
+                progress = Integer.parseInt(updateTextField.getText());
+                if ((progress < 0) || (progress > totalNeeded)){
+                    throw new Exception();
+                }
+            }
+            catch (Exception ex){
+                showMessageDialog(null, "Please type in a whole number between 0 and " + totalNeeded + " inclusive");
+                return;
+            }
+            String updateStr;
+            
+            if(progress == totalNeeded){
+                updateStr = "update HasWorkTowards H set H.progress=" + progress + ", H.isComplete=true where H.playerID=" + loggedInUser + " and H.aID=" + aID; 
+            }
+            else{
+                updateStr = "update HasWorkTowards H set H.progress=" + progress + ", H.isComplete=false where H.playerID=" + loggedInUser + " and H.aID=" + aID;
+            }                       
+            stmt.executeUpdate(updateStr);
+            this.setVisible(false);
+            this.dispose();
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(DeveloperForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_updateButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -362,10 +450,13 @@ public class AchievementManagerForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JButton updateButton;
+    private javax.swing.JTextField updateTextField;
     // End of variables declaration//GEN-END:variables
 }
