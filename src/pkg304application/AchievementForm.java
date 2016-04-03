@@ -164,7 +164,8 @@ public class AchievementForm extends javax.swing.JFrame {
             }                       
             String insert = "Insert into Achievement(aDesc, aName, totalNeeded, gameID) values('"
                     + achievementDescription.getText() + "' , '" + achievementName.getText() +  "' , '" + 
-                    Integer.parseInt(totalNeeded.getText()) + "' , " + GameInfoForm.thisGameID + ")";
+                    Integer.parseInt(totalNeeded.getText()) + "' , " + EditGameForm.thisGameID + ")";
+            System.out.println(insert);
             stmt.executeUpdate(insert);
             this.setVisible(false);
             this.dispose();
