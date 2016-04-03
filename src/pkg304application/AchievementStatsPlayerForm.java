@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
 import pkg304application.database.DatabaseConnection;
 
 /**
@@ -24,7 +25,7 @@ public class AchievementStatsPlayerForm extends javax.swing.JFrame {
     String gName;
     int numOwnersWithAchievement;
     int numOwners;
-    int percentOwners;
+    double percentOwners;
     
     /**
      * Creates new form AchievementStatsPlayerForm
@@ -65,9 +66,22 @@ public class AchievementStatsPlayerForm extends javax.swing.JFrame {
             rs = stmt.executeQuery(query);
             if(rs.next()){
                 numOwners = Integer.parseInt(rs.getString("numOwners"));
-                percentOwners = numOwnersWithAchievement/numOwners * 100;
-                percentPlayersLabel.setText(Integer.toString(percentOwners) + "%");
+                if(numOwners == 0){
+                    percentOwners = 0;
+                }
+                else{
+                    percentOwners = numOwnersWithAchievement/numOwners * 100;
+                }
+                
+                percentPlayersLabel.setText(String.valueOf(percentOwners) + "%");
             }
+            query = "select A.userName from HasWorkTowards H, Account A where H.aID=" + aID + " and H.isComplete=true and H.playerID = A.userID";
+            rs = stmt.executeQuery(query);
+            DefaultListModel userListModel = new DefaultListModel();
+            while(rs.next()){
+                userListModel.addElement(rs.getString("userName"));
+            }
+            userList.setModel(userListModel);
         } catch (SQLException ex) {
             Logger.getLogger(SearchReviewForm.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -91,6 +105,9 @@ public class AchievementStatsPlayerForm extends javax.swing.JFrame {
         percentPlayersLabel = new javax.swing.JLabel();
         numOwnersLabel = new javax.swing.JLabel();
         numOwnersWithAchievementLabel = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        userList = new javax.swing.JList<>();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -103,6 +120,20 @@ public class AchievementStatsPlayerForm extends javax.swing.JFrame {
 
         jLabel4.setText("Percent of Game Owners with Achievement:");
 
+        userList.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        userList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                userListMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(userList);
+
+        jLabel5.setText("Users with this Achievement:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -110,23 +141,30 @@ public class AchievementStatsPlayerForm extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel3))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(percentPlayersLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(numOwnersLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(122, 122, 122)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(numOwnersWithAchievementLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
+                                    .addComponent(title, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 469, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                        .addComponent(numPlayersLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(122, 122, 122)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(numOwnersWithAchievementLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
-                            .addComponent(title, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(numPlayersLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel3))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(percentPlayersLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(numOwnersLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel5))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -145,13 +183,36 @@ public class AchievementStatsPlayerForm extends javax.swing.JFrame {
                     .addComponent(numOwnersLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
                     .addComponent(percentPlayersLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
-                .addComponent(numPlayersLabel)
-                .addGap(350, 350, 350))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel5)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(numPlayersLabel)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void userListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userListMouseClicked
+         try {
+            if (evt.getClickCount() == 2){
+                
+                String selectedUser = userList.getSelectedValue();
+                String queryStr = "Select userID from Account where userName='" + selectedUser + "'";
+                rs = stmt.executeQuery(queryStr);
+                rs.next();
+                new SearchUserForm(Integer.parseInt(rs.getString("userID")),false).setVisible(true);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DeveloperForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_userListMouseClicked
 
     /**
      * @param args the command line arguments
@@ -193,10 +254,13 @@ public class AchievementStatsPlayerForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel numOwnersLabel;
     private javax.swing.JLabel numOwnersWithAchievementLabel;
     private javax.swing.JLabel numPlayersLabel;
     private javax.swing.JLabel percentPlayersLabel;
     private javax.swing.JLabel title;
+    private javax.swing.JList<String> userList;
     // End of variables declaration//GEN-END:variables
 }
