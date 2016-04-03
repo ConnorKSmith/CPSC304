@@ -19,4 +19,3 @@ Useful Resources:
 
 1. https://netbeans.org/competition/win-with-netbeans/mysql-client.html
 2. https://dev.mysql.com/doc/connector-j/en/connector-j-usagenotes-connect-drivermanager.html
->>>>>>> 056f633484dd12020773f57941211b8be3ee813c
