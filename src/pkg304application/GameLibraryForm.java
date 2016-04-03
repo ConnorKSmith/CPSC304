@@ -70,6 +70,8 @@ public class GameLibraryForm extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         genreList = new java.awt.Choice();
         filterButton = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        sortingChoice = new java.awt.Choice();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(386, 413));
@@ -91,7 +93,7 @@ public class GameLibraryForm extends javax.swing.JFrame {
         jScrollPane1.setViewportView(gameList);
 
         getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(20, 170, 335, 160);
+        jScrollPane1.setBounds(20, 190, 335, 160);
 
         addButton.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         addButton.setText("Add");
@@ -101,17 +103,17 @@ public class GameLibraryForm extends javax.swing.JFrame {
             }
         });
         getContentPane().add(addButton);
-        addButton.setBounds(20, 340, 75, 29);
+        addButton.setBounds(20, 360, 75, 29);
 
         jLabel1.setFont(new java.awt.Font("Univers LT 45 Light", 0, 14)); // NOI18N
         jLabel1.setText("Search Result for Games:");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(20, 140, 162, 18);
+        jLabel1.setBounds(20, 160, 162, 18);
 
         jLabel3.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         jLabel3.setText("Narrow By:");
         getContentPane().add(jLabel3);
-        jLabel3.setBounds(26, 32, 70, 16);
+        jLabel3.setBounds(20, 30, 70, 16);
 
         ratingChoice.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         getContentPane().add(ratingChoice);
@@ -163,6 +165,15 @@ public class GameLibraryForm extends javax.swing.JFrame {
         getContentPane().add(filterButton);
         filterButton.setBounds(265, 90, 100, 29);
 
+        jLabel2.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
+        jLabel2.setText("Sort By:");
+        getContentPane().add(jLabel2);
+        jLabel2.setBounds(20, 130, 60, 16);
+
+        sortingChoice.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
+        getContentPane().add(sortingChoice);
+        sortingChoice.setBounds(80, 130, 110, 20);
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -210,7 +221,7 @@ public class GameLibraryForm extends javax.swing.JFrame {
         try {
             // TODO add your handling code here:
             gameLibraryQueryBuilder(ratingChoice.getSelectedItem(), ratingTextField.getText(),
-            priceChoice.getSelectedItem(), priceTextField.getText(), genreList.getSelectedItem());
+            priceChoice.getSelectedItem(), priceTextField.getText(), genreList.getSelectedItem(), sortingChoice.getSelectedItem());
             rs = stmt.executeQuery(thisFilterQuery);
             DefaultListModel gameListModel = new DefaultListModel();
             while (rs.next()){
@@ -233,6 +244,7 @@ public class GameLibraryForm extends javax.swing.JFrame {
     private javax.swing.JList<String> gameList;
     private java.awt.Choice genreList;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -242,6 +254,7 @@ public class GameLibraryForm extends javax.swing.JFrame {
     private javax.swing.JTextField priceTextField;
     private java.awt.Choice ratingChoice;
     private javax.swing.JTextField ratingTextField;
+    private java.awt.Choice sortingChoice;
     // End of variables declaration//GEN-END:variables
 private void showGameList(String searchField) {
          try {
@@ -270,6 +283,9 @@ private void showGameList(String searchField) {
     
     private void showFilter() {
         try {
+            sortingChoice.add("None");
+            sortingChoice.add("Asc");
+            sortingChoice.add("Desc");
             ratingChoice.add(">");
             ratingChoice.add(">=");
             ratingChoice.add("=");
@@ -283,7 +299,8 @@ private void showGameList(String searchField) {
             priceChoice.add("<=");
             priceChoice.add("<");
             priceChoice.add("!=");
-            priceChoice.add(" ");            
+            priceChoice.add(" ");   
+            genreList.add("None");
             String queryStr = "Select * from Genre";
             ResultSet rs = stmt.executeQuery(queryStr);
             while (rs.next()){
@@ -294,17 +311,25 @@ private void showGameList(String searchField) {
         }
     }
 
-    private void gameLibraryQueryBuilder(String ratingChoice, String ratingField, String priceChoice, String priceField, String genreChoice) {
+    private void gameLibraryQueryBuilder(String ratingChoice, String ratingField, String priceChoice, String priceField, String genreChoice, String sortChoice) {
         thisFilterQuery = "select distinct G.gName from Game G, Review R, HasGenre H where gName like '" + thisSearchField + "'";
         if (checkFilterFields()){
+            if (!genreChoice.equals("None")){
             thisFilterQuery = thisFilterQuery.concat(" and G.gameID = H.gameID and H.genre='" + genreChoice + "'");
+            }
             if (!priceChoice.equals(" ") && !priceField.equals("")){
                 thisFilterQuery = thisFilterQuery.concat(" and G.currentPrice " + priceChoice + priceField);
             }
             if (!ratingChoice.equals(" ") && !ratingField.equals("")){
                 thisFilterQuery = thisFilterQuery.concat(" and (select avg(rating) from Game G2, Review R2"
                         + " where G2.gameID = R2.gameReviewedID and G2.gName = G.gName) " + ratingChoice + ratingField);
-            }                     
+            }
+            if (!sortChoice.equals("None")){
+                thisFilterQuery = thisFilterQuery.concat(" group by G.gName " + sortChoice);
+                System.out.println(thisFilterQuery);
+
+            }
+            
         } else {
             JOptionPane.showMessageDialog(null, "Rating has to be betweeen 0 and 10, and price must be positive!", "Invalid filter!", JOptionPane.INFORMATION_MESSAGE);      
         }

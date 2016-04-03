@@ -113,9 +113,12 @@ public class AchievementManagerForm extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Univers LT 45 Light", 0, 18)); // NOI18N
         jLabel1.setText("Achievement Manager");
 
+        AchievementTabbedPanel.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
+
+        AddAchievementList.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         AddAchievementList.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 AddAchievementListMouseClicked(evt);
@@ -123,10 +126,13 @@ public class AchievementManagerForm extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(AddAchievementList);
 
+        jLabel3.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         jLabel3.setText("Select an Achievement to Add. If you have already added all achievements, none will be displayed");
 
+        jLabel5.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         jLabel5.setText("Achievements will be added with zero progress");
 
+        AddButton.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         AddButton.setText("Add");
         AddButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -157,7 +163,7 @@ public class AchievementManagerForm extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(AddButton))
@@ -166,6 +172,7 @@ public class AchievementManagerForm extends javax.swing.JFrame {
 
         AchievementTabbedPanel.addTab("Add a New Achievement", jPanel1);
 
+        UpdateAchievementList.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         UpdateAchievementList.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 UpdateAchievementListMouseClicked(evt);
@@ -173,10 +180,15 @@ public class AchievementManagerForm extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(UpdateAchievementList);
 
+        jLabel4.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         jLabel4.setText("Select an Achievement to Update. If you have no achievements, none will be displayed");
 
+        jLabel6.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         jLabel6.setText("Update Progress to:");
 
+        updateTextField.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
+
+        updateButton.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         updateButton.setText("Update");
         updateButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -192,7 +204,7 @@ public class AchievementManagerForm extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane3)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 472, Short.MAX_VALUE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 472, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -219,10 +231,12 @@ public class AchievementManagerForm extends javax.swing.JFrame {
 
         AchievementTabbedPanel.addTab("Update Achievement Progress", jPanel2);
 
-        AddAchievementSelectGamePanel.setBorder(new javax.swing.border.SoftBevelBorder(0));
+        AddAchievementSelectGamePanel.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
+        jLabel2.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         jLabel2.setText("Select a Game that you Own");
 
+        GameList.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         GameList.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -278,8 +292,8 @@ public class AchievementManagerForm extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(AddAchievementSelectGamePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(AchievementTabbedPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addComponent(AchievementTabbedPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         pack();

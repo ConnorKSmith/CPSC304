@@ -83,6 +83,7 @@ public class ProfileForm extends javax.swing.JFrame {
         backgroundImg = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(481, 553));
         setSize(new java.awt.Dimension(481, 553));
         getContentPane().setLayout(null);
 
@@ -278,17 +279,17 @@ public class ProfileForm extends javax.swing.JFrame {
         usersRadioButton.setFont(new java.awt.Font("Univers LT 45 Light", 1, 12)); // NOI18N
         usersRadioButton.setText("users");
         getContentPane().add(usersRadioButton);
-        usersRadioButton.setBounds(10, 40, 59, 25);
+        usersRadioButton.setBounds(10, 40, 62, 23);
 
         groupRadioButton.setFont(new java.awt.Font("Univers LT 45 Light", 1, 12)); // NOI18N
         groupRadioButton.setText("groups");
         getContentPane().add(groupRadioButton);
-        groupRadioButton.setBounds(70, 40, 65, 25);
+        groupRadioButton.setBounds(80, 40, 70, 23);
 
         gameRadioButton.setFont(new java.awt.Font("Univers LT 45 Light", 1, 12)); // NOI18N
         gameRadioButton.setText("games");
         getContentPane().add(gameRadioButton);
-        gameRadioButton.setBounds(140, 40, 65, 25);
+        gameRadioButton.setBounds(160, 40, 69, 23);
 
         createGroupButton.setFont(new java.awt.Font("Univers LT 45 Light", 1, 12)); // NOI18N
         createGroupButton.setForeground(new java.awt.Color(255, 255, 255));
@@ -306,16 +307,27 @@ public class ProfileForm extends javax.swing.JFrame {
             }
         });
         getContentPane().add(createGroupButton);
-        createGroupButton.setBounds(360, 390, 90, 30);
+        createGroupButton.setBounds(360, 420, 90, 30);
 
-        AchievementManagerButton.setText("Achievement Manager");
+        AchievementManagerButton.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
+        AchievementManagerButton.setForeground(new java.awt.Color(255, 255, 255));
+        AchievementManagerButton.setText("Achievement");
+        AchievementManagerButton.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true));
+        AchievementManagerButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                AchievementManagerButtonMouseExited(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                AchievementManagerButtonMouseEntered(evt);
+            }
+        });
         AchievementManagerButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 AchievementManagerButtonActionPerformed(evt);
             }
         });
         getContentPane().add(AchievementManagerButton);
-        AchievementManagerButton.setBounds(250, 350, 200, 23);
+        AchievementManagerButton.setBounds(360, 380, 90, 30);
 
         backgroundImg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/staticImg/bgtest.jpg"))); // NOI18N
         backgroundImg.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true));
@@ -627,6 +639,16 @@ public class ProfileForm extends javax.swing.JFrame {
     private void AchievementManagerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AchievementManagerButtonActionPerformed
         new AchievementManagerForm(MainForm.userID).setVisible(true);
     }//GEN-LAST:event_AchievementManagerButtonActionPerformed
+
+    private void AchievementManagerButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AchievementManagerButtonMouseEntered
+        this.AchievementManagerButton.setBorder(BorderFactory.createLineBorder(Color.yellow));
+        this.AchievementManagerButton.setForeground(Color.yellow);
+    }//GEN-LAST:event_AchievementManagerButtonMouseEntered
+
+    private void AchievementManagerButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AchievementManagerButtonMouseExited
+        this.AchievementManagerButton.setBorder(BorderFactory.createLineBorder(Color.white));
+        this.AchievementManagerButton.setForeground(Color.white);
+    }//GEN-LAST:event_AchievementManagerButtonMouseExited
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -272,11 +272,11 @@ public class DeveloperForm extends javax.swing.JFrame {
 
         groupRadioButton.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         groupRadioButton.setText("groups");
-        getContentPane().add(groupRadioButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 40, -1, -1));
+        getContentPane().add(groupRadioButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 40, -1, -1));
 
         gameRadioButton.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         gameRadioButton.setText("games");
-        getContentPane().add(gameRadioButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 40, -1, -1));
+        getContentPane().add(gameRadioButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 40, -1, -1));
 
         backgroundImg.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         backgroundImg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/staticImg/bgtest.jpg"))); // NOI18N

@@ -57,6 +57,7 @@ public class CreateGroupForm extends javax.swing.JFrame {
         setResizable(false);
         setSize(new java.awt.Dimension(356, 283));
 
+        groupName.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         groupName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 groupNameActionPerformed(evt);
@@ -64,11 +65,14 @@ public class CreateGroupForm extends javax.swing.JFrame {
         });
 
         descGroup.setColumns(20);
+        descGroup.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         descGroup.setRows(5);
         jScrollPane1.setViewportView(descGroup);
 
+        jLabel1.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         jLabel1.setText("Group Name:");
 
+        createGroupButton.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         createGroupButton.setText("Create");
         createGroupButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -76,6 +80,7 @@ public class CreateGroupForm extends javax.swing.JFrame {
             }
         });
 
+        jLabel2.setFont(new java.awt.Font("Univers LT 45 Light", 0, 12)); // NOI18N
         jLabel2.setText("Group description:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -87,7 +92,7 @@ public class CreateGroupForm extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
                     .addComponent(jLabel1))
-                .addContainerGap(211, Short.MAX_VALUE))
+                .addContainerGap(227, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
